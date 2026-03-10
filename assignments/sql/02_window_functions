@@ -1,0 +1,547 @@
+# Q5 Breakdown — Building the MRR Time Series Step by Step
+### Idynamics Finance Analyst Training Program
+
+---
+
+> **Why this exists:** The Final query (Q5) in the window functions
+> assignment asks you to do five things at the same time — CASE WHEN,
+> SUM(), CTEs, FULL OUTER JOIN, and SUM OVER. That's too many new things
+> at once. This breakdown separates each piece so you can get it right
+> before connecting it to the next one.
+>
+> Every step here produces a real output that you'll use in the Final
+> query and in the cohort analysis. Nothing is busywork.
+
+---
+
+## Step A — CASE WHEN in SELECT: Label Each Subscription
+
+**Concept:** CASE WHEN checks a condition and returns a value. That's it.
+No math yet. Just a label.
+
+**The pattern:**
+
+```sql
+CASE
+    WHEN some_column = 'some_value' THEN 'Label A'
+    ELSE 'Label B'
+END
+```
+
+**Your query:** Pull every active subscription and add a column called
+`rate_type`. If `billing_cycle = 'Annual'`, show `'Annual — divide by 12'`.
+Otherwise show `'Monthly — use as-is'`.
+
+**Return:** `subscription_id`, `plan_name`, `billing_cycle`, `seats`,
+`price_per_seat`, `rate_type`
+
+**Sort:** `billing_cycle` ascending (Annual first)
+
+```sql
+-- Step A: CASE WHEN in SELECT
+SELECT
+    subscription_id,
+    plan_name,
+    billing_cycle,
+    seats,
+    price_per_seat,
+    CASE
+        WHEN billing_cycle = 'Annual' THEN 'Annual — divide by 12'
+        ELSE 'Monthly — use as-is'
+    END AS rate_type
+FROM subscriptions
+WHERE status = 'active'
+ORDER BY billing_cycle;
+```
+
+**Self-check:** 49 rows. The first 7 rows all say `'Annual — divide by 12'`.
+The remaining 42 rows say `'Monthly — use as-is'`.
+
+> **What you just proved:** CASE WHEN is a column that makes a decision.
+> One condition → two possible results. Next step, that same decision
+> controls a math formula.
+
+---
+
+## Step B — CASE WHEN with Math: Per-Subscription Monthly Rate
+
+**Concept:** CASE WHEN can wrap an arithmetic expression, not just a
+label. Annual subscriptions store the *full-year* price, so you divide
+by 12 to get the monthly equivalent. Monthly subscriptions need no
+adjustment.
+
+**The MRR formula:**
+
+```
+Monthly sub:  seats × price_per_seat × (1 - discount_percent / 100.0)
+Annual sub:   seats × price_per_seat × (1 - discount_percent / 100.0) / 12
+```
+
+The only difference is `/ 12` at the end of the Annual branch. Everything
+else is identical.
+
+**Your query:** Pull every active subscription with its calculated MRR.
+
+**Return:** `subscription_id`, `plan_name`, `billing_cycle`, `seats`,
+`price_per_seat`, `discount_percent`, `mrr` (rounded to 2 decimal places)
+
+**Sort:** `mrr` descending
+
+```sql
+-- Step B: CASE WHEN with arithmetic
+SELECT
+    subscription_id,
+    plan_name,
+    billing_cycle,
+    seats,
+    price_per_seat,
+    discount_percent,
+    ROUND(
+        CASE
+            WHEN billing_cycle = 'Annual'
+                THEN seats * price_per_seat * (1 - discount_percent / 100.0) / 12
+            ELSE
+                 seats * price_per_seat * (1 - discount_percent / 100.0)
+        END
+    , 2) AS mrr
+FROM subscriptions
+WHERE status = 'active'
+ORDER BY mrr DESC;
+```
+
+**Self-check:** 49 rows. Top row: `SUB025` | Analytics Enterprise | Annual | `$6,840.00`.
+Sum of the `mrr` column = **$142,110.50**.
+
+> This is Q1 from the MRR Snapshot assignment — you already built this.
+> The point of running it again here is to read the CASE WHEN structure
+> clearly before it goes inside a SUM().
+
+---
+
+## Step C — CASE WHEN Inside SUM(): New MRR by Start Month
+
+**Concept:** The formula from Step B now goes inside `SUM()`. This
+collapses all subscriptions that started in the same month into a single
+total. No changes to the formula — it just moves inside the aggregation.
+
+**Business question:** How much new MRR came in each month?
+
+Every subscription starts on a `start_date`. Group by the month of that
+date. Sum the MRR formula for all subscriptions in each group. Note:
+**no `WHERE status = 'active'` here** — you want all subscriptions that
+ever started, including those that later churned, because they contributed
+real MRR in the month they started.
+
+```sql
+-- Step C: CASE WHEN inside SUM() — new MRR by start month
+SELECT
+    TO_CHAR(DATE_TRUNC('month', start_date), 'YYYY-MM') AS month,
+    ROUND(SUM(
+        CASE
+            WHEN billing_cycle = 'Annual'
+                THEN seats * price_per_seat * (1 - discount_percent / 100.0) / 12
+            ELSE
+                 seats * price_per_seat * (1 - discount_percent / 100.0)
+        END
+    ), 2) AS new_mrr
+FROM subscriptions
+GROUP BY DATE_TRUNC('month', start_date)
+ORDER BY DATE_TRUNC('month', start_date);
+```
+
+**Self-check:** 19 rows.
+
+| month | new_mrr |
+|---|---|
+| 2024-01 | $5,800.00 |
+| 2024-02 | $8,615.00 |
+| 2024-03 | $6,075.00 |
+| 2024-04 | $9,444.00 |
+| 2024-05 | $2,565.00 |
+| 2024-06 | $3,490.00 |
+| 2024-07 | $9,364.50 |
+| 2024-08 | $6,840.00 |
+| 2024-09 | $13,415.00 |
+| 2024-10 | $10,130.00 |
+| 2024-11 | $4,955.00 |
+| 2024-12 | $14,915.00 |
+| 2025-01 | $9,940.50 |
+| 2025-02 | $7,405.00 |
+| 2025-03 | $19,390.00 |
+| 2025-04 | $5,780.00 |
+| 2025-05 | $10,920.00 |
+| 2025-06 | $8,630.00 |
+| 2026-01 | $1,710.00 |
+
+> **This is exactly the `new_mrr` CTE body.** When you build the Final
+> query, you wrap this SELECT in `WITH new_mrr AS (...)` and reference it
+> by name. The query itself doesn't change at all.
+
+---
+
+## Step D — Same Pattern for Churned MRR
+
+**Concept:** Identical structure to Step C, but instead of `start_date`
+you use `cancelled_date`, and you filter to subscriptions that actually
+have one.
+
+Two things are different from Step C:
+
+1. `GROUP BY DATE_TRUNC('month', cancelled_date)` instead of `start_date`
+2. `WHERE cancelled_date IS NOT NULL`
+
+> ⚠️ **Important:** `cancelled_date` is a **DATE column**, not text. Do
+> **not** write `AND cancelled_date <> ''` — that's a text comparison and
+> will cause a type error in PostgreSQL. `IS NOT NULL` is all you need.
+
+Everything else — the CASE WHEN formula, ROUND(), GROUP BY pattern,
+ORDER BY pattern — is exactly the same.
+
+**Business question:** How much MRR churned each month?
+
+**Return:** `month` (formatted as `'YYYY-MM'`), `churned_mrr` (rounded to
+2 decimal places)
+
+**Sort:** `month` ascending
+
+```sql
+-- Step D: Churned MRR by cancellation month
+SELECT
+    TO_CHAR(DATE_TRUNC('month', cancelled_date), 'YYYY-MM') AS month,
+    ROUND(SUM(
+        CASE
+            WHEN billing_cycle = 'Annual'
+                THEN seats * price_per_seat * (1 - discount_percent / 100.0) / 12
+            ELSE
+                 seats * price_per_seat * (1 - discount_percent / 100.0)
+        END
+    ), 2) AS churned_mrr
+FROM subscriptions
+WHERE cancelled_date IS NOT NULL
+GROUP BY DATE_TRUNC('month', cancelled_date)
+ORDER BY DATE_TRUNC('month', cancelled_date);
+```
+
+**Self-check:** 10 rows. Churn begins in August 2024 — subscriptions that
+churned in 2024 are included because `new_mrr` tracked them when they started.
+
+| month | churned_mrr |
+|---|---|
+| 2024-08 | $1,900.00 |
+| 2024-11 | $495.00 |
+| 2024-12 | $2,090.00 |
+| 2025-01 | $450.00 |
+| 2025-05 | $2,375.00 |
+| 2025-06 | $1,305.00 |
+| 2025-07 | $1,760.00 |
+| 2025-08 | $4,680.00 |
+| 2025-12 | $1,624.50 |
+| 2026-02 | $594.00 |
+
+> **Notice:** Steps C and D overlap in several months (Aug, Nov, Dec 2024,
+> Jan/May/Jun 2025) — months where both new subscriptions started and
+> existing ones churned. This is exactly why you need a FULL OUTER JOIN in
+> Step E: a regular JOIN would silently drop all months that exist in only
+> one table.
+
+---
+
+## Step E — Combine with CTEs and FULL OUTER JOIN
+
+**Concept:** You've already written and verified both queries. Now you
+wrap them in `WITH` clauses so they have names, then join them.
+
+FULL OUTER JOIN keeps every month from both sides — months with only new
+MRR, months with only churn, and months with both. A missing value on
+either side comes through as NULL. `COALESCE(value, 0)` converts those
+NULLs to zero so your math works.
+
+**Your query:** Monthly MRR movement — new, churned, net, and running total.
+
+**Return:** `month`, `new_mrr`, `churned_mrr`, `net_mrr_change`, `total_mrr`
+
+```sql
+-- Step E: CTEs + FULL OUTER JOIN + running total
+WITH new_mrr AS (
+    SELECT
+        DATE_TRUNC('month', start_date)               AS month,
+        ROUND(SUM(
+            CASE
+                WHEN billing_cycle = 'Annual'
+                    THEN seats * price_per_seat * (1 - discount_percent / 100.0) / 12
+                ELSE
+                     seats * price_per_seat * (1 - discount_percent / 100.0)
+            END
+        ), 2)                                         AS new_mrr
+    FROM subscriptions
+    GROUP BY DATE_TRUNC('month', start_date)
+),
+churned_mrr AS (
+    SELECT
+        DATE_TRUNC('month', cancelled_date)           AS month,
+        ROUND(SUM(
+            CASE
+                WHEN billing_cycle = 'Annual'
+                    THEN seats * price_per_seat * (1 - discount_percent / 100.0) / 12
+                ELSE
+                     seats * price_per_seat * (1 - discount_percent / 100.0)
+            END
+        ), 2)                                         AS churned_mrr
+    FROM subscriptions
+    WHERE cancelled_date IS NOT NULL
+    GROUP BY DATE_TRUNC('month', cancelled_date)
+),
+monthly_mrr AS (
+    SELECT
+        COALESCE(n.month, c.month)                              AS month,
+        COALESCE(n.new_mrr, 0)                                  AS new_mrr,
+        COALESCE(c.churned_mrr, 0)                              AS churned_mrr,
+        ROUND(COALESCE(n.new_mrr, 0) - COALESCE(c.churned_mrr, 0), 2) AS net_mrr_change,
+        ROUND(SUM(
+            COALESCE(n.new_mrr, 0) - COALESCE(c.churned_mrr, 0)
+        ) OVER (ORDER BY COALESCE(n.month, c.month)), 2)       AS total_mrr
+    FROM new_mrr n
+    FULL OUTER JOIN churned_mrr c ON n.month = c.month
+)
+SELECT
+    TO_CHAR(month, 'YYYY-MM')   AS month,
+    new_mrr,
+    churned_mrr,
+    net_mrr_change,
+    total_mrr
+FROM monthly_mrr
+ORDER BY month;
+```
+
+**Self-check:** 23 rows.
+
+| month | new_mrr | churned_mrr | net_mrr_change | total_mrr |
+|---|---|---|---|---|
+| 2024-01 | $5,800.00 | $0.00 | $5,800.00 | $5,800.00 |
+| 2024-02 | $8,615.00 | $0.00 | $8,615.00 | $14,415.00 |
+| 2024-08 | $6,840.00 | $1,900.00 | $4,940.00 | $50,293.50 |
+| 2025-07 | $0.00 | $1,760.00 | -$1,760.00 | $147,299.00 |
+| 2025-08 | $0.00 | $4,680.00 | -$4,680.00 | $142,619.00 |
+| 2026-02 | $0.00 | $594.00 | -$594.00 | $142,110.50 |
+
+Last row `total_mrr` = **$142,110.50**
+
+> If this works, you're 95% of the way to the Final query.
+> The only thing left is adding `LAG()` in Step F.
+
+---
+
+## Step F — Add LAG(): Complete Final Query
+
+**Concept:** `LAG(col) OVER (ORDER BY col)` returns the value from the
+previous row. For the first row, it returns NULL (there is no previous row).
+You use this to show what last month's total was, and to calculate the
+month-over-month change.
+
+Add two columns to the SELECT from Step E:
+
+```sql
+LAG(total_mrr) OVER (ORDER BY month)                        AS prev_total_mrr,
+ROUND(total_mrr - LAG(total_mrr) OVER (ORDER BY month), 2) AS mom_change
+```
+
+**Your query:** The complete Final query. This is the exact output you
+export to Excel.
+
+**Return:** `month`, `new_mrr`, `churned_mrr`, `net_mrr_change`,
+`total_mrr`, `prev_total_mrr`, `mom_change`
+
+```sql
+-- Step F: Full Final query — add LAG for MoM change
+WITH new_mrr AS (
+    SELECT
+        DATE_TRUNC('month', start_date)               AS month,
+        ROUND(SUM(
+            CASE
+                WHEN billing_cycle = 'Annual'
+                    THEN seats * price_per_seat * (1 - discount_percent / 100.0) / 12
+                ELSE
+                     seats * price_per_seat * (1 - discount_percent / 100.0)
+            END
+        ), 2)                                         AS new_mrr
+    FROM subscriptions
+    GROUP BY DATE_TRUNC('month', start_date)
+),
+churned_mrr AS (
+    SELECT
+        DATE_TRUNC('month', cancelled_date)           AS month,
+        ROUND(SUM(
+            CASE
+                WHEN billing_cycle = 'Annual'
+                    THEN seats * price_per_seat * (1 - discount_percent / 100.0) / 12
+                ELSE
+                     seats * price_per_seat * (1 - discount_percent / 100.0)
+            END
+        ), 2)                                         AS churned_mrr
+    FROM subscriptions
+    WHERE cancelled_date IS NOT NULL
+    GROUP BY DATE_TRUNC('month', cancelled_date)
+),
+monthly_mrr AS (
+    SELECT
+        COALESCE(n.month, c.month)                              AS month,
+        COALESCE(n.new_mrr, 0)                                  AS new_mrr,
+        COALESCE(c.churned_mrr, 0)                              AS churned_mrr,
+        ROUND(COALESCE(n.new_mrr, 0) - COALESCE(c.churned_mrr, 0), 2) AS net_mrr_change,
+        ROUND(SUM(
+            COALESCE(n.new_mrr, 0) - COALESCE(c.churned_mrr, 0)
+        ) OVER (ORDER BY COALESCE(n.month, c.month)), 2)       AS total_mrr
+    FROM new_mrr n
+    FULL OUTER JOIN churned_mrr c ON n.month = c.month
+)
+SELECT
+    TO_CHAR(month, 'YYYY-MM')                               AS month,
+    new_mrr,
+    churned_mrr,
+    net_mrr_change,
+    total_mrr,
+    LAG(total_mrr) OVER (ORDER BY month)                    AS prev_total_mrr,
+    ROUND(total_mrr - LAG(total_mrr) OVER (ORDER BY month), 2) AS mom_change
+FROM monthly_mrr
+ORDER BY month;
+```
+
+**Self-check:** 23 rows. First row `prev_total_mrr` = NULL, `mom_change` = NULL.
+
+| month | new_mrr | churned_mrr | net_mrr_change | total_mrr | prev_total_mrr | mom_change |
+|---|---|---|---|---|---|---|
+| 2024-01 | $5,800.00 | $0.00 | $5,800.00 | $5,800.00 | NULL | NULL |
+| 2024-02 | $8,615.00 | $0.00 | $8,615.00 | $14,415.00 | $5,800.00 | $8,615.00 |
+| 2025-07 | $0.00 | $1,760.00 | -$1,760.00 | $147,299.00 | $149,059.00 | -$1,760.00 |
+| 2025-08 | $0.00 | $4,680.00 | -$4,680.00 | $142,619.00 | $147,299.00 | -$4,680.00 |
+| 2026-02 | $0.00 | $594.00 | -$594.00 | $142,110.50 | $142,704.50 | -$594.00 |
+
+Last row `total_mrr` = **$142,110.50** ✅
+
+---
+
+## What These Steps Built
+
+| Step | What You Wrote | Where It's Used |
+|---|---|---|
+| A | CASE WHEN label | CASE WHEN syntax practice |
+| B | Per-sub MRR formula | Q1 of MRR Snapshot (you already had this) |
+| C | New MRR by month | `new_mrr` CTE in Final query |
+| D | Churned MRR by month | `churned_mrr` CTE in Final query |
+| E | CTEs + FULL OUTER JOIN + running total | Monthly MRR movement table → Excel waterfall |
+| F | + LAG for MoM change | Complete Final query → Excel import |
+
+---
+
+## Practice Questions
+
+Same patterns you just used. Different column, same logic. No new syntax.
+
+---
+
+### Practice 1 — Step A again, different column
+
+**Your query:** Pull every subscription and add a column called
+`status_label`. If `status = 'active'`, show `'Active'`. Otherwise show
+`'Inactive'`.
+
+**Return:** `subscription_id`, `plan_name`, `billing_cycle`, `status`,
+`status_label`
+
+**Sort:** `status_label` ascending, then `plan_name` ascending
+
+```sql
+-- Practice 1: Your query here
+```
+
+**Self-check:** 60 rows total. 49 labelled `'Active'`, 11 labelled `'Inactive'`.
+
+---
+
+### Practice 2 — Step C again, different GROUP BY
+
+Step C grouped new MRR by start month. This time group active MRR by
+`billing_cycle`. Same formula, same filter, different `GROUP BY`.
+
+**Return:** `billing_cycle`, `subscription_count`, `total_mrr`
+
+**Sort:** `total_mrr` descending
+
+```sql
+-- Practice 2: Your query here
+```
+
+**Self-check:** 2 rows.
+
+| billing_cycle | subscription_count | total_mrr |
+|---|---|---|
+| Monthly | 42 | $105,355.00 |
+| Annual | 7 | $36,755.50 |
+
+Both rows sum to **$142,110.50**
+
+---
+
+### Practice 3 — Step D again, different GROUP BY
+
+Step D grouped churned MRR by cancellation month. This time group by
+`plan_name`. Same formula, same filter (`WHERE cancelled_date IS NOT NULL`),
+different `GROUP BY`.
+
+**Return:** `plan_name`, `churned_subscriptions`, `churned_mrr`
+
+**Sort:** `churned_mrr` descending
+
+```sql
+-- Practice 3: Your query here
+```
+
+**Self-check:** 4 rows.
+
+| plan_name | churned_subscriptions | churned_mrr |
+|---|---|---|
+| Analytics Growth | 4 | $7,989.50 |
+| Analytics Enterprise | 1 | $4,680.00 |
+| Analytics Starter | 5 | $2,844.00 |
+| Sales Hub | 1 | $1,760.00 |
+
+Total churned MRR = **$17,273.50**
+
+---
+
+## Coming Up: Cohort Analysis
+
+The cohort query uses CASE WHEN in a different way — to assign each
+subscription to a "month bucket" (M0, M1, M2...) based on how long after
+signup an invoice was paid. The syntax is the same pattern:
+
+```sql
+CASE
+    WHEN months_since_signup = 0 THEN 'M0'
+    WHEN months_since_signup = 1 THEN 'M1'
+    WHEN months_since_signup = 2 THEN 'M2'
+    ...
+END AS cohort_month
+```
+
+Once you can write CASE WHEN in your sleep — which you will after Steps A
+through D — the cohort query is just a new business question, not a new concept.
+
+---
+
+## Deliverable
+
+Submit Steps C, D, and F in your `.sql` file under
+`submissions/sql/02_window_functions.sql`. Steps A, B, and E are
+practice — you don't need to include them, but run them and verify
+the self-checks before moving on.
+
+```sql
+-- Step C: New MRR by start month
+-- Step D: Churned MRR by cancellation month
+-- Step F: Complete Final query — MRR time series
+```
+
+---
+
+*Q5 Breakdown | Idynamics Finance Analyst Training Program | March 2026*
