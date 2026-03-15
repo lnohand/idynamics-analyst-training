@@ -1,4 +1,4 @@
--- Query 3
+-- Query 3: cash trend
 with monthly_revenue as (
 select
 	to_char(date_trunc('month', invoice_date), 'YYYY-MM') as month,
