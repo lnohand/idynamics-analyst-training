@@ -23,32 +23,6 @@
 
 ---
 
-## Before You Start — Answer These in Slack
-
-Post your answers in **#finance** before starting. One sentence each.
-David will not share the brief details until you've answered.
-
-> **Q1 — ARPA denominator**
-> When calculating ARPA, why do we divide by active *customers* and not
-> active *subscriptions*? What would happen to the number if we used
-> subscriptions, and why would that mislead us?
-
-> **Q2 — GRR vs NRR**
-> What is the difference between GRR and NRR? Give me a concrete example —
-> a month where they would be different values. Which is higher in that
-> scenario?
-
-> **Q3 — Monthly CAC**
-> January had one new customer and $30,000 in S&M spend. Monthly CAC = $30,000.
-> Is that a useful number to put in a board slide? Why or why not?
-
-> **Q4 — Why a structured table?**
-> I'm asking you to format WaterfallData as an Excel Table (not just a
-> range). What does that give you that a plain range doesn't?
-> When February closes, what will you do to update it?
-
----
-
 ## What You're Building
 
 Three additions to your existing workbook (`06_actual_vs_forecast.xlsx`):
