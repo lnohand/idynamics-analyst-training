@@ -60,7 +60,7 @@ where you first built them (Excel 03 for retention, Excel 04 for unit economics)
 
 **\* Monthly CAC note** — add a note cell directly below the CAC row:
 > "Monthly CAC is noisy with one customer. Q1 CAC will be calculated
-> after March closes ($90,000 S&M ÷ 4 customers = $22,500)."
+> after March closes using total Q1 S&M spend ÷ total new customers acquired."
 
 **† Quarterly metrics** — add a note cell below LTV:
 > "LTV, LTV:CAC, and CAC Payback are calculated quarterly using the
