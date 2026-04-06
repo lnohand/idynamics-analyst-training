@@ -39,20 +39,21 @@ Below your management commentary, add a section header:
 
 **January 2026 — SaaS KPIs**
 
-Then build this table. Calculate every metric from the numbers already
-in your tab — no new SQL needed for most of them.
+Then build this table. You've calculated all of these before — look up
+the formulas in your `my-notes/kpi_definitions.md` or the assignments
+where you first built them (Excel 03 for retention, Excel 04 for unit economics).
 
 | Metric | Value | Notes |
 |--------|-------|-------|
-| Active Customers | 39 | Unique customer_ids in Jan 31 snapshot — from your SQL |
-| Active Subscriptions | 52 | Row count in Jan 31 snapshot — from your SQL |
-| ARPA | ? | Closing MRR ÷ Active Customers |
-| Gross Margin | 70.0% | (Revenue − COGS) ÷ Revenue — already in your P&L |
-| GRR | ? | (Opening MRR − Churned MRR − Contraction MRR) ÷ Opening MRR |
-| NRR | ? | (Opening MRR + Expansion − Contraction − Churn) ÷ Opening MRR |
-| Quick Ratio | N/A — no losses | (New + Expansion) ÷ (Churn + Contraction) — denominator is $0 |
+| Active Customers | 39 | From your Jan 31 SQL snapshot |
+| Active Subscriptions | 52 | From your Jan 31 SQL snapshot |
+| ARPA | calculate | Excel 04 |
+| Gross Margin | calculate | Already in your P&L |
+| GRR | calculate | Excel 03 |
+| NRR | calculate | Excel 03 |
+| Quick Ratio | N/A — no losses | Excel 02 — see note below |
 | S&M (actual) | $30,000 | From Lisa's monthly close message |
-| CAC — this month | $30,000 * | S&M ÷ New Customers acquired this month |
+| CAC — this month | calculate * | Excel 04 |
 | LTV | — † | Quarterly metric — calculated at Q1 close |
 | LTV:CAC | — † | Quarterly metric — calculated at Q1 close |
 | CAC Payback | — † | Quarterly metric — calculated at Q1 close |
@@ -72,13 +73,16 @@ Write the text "N/A — no losses" in the cell. A blank says nothing.
 
 ### Self-Check — KPIs
 
-| Metric | Expected |
-|--------|---------|
-| ARPA | $3,712.29 |
-| GRR | 100.0% |
-| NRR | 100.0% |
-| Quick Ratio | N/A — no losses |
-| CAC (monthly) | $30,000 |
+Calculate each metric and fill in the PR description before submitting.
+Do not skip this step — if a number looks off, find the bug before opening the PR.
+
+| Metric | Your value |
+|--------|-----------|
+| ARPA | |
+| GRR | |
+| NRR | |
+| Quick Ratio | |
+| CAC (monthly) | |
 
 ---
 
@@ -94,23 +98,23 @@ Build this structure:
 
 | Metric | Jan 2026 | Feb 2026 | Mar 2026 | Q1 2026 |
 |--------|---------|---------|---------|---------|
-| Closing MRR | $144,779.50 | | | |
-| Active Customers | 39 | | | |
-| ARPA | $3,712.29 | | | |
-| Gross Margin | 70.0% | | | |
-| GRR | 100.0% | | | |
-| NRR | 100.0% | | | |
-| Quick Ratio | N/A — no losses | | | |
-| S&M (actual) | $30,000 | | | |
-| CAC — monthly | $30,000 * | | | |
-| CAC — trailing Q | — | — | — | $22,500 |
+| Closing MRR | | | | |
+| Active Customers | | | | |
+| ARPA | | | | |
+| Gross Margin | | | | |
+| GRR | | | | |
+| NRR | | | | |
+| Quick Ratio | | | | |
+| S&M (actual) | | | | |
+| CAC — monthly | | | | |
+| CAC — trailing Q | — | — | — | |
 | LTV | — | — | — | (calc at Q1) |
 | LTV:CAC | — | — | — | (calc at Q1) |
 | CAC Payback | — | — | — | (calc at Q1) |
 
 **Rules for this tab:**
 - Jan column values must reference your `Jan 2026 A vs F` tab — do not
-  type the numbers in twice. Use formulas: `='Jan 2026 A vs F'!B8`
+  type the numbers in twice. Use formulas to pull them across.
 - Feb and Mar columns: leave the cells empty for now. Build the column
   headers and row labels — just no values yet.
 - Q1 column: quarterly metrics only. Leave monthly metrics blank in Q1.
@@ -129,13 +133,12 @@ On this tab, build a table with exactly these columns:
 
 | Month | Movement | Actual | Forecast | Variance |
 |-------|----------|--------|----------|---------|
-| Jan 2026 | Opening MRR | 143069.50 | 143069.50 | 0 |
-| Jan 2026 | New MRR | 1710.00 | 4000.00 | -2290.00 |
-| Jan 2026 | Expansion MRR | 0.00 | 715.35 | -715.35 |
-| Jan 2026 | Contraction MRR | 0.00 | 0.00 | 0.00 |
-| Jan 2026 | Churned MRR | 0.00 | 953.80 | -953.80 |
-| Jan 2026 | Net New MRR | 1710.00 | 3761.55 | -2051.55 |
-| Jan 2026 | Closing MRR | 144779.50 | 146831.05 | -2051.55 |
+
+Populate 7 rows for January 2026 — one per waterfall movement, in order:
+Opening MRR, New MRR, Expansion MRR, Contraction MRR, Churned MRR, Net New MRR, Closing MRR.
+
+All numbers come directly from your `Jan 2026 A vs F` tab. Do not retype them —
+reference the cells or copy the values across. Variance = Actual − Forecast.
 
 Then format this range as an **Excel Table**:
 - Select the data including headers
@@ -155,8 +158,8 @@ The table expands automatically — no reformatting needed.
 |-------|---------|
 | Row count (Jan only) | 7 rows |
 | Table name | WaterfallData |
-| Closing MRR row, Actual column | 144779.50 |
-| Closing MRR row, Variance column | -2051.55 |
+| Closing MRR row, Actual column | matches your Jan 2026 A vs F tab |
+| Closing MRR row, Variance column | matches your Jan 2026 A vs F tab |
 
 ---
 
