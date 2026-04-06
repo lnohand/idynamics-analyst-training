@@ -186,6 +186,55 @@ The table expands automatically — no reformatting needed.
 
 ---
 
+## Git Workflow for This Assignment
+
+### New assignment = new branch. Always.
+
+The branch from Excel 06 (`student/excel_06_actual_vs_forecast_jan2026`) is merged
+and done. Do not push new work to it. Start fresh:
+
+```
+git checkout main
+git pull origin main
+git checkout -b student/excel_06b_kpis_tracker
+```
+
+Work on this branch. When you're ready to submit, push and open a PR:
+
+```
+git add submissions/excel/06_actual_vs_forecast.xlsx
+git commit -m "Add: 06b — KPIs section, KPI Tracker tab, WaterfallData tab"
+git push origin student/excel_06b_kpis_tracker
+```
+
+**One branch per assignment. One PR per assignment. Never reuse a merged branch.**
+
+---
+
+### Keep your personal reference files current
+
+Every time you learn a new SQL query, a new Git command, or a new Excel
+technique — write it down in your own reference files and push them.
+
+You should have (or create) these files on your branch, in a folder called
+`my-notes/`:
+
+| File | What goes in it |
+|------|----------------|
+| `my-notes/sql_queries.sql` | Every query you've written, with a comment explaining what it does |
+| `my-notes/git_commands.md` | Every Git command you've used, with an example |
+| `my-notes/excel_techniques.md` | Formulas and techniques — XLOOKUP, named ranges, Excel Tables, pivot refresh, etc. |
+| `my-notes/kpi_definitions.md` | Every metric you've calculated: formula, what it means, when to use it |
+
+These are your notes, not a submission. No one is grading them. But they will
+save you hours — instead of Googling the same thing twice, you'll have it
+written in your own words from the last time you used it.
+
+Update them before you commit each assignment. If you learned three new things
+this week, they should be in the file before the PR goes up.
+
+---
+
 ## Submission
 
 Same workbook, same file:
@@ -193,14 +242,14 @@ Same workbook, same file:
 submissions/excel/06_actual_vs_forecast.xlsx
 ```
 
-Same branch — push to `student/excel_06_actual_vs_forecast_jan2026` or open
-a new branch `student/excel_06b_kpis_tracker`. Open a PR with:
+Open a PR from `student/excel_06b_kpis_tracker` → `main` with this description:
 
 ```
 ## 06b additions
 - KPIs section added to Jan 2026 A vs F tab
 - KPI Tracker tab created (Jan column, structure for Feb/Mar/Q1)
 - WaterfallData tab created (Excel Table, 7 Jan rows)
+- my-notes/ updated with new KPI definitions and Excel techniques
 
 ## KPI self-check
 ARPA:            $___________
