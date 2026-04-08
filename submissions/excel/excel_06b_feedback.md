@@ -3,141 +3,108 @@
 
 ---
 
-## What's Working
+## Round 2 Review
 
-The structure is solid. KPI section is in the right place, all required
-metrics are present, the notes on Quick Ratio and quarterly metrics are
-correct, and you caught the N/A case cleanly. KPI Tracker pulls Jan values
-by formula from the A vs F tab — right instinct. WaterfallData is formatted
-as an Excel Table named `WaterfallData` with 7 rows. Good.
-
-Four things need fixing before this merges.
+Good progress. Four of the six fixes from last round are resolved. Here's
+where things stand.
 
 ---
 
-## Fix 1 — PR description is empty
+## Fixed — Good Work
 
-The brief required a self-check table in your PR description:
+**ARPA source:** Correct. Now using `Closing MRR ÷ Active Customers` from
+your Jan 31 snapshot = $3,712.29. This is the right pattern for every
+monthly KPI going forward.
+
+**Contraction MRR row:** Present in Jan A vs F (row 6, value = $0 actual and
+forecast). Row exists in the architecture. Good.
+
+**WaterfallData sourcing:** Contraction and Churned rows now reference
+`Jan 2026 A vs F` directly. No more Waterfall tab references.
+
+**PR description self-check:** Filled in. Numbers match.
+
+---
+
+## Still Open
+
+### Fix 1 — PR description missing WaterfallData row count
+
+The brief template explicitly included:
 
 ```
-ARPA:                  $___
-GRR:                   ___%
-NRR:                   ___%
-Quick Ratio:           ___
-CAC (monthly):         $___
-WaterfallData rows:    ___
+WaterfallData row count: ___
 ```
 
-The submission rule is: no merge without self-check. This isn't optional —
-it's how I know you verified your own numbers before submitting. Fill it in
-and update the PR description.
+It's missing from your PR description. This is a small thing but the rule is
+the whole template, not just the KPI numbers. Add it.
 
 ---
 
-## Fix 2 — ARPA: wrong source, wrong number
+### Fix 2 — KPI Tracker month headers still not text labels
 
-Your KPI section pulls ARPA from Unit Economics B7 = **$3,604.64**.
+You applied a date format (`mmm-yy`) to the column header cells — so they
+now display as `Jan-26`, `Feb-26`, `Mar-26` rather than raw serial numbers.
+That's better, but it's still not what was asked for.
 
-Your own KPI section shows Active Customers = 39 (Jan 31 snapshot) and your
-Closing MRR = $144,779.50. That gives **$3,712.29** — a different number.
+The brief specifies: `Jan 2026`, `Feb 2026`, `Mar 2026`, `Q1 2026`.
 
-Before you fix it, I want you to understand why they differ.
+The difference matters for Power BI. When you connect a table to Power BI
+and it reads a formatted date cell, it may interpret it as a date type and
+apply its own formatting — which could break your axis labels or filter
+panels. A plain text cell is unambiguous. Type the text directly, or use a
+`TEXT()` formula: `=TEXT(B3,"mmm yyyy")`.
 
-Unit Economics was built in Excel 04 using Table1, which is the MRR events
-log — 97 rows covering every event across all time. When it counts active
-customers with `COUNTA(UNIQUE(customer_id))`, it's counting unique customer
-IDs across every event that ever happened, including churned ones. It returns
-40, not 39. It is not reading Jan 31 state.
-
-That tab was built as a live reference to understand how unit economics
-formulas work. It was never designed to produce point-in-time numbers for a
-monthly close. If someone opens this workbook in June, your Jan ARPA should
-still say January's ARPA — not whatever the database looks like in June.
-
-**Fix:** Calculate ARPA directly on the Jan A vs F tab using your snapshot
-values. Don't reference Unit Economics for any KPI in the monthly close
-section.
-
-**Before you fix it, answer this in the PR description:**
-What is the correct source for Jan ARPA and why? If Unit Economics is a live
-view and the KPI section is a historical record, should they ever be linked?
+Change all three column headers to static text: `Jan 2026`, `Feb 2026`,
+`Mar 2026`. `Q1 2026` is already text — leave it.
 
 ---
 
-## Fix 3 — Contraction MRR row missing from Jan A vs F waterfall
+### Fix 3 — kpi_definitions.md has wrong content
 
-You flagged this yourself in a cell comment on WaterfallData: *"The Jan 2026
-A vs F file does not include Contraction MRR."* You're right — and that's a
-problem you need to fix, not work around.
+This file should contain your KPI definitions — formula, what it means,
+when to use it. It currently contains a copy of the Git workflow from
+`git_commands.md`. This is not a minor overlap — the file has zero KPI
+content.
 
-Your waterfall currently goes:
-
-```
-Opening MRR
-+ New MRR
-+ Expansion MRR
-− Churned MRR
-= Net New MRR
-= Closing MRR
-```
-
-Contraction is missing. January had $0 contraction, so the math works out
-for now. But February may not. The row needs to exist in the architecture
-regardless of the value.
-
-Add `− Contraction MRR` between Expansion and Churned on the Jan A vs F tab.
-Value = 0, with formula structure consistent with the other rows.
-
-This also cascades into Fix 4.
+You defined five KPIs in this assignment: ARPA, GRR, NRR, Quick Ratio, CAC.
+You also now understand why LTV and LTV:CAC are quarterly metrics and not
+monthly ones. Write those definitions in your own words.
 
 ---
 
-## Fix 4 — WaterfallData: two rows reference wrong tabs
+### Fix 4 — excel_techniques.md is empty
 
-Once you add the Contraction row to Jan A vs F, fix WaterfallData:
-
-- **Contraction row:** Currently `=Waterfall!E27`. Should reference the new
-  Contraction row on `Jan 2026 A vs F`.
-- **Churned row:** Actual column uses `=Waterfall!F27`, but Forecast uses
-  `='Jan 2026 A vs F'!C6`. These should both come from `Jan 2026 A vs F`.
-  Inconsistent sourcing is how errors compound across months.
-
-The brief is clear: all WaterfallData values come from `Jan 2026 A vs F`. No
-exceptions. When February closes, you'll add 7 more rows sourced from
-`Feb 2026 A vs F`. The pattern has to be consistent from day one.
+The file was created but has no content. In this assignment you used Excel
+Tables for the first time and applied them with a specific naming convention
+(`WaterfallData`). You also used `IFS()` for conditional F/U flags and
+`IFERROR()` for safe division. Document what you did and why — this tab is
+your future reference sheet, not a submission artifact.
 
 ---
 
-## Fix 5 — KPI Tracker month headers are date serial numbers
+## One More Thing — Open Cell Comment
 
-Your column headers show as `46023`, `46054`, `46082`. These are Excel date
-serial numbers, not text labels. Depending on column formatting they may
-display as dates or as raw numbers — either way, they should be plain text:
-`Jan 2026`, `Feb 2026`, `Mar 2026`, `Q1 2026`.
+Your cell comment on WaterfallData D5 still reads:
+*"The Jan 2026 A vs F file does not include Contraction MRR."*
 
-This tab will feed Power BI later. Text labels, not date serials.
-
----
-
-## Fix 6 — my-notes not updated
-
-Your branch contains only the xlsx file. The brief requires updating
-`my-notes/kpi_definitions.md` and `my-notes/excel_techniques.md` before
-submitting. You learned four new KPI definitions and used Excel Tables for
-the first time in this assignment. Write them down before you close this out.
+This was accurate when you wrote it. It's no longer accurate — you fixed it.
+Delete the comment before the next push so the workbook doesn't contradict
+itself.
 
 ---
 
 ## Summary
 
-| # | Issue | Action |
-|---|-------|--------|
-| 1 | PR description empty | Add self-check values |
-| 2 | ARPA wrong source | Answer the question, then fix to use Jan 31 snapshot |
-| 3 | Contraction row missing from A vs F | Add the row |
-| 4 | WaterfallData wrong sources | Fix after Fix 3 |
-| 5 | KPI Tracker date serials | Change to text labels |
-| 6 | my-notes not updated | Update both files, push to branch |
+| # | Issue | Status | Action |
+|---|-------|--------|--------|
+| 1 | PR description empty | ✅ Fixed | — |
+| 2 | ARPA wrong source | ✅ Fixed | — |
+| 3 | Contraction row missing | ✅ Fixed | — |
+| 4 | WaterfallData wrong sources | ✅ Fixed | — |
+| 5 | KPI Tracker date format | ⚠️ Partial | Change to text: `Jan 2026` format |
+| 6 | my-notes not updated | ❌ Open | Fix kpi_definitions.md, fill excel_techniques.md |
+| 7 | PR description missing WaterfallData row count | ❌ Open | Add to PR description |
+| 8 | Stale cell comment | ❌ Open | Delete WaterfallData D5 comment |
 
-Fix all six, then reply here with what you changed and why ARPA needed a
-different source. I'll re-review.
+Four fixes remaining. Push them and reply here. This is close.
