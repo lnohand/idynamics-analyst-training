@@ -97,24 +97,41 @@ The Visualizations pane has a section called **field wells** — these are the d
 3. From the Fields pane, drag the **Movement** column (from WaterfallData) into the **Category** field well. This puts the waterfall rows (Opening MRR, New MRR, etc.) on the X-axis.
 4. Drag the **Actual** column (from WaterfallData) into the **Y-axis** field well. This sets the bar heights.
 
-**Setting Opening MRR and Closing MRR as Totals**
+**Why "Closing MRR" needs special handling**
 
-By default, Power BI treats every value as an increase or decrease. But Opening MRR and Closing MRR are totals — they represent the full balance, not a movement. You need to tell Power BI this.
+Power BI waterfall charts always auto-generate a final "Total" bar. It computes this by summing every bar in the chart — increases add, decreases subtract. This is exactly right for the middle movement rows. But your WaterfallData also includes a "Closing MRR" row, which is already the ending balance. If that row is included in the chart, Power BI counts it twice: once as a data bar, and again when it sums everything for the auto-Total. The Total bar ends up inflated and wrong.
 
-5. Click on the waterfall chart to select it.
-6. To mark Opening MRR and Closing MRR as totals: go to the **Data view** (table icon in the left sidebar), select the `WaterfallData` table, click on a cell in the Movement column that says "Opening MRR", then in the **Column tools** ribbon at the top look for **Data category** or a "Summarize as" option and set it to **Total**. Repeat for "Closing MRR."
+The fix is to exclude the "Closing MRR" row from the chart and then rename the auto-Total bar to "Closing MRR."
 
-   If you can't locate this in your version of Power BI, note it in your PR description — the instructor will clarify for your specific version.
+**Step 5 — Exclude Closing MRR from the chart visual**
 
-7. Resize the chart to fill roughly the left two-thirds of the canvas.
+5. With the waterfall chart selected, look at the **Filters** pane (to the right of the Visualizations pane — click the funnel icon if it is not visible).
+6. Under **Filters on this visual**, find the **Movement** filter field. If it is not there yet, drag the **Movement** column from the Fields pane into the "Add data fields here" drop zone under "Filters on this visual."
+7. In the Movement filter, set the filter type to **Basic filtering**.
+8. You will see a list of all Movement values with checkboxes. **Uncheck "Closing MRR"** so it is excluded from the chart. Leave all other values checked.
+9. The chart now feeds from 6 rows: Opening MRR + five movements. The auto-Total bar correctly computes Opening MRR + movements = Closing MRR.
+
+**Step 6 — Rename "Total" to "Closing MRR"**
+
+The auto-Total bar label reads "Total" by default. Rename it:
+
+10. With the chart selected, click the **Format visual** tab in the Visualizations pane (the paint roller icon).
+11. Under the **Visual** tab, scroll down to find the **Total labels** section (it may appear inside a **Bars** section).
+12. Look for a **Label** or **Title** text field. Clear it and type `Closing MRR`.
+
+The final bar now reads "Closing MRR" and shows the correct ending MRR balance.
+
+13. Resize the chart to fill roughly the left two-thirds of the canvas.
 
 ### Self-Check — Waterfall Chart
 
 | Check | Expected |
 |-------|---------|
-| All 7 movements visible on X-axis | Opening MRR through Closing MRR |
+| Bars on X-axis | Opening MRR, Net New MRR, New MRR, Churned MRR, Contraction MRR, Expansion MRR, Closing MRR |
+| "Closing MRR" not in Movement filter | Unchecked — it is excluded from the chart data |
+| Final bar label | "Closing MRR" (not "Total") |
 | Bars colored correctly | Increases green, decreases red (or blue/orange — Power BI defaults vary) |
-| Closing MRR bar height | Matches your Jan 2026 A vs F tab value |
+| Closing MRR bar height | Matches your Jan 2026 A vs F tab value ($144,779.50) |
 
 ---
 
@@ -309,7 +326,7 @@ Before you submit, make sure it includes:
 | Measures and DAX | What a measure is, the CALCULATE + FILTER pattern you used |
 | Slicer | What it does, how to add one |
 | Refresh workflow | The exact steps to refresh after updating the Excel source |
-| Waterfall chart Totals | How to mark Opening MRR and Closing MRR as totals (and any version-specific steps you found) |
+| Waterfall chart Totals | Why Closing MRR must be excluded from the chart visual (double-counting), how to filter it out, and how to rename the auto-"Total" bar to "Closing MRR" in Format → Total labels |
 
 These notes will save you time in every Power BI assignment that follows. Write them in your own words.
 
