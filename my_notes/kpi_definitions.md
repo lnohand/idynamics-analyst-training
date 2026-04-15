@@ -1,13 +1,5 @@
-\# 1\. Save your corrected file with the same name as the original  
-\# 2\. Stage it  
-git add submissions/excel/excel\_06.xlsx
+XLOOKUP XLOOKUP searches a range for a value and returns a corresponding result from another range — =XLOOKUP("Jan 2026", KPITracker[Month], KPITracker[ARPA]) reads as "find 'Jan 2026' in the Month column, then return whatever's in the ARPA column on that same row." Use it over a direct cell reference when the row position of the data might change, or when you're pulling from a table where you want the formula to stay readable and self-documenting rather than relying on a hardcoded row number like B4.
 
-\# 3\. If there's an old file with a different name, remove it  
-git rm submissions/excel/idynamics\_2026\_forecast\_done\_updated.xlsx
+NRR = GRR When NRR and GRR are equal, it means there was zero expansion and zero contraction MRR that month — the only movement affecting revenue was pure churn, which hits both metrics identically. NRR normally sits above GRR because expansion (upsells, seat growth) offsets some churn, so when they're the same it's a signal that existing customers neither grew nor shrank their spend, just some cancelled outright. It's not necessarily bad — a month with no expansion but also no contraction and low churn can still be healthy — but sustained NRR = GRR over multiple months suggests the upsell motion isn't working.
 
-\# 4\. Commit with a clear message describing what changed  
-git commit \-m "Fix: excel\_06 — revenue forecast, opening variance, COGS, commentary"
-
-\# 5\. Push to your branch  
-git push origin student/excel\_06\_actual\_vs\_forecast\_jan2026
-
+CAC Q1 to Date The Q1-to-date CAC formula accumulates both the spend and the new customer count across every closed month in the quarter before dividing, rather than just using the current month's figures in isolation. In this workbook that's (Jan S&M + Feb S&M) ÷ (Jan new customers + Feb new customers) through February, with March folded in once it closes — which is why the Feb A vs F sheet references Jan's S&M and new customer count directly in its formula. This gives a much more stable number than monthly CAC because it smooths out the noise of a single new logo landing in one month and distorting the ratio.
