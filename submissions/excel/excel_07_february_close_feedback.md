@@ -51,7 +51,7 @@ This one is a teaching moment, not a simple typo.
 
 **What to fix:**
 
-- **Feb tab C3:** Change from `='Jan 2026 A vs F '!B9` to `$150,592.60` — or better, derive it: Jan forecast closing + Q1 Net New MRR / 3. You can hardcode for now since we'll build a proper monthly forecast for Q2.
+- **Feb tab C3:** Change from `='Jan 2026 A vs F '!B9` to `$146,831.05` — that's January's forecast closing (opening $143,069.50 + Q1 Net New / 3). You can hardcode for now since we'll build a proper monthly forecast for Q2.
 - **March tab C3:** Change from `='Jan 2026 A vs F '!B9` to `$150,592.60` — that's February's forecast closing, which becomes March's forecast opening.
 
 Note: once you fix C3, your Opening MRR variance (D3) will no longer be zero in months where actuals diverged from plan. That's correct — it's telling you the story of how you entered the month vs expectations.
@@ -81,7 +81,7 @@ Row 27 says **"February 2026 — SaaS KPIs"**. Update to **"March 2026 — SaaS 
 | # | Tab | Fix |
 |---|-----|-----|
 | 1 | Feb A vs F | D7 F/U: change to `IFS(D7>0, "F", D7<0, "U", D7=0, "-")` |
-| 2 | Feb A vs F | C3: change to $150,592.60 (Feb forecast closing = Jan FC closing + Q1 Net New / 3) |
+| 2 | Feb A vs F | C3: change to $146,831.05 (Jan forecast closing = opening $143,069.50 + Q1 Net New / 3) |
 | 3 | Mar A vs F | C3: change to $150,592.60 (Feb forecast closing = March's forecast opening) |
 | 4 | Mar A vs F | D7 F/U: same fix as Feb |
 | 5 | Mar A vs F | CAC Q1 to date: include Feb S&M and new customers in the formula |
