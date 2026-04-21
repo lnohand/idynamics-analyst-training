@@ -175,6 +175,17 @@ FROM subscriptions s
 WHERE s.start\_date \<= '2026-01-31'  
  AND (s.cancelled\_date IS NULL OR s.cancelled\_date \> '2026-01-31');
 
+ SELECT  
+   ROUND(SUM(  
+       s.seats  
+       \* s.cost\_per\_seat  
+       \* (1 \- s.discount\_percent / 100.0)  
+       \* CASE WHEN s.billing\_cycle \= 'Annual' THEN 1.0 / 12 ELSE 1 END  
+   ), 2\) AS actual\_cogs  
+FROM subscriptions s  
+WHERE s.start\_date \<= '2026-02-28'  
+ AND (s.cancelled\_date IS NULL OR s.cancelled\_date \> '2026-02-28');
+
 **Expected Result:**
 
 * **$43,433.85**

@@ -1,0 +1,1215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<subscription_events>
+  <DATA_RECORD>
+    <event_id>EVT001</event_id>
+    <subscription_id>SUB001</subscription_id>
+    <customer_id>CUST001</customer_id>
+    <event_date>2024-01-08</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-01-08 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT002</event_id>
+    <subscription_id>SUB002</subscription_id>
+    <customer_id>CUST002</customer_id>
+    <event_date>2024-01-22</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-01-22 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT003</event_id>
+    <subscription_id>SUB003</subscription_id>
+    <customer_id>CUST003</customer_id>
+    <event_date>2024-02-05</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-02-05 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT004</event_id>
+    <subscription_id>SUB004</subscription_id>
+    <customer_id>CUST004</customer_id>
+    <event_date>2024-02-19</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-02-19 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT005</event_id>
+    <subscription_id>SUB055</subscription_id>
+    <customer_id>CUST004</customer_id>
+    <event_date>2024-02-19</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-02-19 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT006</event_id>
+    <subscription_id>SUB005</subscription_id>
+    <customer_id>CUST005</customer_id>
+    <event_date>2024-03-04</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-03-04 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT007</event_id>
+    <subscription_id>SUB006</subscription_id>
+    <customer_id>CUST006</customer_id>
+    <event_date>2024-03-18</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-03-18 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT008</event_id>
+    <subscription_id>SUB007</subscription_id>
+    <customer_id>CUST007</customer_id>
+    <event_date>2024-04-01</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-04-01 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT009</event_id>
+    <subscription_id>SUB050</subscription_id>
+    <customer_id>CUST007</customer_id>
+    <event_date>2024-04-01</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-04-01 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT010</event_id>
+    <subscription_id>SUB008</subscription_id>
+    <customer_id>CUST008</customer_id>
+    <event_date>2024-04-15</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-04-15 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT011</event_id>
+    <subscription_id>SUB009</subscription_id>
+    <customer_id>CUST009</customer_id>
+    <event_date>2024-04-29</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-04-29 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT012</event_id>
+    <subscription_id>SUB010</subscription_id>
+    <customer_id>CUST010</customer_id>
+    <event_date>2024-05-13</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-05-13 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT013</event_id>
+    <subscription_id>SUB011</subscription_id>
+    <customer_id>CUST011</customer_id>
+    <event_date>2024-05-27</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-05-27 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT014</event_id>
+    <subscription_id>SUB012</subscription_id>
+    <customer_id>CUST012</customer_id>
+    <event_date>2024-06-10</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-06-10 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT015</event_id>
+    <subscription_id>SUB049</subscription_id>
+    <customer_id>CUST012</customer_id>
+    <event_date>2024-06-10</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-06-10 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT016</event_id>
+    <subscription_id>SUB013</subscription_id>
+    <customer_id>CUST013</customer_id>
+    <event_date>2024-06-24</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-06-24 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT017</event_id>
+    <subscription_id>SUB014</subscription_id>
+    <customer_id>CUST014</customer_id>
+    <event_date>2024-07-08</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-07-08 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT018</event_id>
+    <subscription_id>SUB041</subscription_id>
+    <customer_id>CUST001</customer_id>
+    <event_date>2024-07-15</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-07-15 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT019</event_id>
+    <subscription_id>SUB015</subscription_id>
+    <customer_id>CUST015</customer_id>
+    <event_date>2024-07-22</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-07-22 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT020</event_id>
+    <subscription_id>SUB046</subscription_id>
+    <customer_id>CUST015</customer_id>
+    <event_date>2024-07-22</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-07-22 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT021</event_id>
+    <subscription_id>SUB016</subscription_id>
+    <customer_id>CUST016</customer_id>
+    <event_date>2024-08-05</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-08-05 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT022</event_id>
+    <subscription_id>SUB017</subscription_id>
+    <customer_id>CUST017</customer_id>
+    <event_date>2024-08-19</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-08-19 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT024</event_id>
+    <subscription_id>SUB018</subscription_id>
+    <customer_id>CUST018</customer_id>
+    <event_date>2024-09-02</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-09-02 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT025</event_id>
+    <subscription_id>SUB042</subscription_id>
+    <customer_id>CUST003</customer_id>
+    <event_date>2024-09-10</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-09-10 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT026</event_id>
+    <subscription_id>SUB019</subscription_id>
+    <customer_id>CUST019</customer_id>
+    <event_date>2024-09-16</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-09-16 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT027</event_id>
+    <subscription_id>SUB060</subscription_id>
+    <customer_id>CUST019</customer_id>
+    <event_date>2024-09-16</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-09-16 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT028</event_id>
+    <subscription_id>SUB020</subscription_id>
+    <customer_id>CUST020</customer_id>
+    <event_date>2024-09-30</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-09-30 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT029</event_id>
+    <subscription_id>SUB043</subscription_id>
+    <customer_id>CUST006</customer_id>
+    <event_date>2024-10-05</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-10-05 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT030</event_id>
+    <subscription_id>SUB021</subscription_id>
+    <customer_id>CUST021</customer_id>
+    <event_date>2024-10-14</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-10-14 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT031</event_id>
+    <subscription_id>SUB022</subscription_id>
+    <customer_id>CUST022</customer_id>
+    <event_date>2024-10-28</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-10-28 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT032</event_id>
+    <subscription_id>SUB059</subscription_id>
+    <customer_id>CUST008</customer_id>
+    <event_date>2024-11-05</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-11-05 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT033</event_id>
+    <subscription_id>SUB023</subscription_id>
+    <customer_id>CUST023</customer_id>
+    <event_date>2024-11-11</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-11-11 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT035</event_id>
+    <subscription_id>SUB024</subscription_id>
+    <customer_id>CUST024</customer_id>
+    <event_date>2024-11-25</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-11-25 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT036</event_id>
+    <subscription_id>SUB025</subscription_id>
+    <customer_id>CUST025</customer_id>
+    <event_date>2024-12-09</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-12-09 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT037</event_id>
+    <subscription_id>SUB056</subscription_id>
+    <customer_id>CUST016</customer_id>
+    <event_date>2024-12-12</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-12-12 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT038</event_id>
+    <subscription_id>SUB044</subscription_id>
+    <customer_id>CUST009</customer_id>
+    <event_date>2024-12-20</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-12-20 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT040</event_id>
+    <subscription_id>SUB026</subscription_id>
+    <customer_id>CUST026</customer_id>
+    <event_date>2024-12-23</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2024-12-23 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT041</event_id>
+    <subscription_id>SUB027</subscription_id>
+    <customer_id>CUST027</customer_id>
+    <event_date>2025-01-06</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2025-01-06 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT042</event_id>
+    <subscription_id>SUB014</subscription_id>
+    <customer_id>CUST014</customer_id>
+    <event_date>2025-01-08</event_date>
+    <event_type>price_change</event_type>
+    <old_value>80.00</old_value>
+    <new_value>85.00</new_value>
+    <field_changed>price_per_seat</field_changed>
+    <reason>Annual price increase applied at renewal</reason>
+    <created_at>2025-01-08 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT044</event_id>
+    <subscription_id>SUB028</subscription_id>
+    <customer_id>CUST028</customer_id>
+    <event_date>2025-01-20</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2025-01-20 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT045</event_id>
+    <subscription_id>SUB054</subscription_id>
+    <customer_id>CUST002</customer_id>
+    <event_date>2025-01-22</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2025-01-22 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT046</event_id>
+    <subscription_id>SUB057</subscription_id>
+    <customer_id>CUST021</customer_id>
+    <event_date>2025-01-28</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2025-01-28 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT047</event_id>
+    <subscription_id>SUB029</subscription_id>
+    <customer_id>CUST029</customer_id>
+    <event_date>2025-02-03</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2025-02-03 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT048</event_id>
+    <subscription_id>SUB045</subscription_id>
+    <customer_id>CUST010</customer_id>
+    <event_date>2025-02-08</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2025-02-08 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT049</event_id>
+    <subscription_id>SUB051</subscription_id>
+    <customer_id>CUST014</customer_id>
+    <event_date>2025-02-10</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2025-02-10 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT050</event_id>
+    <subscription_id>SUB030</subscription_id>
+    <customer_id>CUST030</customer_id>
+    <event_date>2025-02-17</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2025-02-17 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT051</event_id>
+    <subscription_id>SUB031</subscription_id>
+    <customer_id>CUST031</customer_id>
+    <event_date>2025-03-03</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2025-03-03 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT052</event_id>
+    <subscription_id>SUB058</subscription_id>
+    <customer_id>CUST024</customer_id>
+    <event_date>2025-03-08</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2025-03-08 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT053</event_id>
+    <subscription_id>SUB010</subscription_id>
+    <customer_id>CUST010</customer_id>
+    <event_date>2025-03-13</event_date>
+    <event_type>plan_downgrade</event_type>
+    <old_value>Analytics Growth</old_value>
+    <new_value>Analytics Starter</new_value>
+    <field_changed>plan_name</field_changed>
+    <reason>Cost reduction initiative - downgraded to starter tier</reason>
+    <created_at>2025-03-13 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT054</event_id>
+    <subscription_id>SUB052</subscription_id>
+    <customer_id>CUST018</customer_id>
+    <event_date>2025-03-15</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2025-03-15 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT055</event_id>
+    <subscription_id>SUB054</subscription_id>
+    <customer_id>CUST002</customer_id>
+    <event_date>2025-03-15</event_date>
+    <event_type>discount_added</event_type>
+    <old_value>0</old_value>
+    <new_value>5</new_value>
+    <field_changed>discount_percent</field_changed>
+    <reason>Annual contract loyalty discount applied</reason>
+    <created_at>2025-03-15 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT056</event_id>
+    <subscription_id>SUB032</subscription_id>
+    <customer_id>CUST032</customer_id>
+    <event_date>2025-03-17</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2025-03-17 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT057</event_id>
+    <subscription_id>SUB019</subscription_id>
+    <customer_id>CUST019</customer_id>
+    <event_date>2025-03-20</event_date>
+    <event_type>seats_change</event_type>
+    <old_value>22</old_value>
+    <new_value>19</new_value>
+    <field_changed>seats</field_changed>
+    <reason>Headcount reduction - Q1 restructuring</reason>
+    <created_at>2025-03-20 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT058</event_id>
+    <subscription_id>SUB033</subscription_id>
+    <customer_id>CUST033</customer_id>
+    <event_date>2025-03-31</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2025-03-31 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT059</event_id>
+    <subscription_id>SUB027</subscription_id>
+    <customer_id>CUST027</customer_id>
+    <event_date>2025-04-06</event_date>
+    <event_type>price_change</event_type>
+    <old_value>100.00</old_value>
+    <new_value>110.00</new_value>
+    <field_changed>price_per_seat</field_changed>
+    <reason>Annual price increase applied at renewal</reason>
+    <created_at>2025-04-06 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT060</event_id>
+    <subscription_id>SUB034</subscription_id>
+    <customer_id>CUST034</customer_id>
+    <event_date>2025-04-14</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2025-04-14 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT061</event_id>
+    <subscription_id>SUB012</subscription_id>
+    <customer_id>CUST012</customer_id>
+    <event_date>2025-04-15</event_date>
+    <event_type>seats_change</event_type>
+    <old_value>18</old_value>
+    <new_value>23</new_value>
+    <field_changed>seats</field_changed>
+    <reason>New hires onboarded - sales team expansion</reason>
+    <created_at>2025-04-15 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT062</event_id>
+    <subscription_id>SUB047</subscription_id>
+    <customer_id>CUST022</customer_id>
+    <event_date>2025-04-18</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2025-04-18 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT063</event_id>
+    <subscription_id>SUB035</subscription_id>
+    <customer_id>CUST035</customer_id>
+    <event_date>2025-04-28</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2025-04-28 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT064</event_id>
+    <subscription_id>SUB004</subscription_id>
+    <customer_id>CUST004</customer_id>
+    <event_date>2025-05-10</event_date>
+    <event_type>seats_change</event_type>
+    <old_value>15</old_value>
+    <new_value>18</new_value>
+    <field_changed>seats</field_changed>
+    <reason>Team expansion - 3 new account managers onboarded</reason>
+    <created_at>2025-05-10 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT065</event_id>
+    <subscription_id>SUB036</subscription_id>
+    <customer_id>CUST036</customer_id>
+    <event_date>2025-05-12</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2025-05-12 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT066</event_id>
+    <subscription_id>SUB061</subscription_id>
+    <customer_id>CUST013</customer_id>
+    <event_date>2025-05-20</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason>Returning customer — reactivation</reason>
+    <created_at>2025-05-20 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT067</event_id>
+    <subscription_id>SUB048</subscription_id>
+    <customer_id>CUST025</customer_id>
+    <event_date>2025-05-22</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2025-05-22 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT069</event_id>
+    <subscription_id>SUB037</subscription_id>
+    <customer_id>CUST037</customer_id>
+    <event_date>2025-05-26</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2025-05-26 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT070</event_id>
+    <subscription_id>SUB018</subscription_id>
+    <customer_id>CUST018</customer_id>
+    <event_date>2025-06-01</event_date>
+    <event_type>seats_change</event_type>
+    <old_value>30</old_value>
+    <new_value>35</new_value>
+    <field_changed>seats</field_changed>
+    <reason>Department growth - added analytics sub-team</reason>
+    <created_at>2025-06-01 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT071</event_id>
+    <subscription_id>SUB053</subscription_id>
+    <customer_id>CUST027</customer_id>
+    <event_date>2025-06-05</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2025-06-05 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT072</event_id>
+    <subscription_id>SUB038</subscription_id>
+    <customer_id>CUST038</customer_id>
+    <event_date>2025-06-09</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2025-06-09 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT073</event_id>
+    <subscription_id>SUB049</subscription_id>
+    <customer_id>CUST012</customer_id>
+    <event_date>2025-06-10</event_date>
+    <event_type>cancelled</event_type>
+    <old_value>active</old_value>
+    <new_value>cancelled</new_value>
+    <field_changed>status</field_changed>
+    <reason>No longer needed</reason>
+    <created_at>2025-06-10 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT074</event_id>
+    <subscription_id>SUB026</subscription_id>
+    <customer_id>CUST026</customer_id>
+    <event_date>2025-06-15</event_date>
+    <event_type>plan_upgrade</event_type>
+    <old_value>Analytics Starter</old_value>
+    <new_value>Analytics Growth</new_value>
+    <field_changed>plan_name</field_changed>
+    <reason>Growing usage - upgraded for advanced features and higher limits</reason>
+    <created_at>2025-06-15 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT075</event_id>
+    <subscription_id>SUB039</subscription_id>
+    <customer_id>CUST039</customer_id>
+    <event_date>2025-06-23</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2025-06-23 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT077</event_id>
+    <subscription_id>SUB059</subscription_id>
+    <customer_id>CUST008</customer_id>
+    <event_date>2025-07-05</event_date>
+    <event_type>price_change</event_type>
+    <old_value>75.00</old_value>
+    <new_value>85.00</new_value>
+    <field_changed>price_per_seat</field_changed>
+    <reason>Annual price increase applied at renewal</reason>
+    <created_at>2025-07-05 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT078</event_id>
+    <subscription_id>SUB060</subscription_id>
+    <customer_id>CUST019</customer_id>
+    <event_date>2025-07-20</event_date>
+    <event_type>cancelled</event_type>
+    <old_value>active</old_value>
+    <new_value>cancelled</new_value>
+    <field_changed>status</field_changed>
+    <reason>Budget cuts</reason>
+    <created_at>2025-07-20 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT079</event_id>
+    <subscription_id>SUB011</subscription_id>
+    <customer_id>CUST011</customer_id>
+    <event_date>2025-07-22</event_date>
+    <event_type>seats_change</event_type>
+    <old_value>14</old_value>
+    <new_value>18</new_value>
+    <field_changed>seats</field_changed>
+    <reason>Team expansion - mid-year headcount increase</reason>
+    <created_at>2025-07-22 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT080</event_id>
+    <subscription_id>SUB029</subscription_id>
+    <customer_id>CUST029</customer_id>
+    <event_date>2025-08-03</event_date>
+    <event_type>price_change</event_type>
+    <old_value>90.00</old_value>
+    <new_value>85.00</new_value>
+    <field_changed>price_per_seat</field_changed>
+    <reason>Renewal negotiation - competitive pricing match</reason>
+    <created_at>2025-08-03 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT081</event_id>
+    <subscription_id>SUB032</subscription_id>
+    <customer_id>CUST032</customer_id>
+    <event_date>2025-08-12</event_date>
+    <event_type>plan_upgrade</event_type>
+    <old_value>Analytics Growth</old_value>
+    <new_value>Analytics Enterprise</new_value>
+    <field_changed>plan_name</field_changed>
+    <reason>Enterprise SSO and audit logs required</reason>
+    <created_at>2025-08-12 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT082</event_id>
+    <subscription_id>SUB017</subscription_id>
+    <customer_id>CUST017</customer_id>
+    <event_date>2025-08-19</event_date>
+    <event_type>plan_downgrade</event_type>
+    <old_value>Analytics Growth</old_value>
+    <new_value>Analytics Starter</new_value>
+    <field_changed>plan_name</field_changed>
+    <reason>Reduced usage - advanced features no longer needed</reason>
+    <created_at>2025-08-19 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT083</event_id>
+    <subscription_id>SUB022</subscription_id>
+    <customer_id>CUST022</customer_id>
+    <event_date>2025-08-20</event_date>
+    <event_type>seats_change</event_type>
+    <old_value>28</old_value>
+    <new_value>33</new_value>
+    <field_changed>seats</field_changed>
+    <reason>Team expansion - ops team grew</reason>
+    <created_at>2025-08-20 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT085</event_id>
+    <subscription_id>SUB030</subscription_id>
+    <customer_id>CUST030</customer_id>
+    <event_date>2025-09-05</event_date>
+    <event_type>plan_upgrade</event_type>
+    <old_value>Analytics Starter</old_value>
+    <new_value>Analytics Growth</new_value>
+    <field_changed>plan_name</field_changed>
+    <reason>Upgraded for advanced analytics and API access</reason>
+    <created_at>2025-09-05 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT086</event_id>
+    <subscription_id>SUB053</subscription_id>
+    <customer_id>CUST027</customer_id>
+    <event_date>2025-09-10</event_date>
+    <event_type>seats_change</event_type>
+    <old_value>26</old_value>
+    <new_value>31</new_value>
+    <field_changed>seats</field_changed>
+    <reason>Department expansion - data team scaling</reason>
+    <created_at>2025-09-10 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT087</event_id>
+    <subscription_id>SUB033</subscription_id>
+    <customer_id>CUST033</customer_id>
+    <event_date>2025-09-30</event_date>
+    <event_type>price_change</event_type>
+    <old_value>90.00</old_value>
+    <new_value>85.00</new_value>
+    <field_changed>price_per_seat</field_changed>
+    <reason>Renewal negotiation - loyalty discount applied</reason>
+    <created_at>2025-09-30 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT088</event_id>
+    <subscription_id>SUB024</subscription_id>
+    <customer_id>CUST024</customer_id>
+    <event_date>2025-10-05</event_date>
+    <event_type>seats_change</event_type>
+    <old_value>26</old_value>
+    <new_value>31</new_value>
+    <field_changed>seats</field_changed>
+    <reason>New department added - customer success team</reason>
+    <created_at>2025-10-05 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT089</event_id>
+    <subscription_id>SUB062</subscription_id>
+    <customer_id>CUST023</customer_id>
+    <event_date>2025-10-15</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason>Returning customer — reactivation</reason>
+    <created_at>2025-10-15 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT090</event_id>
+    <subscription_id>SUB036</subscription_id>
+    <customer_id>CUST036</customer_id>
+    <event_date>2025-10-20</event_date>
+    <event_type>plan_upgrade</event_type>
+    <old_value>Analytics Starter</old_value>
+    <new_value>Analytics Growth</new_value>
+    <field_changed>plan_name</field_changed>
+    <reason>Reached Starter usage limits - upgraded</reason>
+    <created_at>2025-10-20 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT091</event_id>
+    <subscription_id>SUB015</subscription_id>
+    <customer_id>CUST015</customer_id>
+    <event_date>2025-11-01</event_date>
+    <event_type>discount_added</event_type>
+    <old_value>0</old_value>
+    <new_value>10</new_value>
+    <field_changed>discount_percent</field_changed>
+    <reason>Retention discount - customer at-risk of churning</reason>
+    <created_at>2025-11-01 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT092</event_id>
+    <subscription_id>SUB039</subscription_id>
+    <customer_id>CUST039</customer_id>
+    <event_date>2025-11-15</event_date>
+    <event_type>seats_change</event_type>
+    <old_value>32</old_value>
+    <new_value>29</new_value>
+    <field_changed>seats</field_changed>
+    <reason>Restructuring - reduced team size</reason>
+    <created_at>2025-11-15 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT093</event_id>
+    <subscription_id>SUB047</subscription_id>
+    <customer_id>CUST022</customer_id>
+    <event_date>2025-12-08</event_date>
+    <event_type>seats_change</event_type>
+    <old_value>22</old_value>
+    <new_value>26</new_value>
+    <field_changed>seats</field_changed>
+    <reason>Year-end headcount increase</reason>
+    <created_at>2025-12-08 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT094</event_id>
+    <subscription_id>SUB050</subscription_id>
+    <customer_id>CUST007</customer_id>
+    <event_date>2025-12-15</event_date>
+    <event_type>discount_added</event_type>
+    <old_value>0</old_value>
+    <new_value>12</new_value>
+    <field_changed>discount_percent</field_changed>
+    <reason>Retention discount - at-risk account escalated</reason>
+    <created_at>2025-12-15 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT096</event_id>
+    <subscription_id>SUB040</subscription_id>
+    <customer_id>CUST040</customer_id>
+    <event_date>2026-01-26</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2026-01-26 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT023</event_id>
+    <subscription_id>SUB001</subscription_id>
+    <customer_id>CUST001</customer_id>
+    <event_date>2024-08-27</event_date>
+    <event_type>cancelled</event_type>
+    <old_value>active</old_value>
+    <new_value>cancelled</new_value>
+    <field_changed>status</field_changed>
+    <reason>Missing features</reason>
+    <created_at>2024-08-27 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT034</event_id>
+    <subscription_id>SUB005</subscription_id>
+    <customer_id>CUST005</customer_id>
+    <event_date>2024-11-20</event_date>
+    <event_type>cancelled</event_type>
+    <old_value>active</old_value>
+    <new_value>cancelled</new_value>
+    <field_changed>status</field_changed>
+    <reason>Price too high</reason>
+    <created_at>2024-11-20 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT039</event_id>
+    <subscription_id>SUB008</subscription_id>
+    <customer_id>CUST008</customer_id>
+    <event_date>2024-12-22</event_date>
+    <event_type>cancelled</event_type>
+    <old_value>active</old_value>
+    <new_value>cancelled</new_value>
+    <field_changed>status</field_changed>
+    <reason>Price too high</reason>
+    <created_at>2024-12-22 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT043</event_id>
+    <subscription_id>SUB013</subscription_id>
+    <customer_id>CUST013</customer_id>
+    <event_date>2025-01-15</event_date>
+    <event_type>cancelled</event_type>
+    <old_value>active</old_value>
+    <new_value>cancelled</new_value>
+    <field_changed>status</field_changed>
+    <reason>Switched to competitor</reason>
+    <created_at>2025-01-15 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT068</event_id>
+    <subscription_id>SUB021</subscription_id>
+    <customer_id>CUST021</customer_id>
+    <event_date>2025-05-26</event_date>
+    <event_type>cancelled</event_type>
+    <old_value>active</old_value>
+    <new_value>cancelled</new_value>
+    <field_changed>status</field_changed>
+    <reason>Company downsizing</reason>
+    <created_at>2025-05-26 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT076</event_id>
+    <subscription_id>SUB023</subscription_id>
+    <customer_id>CUST023</customer_id>
+    <event_date>2025-06-25</event_date>
+    <event_type>cancelled</event_type>
+    <old_value>active</old_value>
+    <new_value>cancelled</new_value>
+    <field_changed>status</field_changed>
+    <reason>Missing features</reason>
+    <created_at>2025-06-25 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT084</event_id>
+    <subscription_id>SUB055</subscription_id>
+    <customer_id>CUST004</customer_id>
+    <event_date>2025-08-30</event_date>
+    <event_type>cancelled</event_type>
+    <old_value>active</old_value>
+    <new_value>cancelled</new_value>
+    <field_changed>status</field_changed>
+    <reason>Switched to competitor</reason>
+    <created_at>2025-08-30 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT095</event_id>
+    <subscription_id>SUB015</subscription_id>
+    <customer_id>CUST015</customer_id>
+    <event_date>2025-12-30</event_date>
+    <event_type>cancelled</event_type>
+    <old_value>active</old_value>
+    <new_value>cancelled</new_value>
+    <field_changed>status</field_changed>
+    <reason>Switched to competitor</reason>
+    <created_at>2025-12-30 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT097</event_id>
+    <subscription_id>SUB050</subscription_id>
+    <customer_id>CUST007</customer_id>
+    <event_date>2026-02-20</event_date>
+    <event_type>cancelled</event_type>
+    <old_value>active</old_value>
+    <new_value>cancelled</new_value>
+    <field_changed>status</field_changed>
+    <reason>Poor support</reason>
+    <created_at>2026-02-20 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT098</event_id>
+    <subscription_id>SUB063</subscription_id>
+    <customer_id>CUST041</customer_id>
+    <event_date>2026-02-10</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2026-02-10 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT099</event_id>
+    <subscription_id>SUB064</subscription_id>
+    <customer_id>CUST042</customer_id>
+    <event_date>2026-02-20</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2026-02-20 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT100</event_id>
+    <subscription_id>SUB065</subscription_id>
+    <customer_id>CUST043</customer_id>
+    <event_date>2026-03-08</event_date>
+    <event_type>created</event_type>
+    <old_value></old_value>
+    <new_value></new_value>
+    <field_changed></field_changed>
+    <reason></reason>
+    <created_at>2026-03-08 00:00:00.000</created_at>
+  </DATA_RECORD>
+  <DATA_RECORD>
+    <event_id>EVT101</event_id>
+    <subscription_id>SUB012</subscription_id>
+    <customer_id>CUST012</customer_id>
+    <event_date>2026-03-15</event_date>
+    <event_type>seats_change</event_type>
+    <old_value>23</old_value>
+    <new_value>27</new_value>
+    <field_changed>seats</field_changed>
+    <reason>Team expansion</reason>
+    <created_at>2026-03-15 00:00:00.000</created_at>
+  </DATA_RECORD>
+</subscription_events>
