@@ -63,7 +63,7 @@ With the fix applied:
 - March GRR = **100%** (no churn)
 - March NRR = **100.24%** (expansion present)
 
-Rather than hardcoding a column letter, look at what row 4 of the Retention tab contains — it holds the month date for each column. That means you can look up the right column by date instead of by letter. Excel has functions that let you search a row for a value and return data from that position. Use that approach here: tell the formula which month you want, let it find the column. When you build April's tab, you change the month you're asking for and the formula points at the right column automatically — no manual incrementing, no risk of silently pulling the wrong month. Always follow this pattern instead of hardcoding column letters.
+For the immediate fix, update the column letter. But going forward, don't hardcode column letters at all — use INDEX/MATCH instead. Row 4 of the Retention tab holds the month date for each column. MATCH can find which column corresponds to the month you want; INDEX can then pull the value from that column. That way the formula looks up the right month by date, not by position. When you build April's tab, you tell it which month you're on and it finds the right column automatically — no manual incrementing, no risk of silently pulling last month's number. Always use this pattern when referencing a tab that grows a column per month.
 
 ---
 
