@@ -82,21 +82,19 @@ What it's actually showing:
 | S&M | -$1,000 | -$2,000 |
 | CAC | -$15,500 | -$1,000 |
 
-**Immediate fix:** change `'KPI Tracker'!$B$4:$B$16` to `'KPI Tracker'!$C$4:$C$16` in every XLOOKUP in the comparison column.
-
-**Better approach going forward:** instead of looking up the prior month's value from the KPI Tracker, reference the prior month's tab directly. For example, replace:
+Fix by referencing the prior month's tab directly rather than looking up from the KPI Tracker. Instead of:
 
 ```
 =B32 - XLOOKUP("ARPA", 'KPI Tracker'!$A$4:$A$16, 'KPI Tracker'!$B$4:$B$16)
 ```
 
-with:
+use:
 
 ```
 =B32 - 'Feb 2026 A vs F'!B32
 ```
 
-Same cell, prior tab. No column index to manage. When you build April's tab, you change `'Feb 2026 A vs F'` to `'Mar 2026 A vs F'` — one find-and-replace on the sheet, done. The KPI Tracker approach requires you to manually increment a column letter every month, which is exactly the kind of thing that gets missed.
+Same cell, prior tab. When you build April's tab, one find-and-replace on `'Feb 2026 A vs F'` → `'Mar 2026 A vs F'` and every comparison formula updates. Always follow this pattern — the KPI Tracker approach requires you to manually increment a column letter each month, which is exactly the kind of thing that gets missed.
 
 ---
 
