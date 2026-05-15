@@ -23,9 +23,11 @@ That said, there are four fixes required before this can merge.
 
 ## Process — Open the PR
 
-You pushed to the branch but never opened a pull request. The submission rules require a PR with a self-check table before review. Going forward, the branch alone is not a submission.
+You pushed to the branch but never opened a pull request. The push is not the submission — the PR is.
 
-Open a PR from `student/excel_08_march_close_q1` → `main` with the description format from the brief, including your completed self-check table.
+After pushing, go to GitHub and open a PR from `student/excel_08_march_close_q1` → `main`. Use the description template from the brief and paste in your completed self-check table. If a value in your self-check doesn't match the expected figure, investigate before submitting.
+
+Going forward: push → open PR with self-check filled in → that's the submission.
 
 ---
 
@@ -80,7 +82,21 @@ What it's actually showing:
 | S&M | -$1,000 | -$2,000 |
 | CAC | -$15,500 | -$1,000 |
 
-The fix: in every XLOOKUP formula in column C of the KPI section, change `'KPI Tracker'!$B$4:$B$16` to `'KPI Tracker'!$C$4:$C$16`. Same copy-paste pattern — increment the column each month.
+**Immediate fix:** change `'KPI Tracker'!$B$4:$B$16` to `'KPI Tracker'!$C$4:$C$16` in every XLOOKUP in the comparison column.
+
+**Better approach going forward:** instead of looking up the prior month's value from the KPI Tracker, reference the prior month's tab directly. For example, replace:
+
+```
+=B32 - XLOOKUP("ARPA", 'KPI Tracker'!$A$4:$A$16, 'KPI Tracker'!$B$4:$B$16)
+```
+
+with:
+
+```
+=B32 - 'Feb 2026 A vs F'!B32
+```
+
+Same cell, prior tab. No column index to manage. When you build April's tab, you change `'Feb 2026 A vs F'` to `'Mar 2026 A vs F'` — one find-and-replace on the sheet, done. The KPI Tracker approach requires you to manually increment a column letter every month, which is exactly the kind of thing that gets missed.
 
 ---
 
