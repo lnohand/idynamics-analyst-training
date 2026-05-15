@@ -63,7 +63,14 @@ With the fix applied:
 - March GRR = **100%** (no churn)
 - March NRR = **100.24%** (expansion present)
 
-Same copy-paste pattern as the GRR/NRR column shift you need to do every month. Add a note to your process: after adding a new monthly tab, verify that the Retention column reference has incremented (Z → AA → AB → AC…).
+Rather than hardcoding a column letter, use INDEX/MATCH to find the right month in the Retention tab automatically:
+
+```
+=INDEX(Retention!6:6, MATCH(DATE(2026,3,1), Retention!4:4, 0))
+=INDEX(Retention!7:7, MATCH(DATE(2026,3,1), Retention!4:4, 0))
+```
+
+Row 4 of the Retention tab holds the month dates. MATCH finds the column where row 4 equals March 1 — no column letter to track. When you build April's tab, change `DATE(2026,3,1)` to `DATE(2026,4,1)` and it points at the right column automatically. Always follow this pattern instead of hardcoding column letters — as the Retention tab grows past column Z into AA, AB, AC, a hardcoded reference is the kind of thing that silently pulls the wrong month.
 
 ---
 
