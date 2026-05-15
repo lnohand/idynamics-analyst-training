@@ -63,14 +63,7 @@ With the fix applied:
 - March GRR = **100%** (no churn)
 - March NRR = **100.24%** (expansion present)
 
-Rather than hardcoding a column letter, use INDEX/MATCH to find the right month in the Retention tab automatically:
-
-```
-=INDEX(Retention!6:6, MATCH(DATE(2026,3,1), Retention!4:4, 0))
-=INDEX(Retention!7:7, MATCH(DATE(2026,3,1), Retention!4:4, 0))
-```
-
-Row 4 of the Retention tab holds the month dates. MATCH finds the column where row 4 equals March 1 — no column letter to track. When you build April's tab, change `DATE(2026,3,1)` to `DATE(2026,4,1)` and it points at the right column automatically. Always follow this pattern instead of hardcoding column letters — as the Retention tab grows past column Z into AA, AB, AC, a hardcoded reference is the kind of thing that silently pulls the wrong month.
+Rather than hardcoding a column letter, look at what row 4 of the Retention tab contains — it holds the month date for each column. That means you can look up the right column by date instead of by letter. Excel has functions that let you search a row for a value and return data from that position. Use that approach here: tell the formula which month you want, let it find the column. When you build April's tab, you change the month you're asking for and the formula points at the right column automatically — no manual incrementing, no risk of silently pulling the wrong month. Always follow this pattern instead of hardcoding column letters.
 
 ---
 
