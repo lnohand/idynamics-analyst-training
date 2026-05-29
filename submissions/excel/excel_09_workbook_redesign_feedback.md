@@ -39,7 +39,13 @@ The assignment exists because typed numbers go stale the moment a formula change
 
 The LTV:CAC and CAC Payback errors are large — these aren't rounding differences. You wrote those sentences when your formulas had different inputs, then corrected the formulas without updating the text. That is exactly the failure mode this assignment was designed to prevent.
 
-The rule from the brief: *numbers are never typed*. Go through every sentence in every commentary section and verify each figure against its formula cell.
+Two things worth addressing directly.
+
+First, the "don't touch anything" instruction. That applies to the protected tabs listed in the brief — Retention, Engine, Waterfall, Unit Economics, January, February. Your commentary on the March tab and Q1 Roll-Up is your own work written for this assignment. It is not a protected tab. You are responsible for keeping it accurate.
+
+Second, this check wasn't on the self-check list — that's a fair point, and it's an oversight in the brief. But the rule was stated plainly in Part 4: *"numbers are never typed."* The self-check had one entry for commentary: "Commentary key metrics line updates when actuals change." That refers to the formula-driven summary line, which you did correctly. The qualitative paragraphs beneath it were not explicitly listed — but they contain numbers, and those numbers are wrong. The absence of a checkbox doesn't change the standard.
+
+Go through every sentence in every commentary section and verify each figure against its formula cell.
 
 ---
 
