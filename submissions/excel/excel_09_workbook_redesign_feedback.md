@@ -17,11 +17,7 @@ The formula-driven summary line in the commentary section is correct and updates
 
 ## Fixes Required
 
-### 1 — Delete the April dry run tab
-
-The brief is explicit: *"Delete the April test tab when you're done. It was a dry run, not a real close."* The `Apr 2026 A vs F` tab is still in the workbook. Remove it before resubmitting.
-
-### 2 — Qualitative commentary contains wrong numbers
+### 1 — Qualitative commentary contains wrong numbers
 
 This is the most important fix, because it is the central lesson of this assignment.
 
@@ -77,8 +73,7 @@ The "Opening MRR as of March 31, 2026" section has the correct query, but the Ex
 | Config cell drives all actuals | ✅ |
 | GRR/NRR — no column letters | ✅ |
 | Formula-driven commentary line | ✅ |
-| April dry run tab deleted | ❌ |
 | Qualitative commentary — no typed numbers | ❌ |
 | Notes accurate to what was built | ❌ |
 
-Three fixes. Push to the same branch when done.
+Two fixes. Push to the same branch when done.
