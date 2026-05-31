@@ -1,79 +1,53 @@
 # Excel 09 — Workbook Redesign: Feedback
-**PR #11 | Branch: `student/excel_09_workbook_redesign`**
+**PR #11 | Branch: `student/excel_09_workbook_redesign`**  
+**Review round:** 2
 
 ---
 
-## What's Working
-
-The technical infrastructure is solid. The Actuals tab is correctly structured — input cells separated from formula cells, the MRR chain derives correctly (Opening → Closing cascades across months), and the March Expansion MRR is $380. The Q1 New Customers formula sums monthly new logos (1+2+2=5) rather than computing a net delta, and Quarterly CAC = $18,000.
-
-The config block works as intended. The current month date cell drives the INDEX/MATCH lookups throughout the tab — every actual on the waterfall and P&L pulls from Actuals via that single reference. The "Actual - Mar 26" header derives from the config cell via TEXT(). The month-end date (EOMONTH) is correctly derived, not typed.
-
-The GRR and NRR formulas contain no column letters or hardcoded numbers. Both use INDEX/MATCH to find the right month in the Retention tab by date. That's the right design — it will work correctly for every future month without any manual update.
-
-The formula-driven summary line in the commentary section is correct and updates automatically.
+The fixes from the first review are done — commentary numbers are formula-driven, April tab is deleted. The core redesign is solid and the GRR/NRR dynamic lookups are working correctly. Two more things before this merges.
 
 ---
 
-## Fixes Required
+## Fix 1 — Self-check cross-reference cells are stale (March tab, rows 55–56)
 
-### 1 — Qualitative commentary contains wrong numbers
+Your self-check table has a "formula check" column. Those cells currently hardcode a specific column in the Retention tab:
 
-This is the most important fix, because it is the central lesson of this assignment.
+- C55: `=Retention!AA6` → returns 99.6%
+- C56: `=Retention!AA7` → returns 99.6%
 
-The assignment exists because typed numbers go stale the moment a formula changes. You built the formula-driven summary line correctly — it always reflects the current calculated values. Then you typed wrong numbers in the paragraphs directly below it.
+Column AA is **February**. March is column AB. So your self-check is comparing your March GRR (100.0%) against February's value (99.6%) and calling that a verification. It isn't.
 
-**March tab:**
-- "March closed at $153,486 MRR" — your formula shows $153,686
-- "$180 of expansion MRR" — the correct value is $380. This is the original wrong number from Excel 08, which you fixed in Actuals. The formula is right. The sentence is still carrying the old number.
+Your actual GRR and NRR formulas in B34/B35 are correct. The self-check cells are the problem.
 
-**Q1 Roll-Up:**
-- "$448,571 in revenue" — formula shows $448,771
-- "$91,999 of EBITDA" — formula shows $92,139
-- "LTV:CAC of 1.71x" — your formula shows **2.86x**
-- "CAC Payback of 11.7 months" — your formula shows **7.03 months**
+This is the same failure mode the whole assignment was designed to fix — you built something that requires a manual update every month, and it went stale immediately. A self-check that needs updating every month isn't a check. It's just another cell that will be wrong.
 
-The LTV:CAC and CAC Payback errors are large — these aren't rounding differences. You wrote those sentences when your formulas had different inputs, then corrected the formulas without updating the text. That is exactly the failure mode this assignment was designed to prevent.
+**The fix — make them dynamic.** You already know how to look up the current month's GRR from Retention without hardcoding a column. You did it in B34. Use the same INDEX/MATCH pattern in C55 and C56. When the formula check uses the same logic as the formula it's checking, the two values will always match — unless something is actually wrong, which is the whole point.
 
-Two things worth addressing directly.
-
-First, the "don't touch anything" instruction. That applies to the protected tabs listed in the brief — Retention, Engine, Waterfall, Unit Economics, January, February. Your commentary on the March tab and Q1 Roll-Up is your own work written for this assignment. It is not a protected tab. You are responsible for keeping it accurate.
-
-Second, this check wasn't on the self-check list — that's a fair point, and it's an oversight in the brief. But the rule was stated plainly in Part 4: *"numbers are never typed."* The self-check had one entry for commentary: "Commentary key metrics line updates when actuals change." That refers to the formula-driven summary line, which you did correctly. The qualitative paragraphs beneath it were not explicitly listed — but they contain numbers, and those numbers are wrong. The absence of a checkbox doesn't change the standard.
-
-Go through every sentence in every commentary section and verify each figure against its formula cell.
+Be more diligent about this. Every cell you build for verification purposes should be held to the same standard as the formulas it's verifying. If a validation cell can go stale, it will.
 
 ---
 
-## Notes on Your `excel_techniques.md`
+## Fix 2 — April dummy data remains in Actuals (column E)
 
-Point 6 (the four-step monthly close workflow) adds "Update the Retention Tab" as Step 2. That's correct for real monthly closes — the Retention tab does need a new column each month. Good catch; the brief's four steps assumed a static Retention tab for the exercise.
-
-One correction to make: Point 4 says "I used the Indirect function." Look at your workbook — INDIRECT does not appear anywhere in it. What you actually did was solve the prior-month comparison using `DATE(YEAR($I$2),MONTH($I$2)-1,1)` to derive the prior month's date and look it up directly in Actuals. That approach is better than INDIRECT (INDIRECT is volatile — it recalculates on every worksheet change, which slows large workbooks), and your note about when not to use it shows you understood the trade-off.
-
-But your notes should reflect what you actually built, not what you considered and discarded. Update Point 4 to describe the INDEX/MATCH-on-Actuals approach you used and why you chose it over INDIRECT.
-
-Related: the `Prior month tab` cell in your config block (I3 = "Feb 2026 A vs F") is never referenced by any formula in the workbook. Nothing reads it. Either wire it into something or remove it — a config cell that doesn't drive anything is misleading documentation.
+The April test tab was correctly deleted. But column E in the Actuals tab still holds the April dry-run numbers — Opening MRR, New MRR, Expansion, Churn, S&M, R&D, G&A, customer counts. Clear that column. The Actuals tab should only contain closed months.
 
 ---
 
-## `sql_queries.md` — One Error
-
-The "Opening MRR as of March 31, 2026" section has the correct query, but the Expected Result block below it shows December 31 figures (51 rows, $143,069.50). That's a copy-paste error. The March 31 snapshot should return 54 rows and $153,685.50. Fix the expected result.
-
----
-
-## Summary
+## What's Good
 
 | | |
 |---|---|
-| Actuals tab structure | ✅ |
+| Actuals tab structure — INPUT vs FORMULA cells | ✅ |
 | March Expansion MRR = $380 | ✅ |
-| Q1 New Customers = 5, CAC = $18K | ✅ |
-| Config cell drives all actuals | ✅ |
-| GRR/NRR — no column letters | ✅ |
-| Formula-driven commentary line | ✅ |
-| Qualitative commentary — no typed numbers | ❌ |
-| Notes accurate to what was built | ❌ |
+| Opening MRR chain: prior Closing → next Opening | ✅ |
+| All actuals pull from Actuals via INDEX/MATCH on config date | ✅ |
+| GRR/NRR — no hardcoded column letters | ✅ |
+| March GRR = 100.0%, NRR = 100.24% | ✅ |
+| Comparison column — no hardcoded tab names | ✅ |
+| Formula-driven commentary line (TEXT concatenation) | ✅ |
+| Q1 New Customers = 5, Quarterly CAC = $18,000 | ✅ |
+| Qualitative commentary — numbers match formulas | ✅ |
+| April test tab deleted | ✅ |
+| `excel_techniques.md` updated | ✅ |
 
 Two fixes. Push to the same branch when done.
