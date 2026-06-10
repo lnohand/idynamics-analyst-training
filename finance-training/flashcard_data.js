@@ -47,7 +47,7 @@ QUIZ_LIBRARY.push({
         {
           type: "flip",
           q: "How would you calculate year-over-year ARR growth rate, and what's a healthy benchmark for a Series B SaaS company?",
-          a: "YoY ARR growth is ending ARR this year minus ending ARR last year, divided by ending ARR last year. If you ended last year at $5M ARR and this year at $8M, your growth rate is 60%. For a Series B SaaS company — typically $5M to $20M ARR — a healthy benchmark is around 80 to 100% growth, sometimes called 'triple, triple, double, double' in the early days. Below 50% at that stage starts to raise questions from investors about whether the go-to-market is working. That said, growth rate always needs to be read alongside burn rate — fast growth that requires massive cash doesn't compound as well as efficient growth."
+          a: "YoY ARR growth is ending ARR this year minus ending ARR last year, divided by ending ARR last year. If you ended last year at $5M ARR and this year at $8M, your growth rate is 60%. For a Series B SaaS company — typically $5M to $20M ARR — a healthy benchmark is around 80 to 100% growth, sometimes called T2D3 — triple for two years, then double for three — in the early days. Below 50% at that stage starts to raise questions from investors about whether the go-to-market is working. That said, growth rate always needs to be read alongside burn rate — fast growth that requires massive cash doesn't compound as well as efficient growth."
         },
         {
           type: "flip",
@@ -228,7 +228,7 @@ QUIZ_LIBRARY.push({
         {
           type: "flip",
           q: "What is gross revenue retention and how do you calculate it?",
-          a: "Gross Revenue Retention, or GRR, measures how much of last period's recurring revenue you kept from existing customers, excluding any expansion. The formula is: beginning-of-period ARR minus churned ARR minus contracted ARR, divided by beginning-of-period ARR. GRR can never exceed 100% — it only captures losses. For example, if you started the year with $10M ARR and lost $500K to churn and $200K to downgrades, your GRR is 97%. It's the purest measure of customer retention and product stickiness, because it strips out the expansion that might mask underlying churn problems."
+          a: "Gross Revenue Retention, or GRR, measures how much of last period's recurring revenue you kept from existing customers, excluding any expansion. The formula is: beginning-of-period ARR minus churned ARR minus contraction ARR, divided by beginning-of-period ARR. GRR can never exceed 100% — it only captures losses. For example, if you started the year with $10M ARR and lost $500K to churn and $200K to downgrades, your GRR is 97%. It's the purest measure of customer retention and product stickiness, because it strips out the expansion that might mask underlying churn problems."
         },
         {
           type: "flip",
