@@ -382,7 +382,7 @@ QUIZ_LIBRARY.push({
         {
           type: "flip",
           q: "A company has 35% ARR growth and negative 8% free cash flow margin. Does it pass the Rule of 40?",
-          a: "Yes — 35% growth plus negative 8% margin equals 27% on a free cash flow basis, so it fails by the free cash flow measure. But if you use EBITDA margin and that's, say, positive 5%, the score would be 40 — right at the threshold. This illustrates why the metric choice matters. With 35% growth, investors would generally expect some burn, but negative 8% FCF margin is a drag that needs to improve as the company matures. To get to 40 on a free cash flow basis, either growth needs to accelerate or the cash burn needs to be cut by roughly $X depending on revenue size. I'd model both levers and discuss which is more achievable given the business context."
+          a: "No, it doesn't — on a free cash flow basis, the score is 35 plus negative 8, which is 27. That's well short of 40. The Rule of 40 adds growth rate to one profitability metric, so the first thing I'd clarify is which margin we're using. If the question is specifically about FCF margin, the answer is a clear fail. Now, if this company had an EBITDA margin of positive 5% instead, the score would be exactly 40 — same growth rate, different margin metric, different conclusion. That gap between EBITDA and FCF usually signals something worth digging into: working capital pressure, capex, or timing differences between accounting profit and cash. With 35% growth, I'd want to understand whether the -8% FCF burn is improving as the business scales or whether it's structural. If it's the former, the trajectory matters more than the current score."
         },
         {
           type: "flip",
