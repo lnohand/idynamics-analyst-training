@@ -2,7 +2,7 @@
 QUIZ_LIBRARY.push({
   id: "saas_metrics",
   name: "SaaS Metrics",
-  color: "#8b5cf6",
+  color: "#ec4899",
   quizzes: [
     {
       id: "fc_arr_mrr",
