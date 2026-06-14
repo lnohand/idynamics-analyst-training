@@ -591,7 +591,7 @@ QUIZ_LIBRARY.push({
         {
           type: "flip",
           q: "Your CEO wants to cut prices 10% to win market share, and gross margin is 60%. How much extra volume do you need just to break even on gross profit?",
-          a: "A 10% price cut on a 60% margin product is brutal because it comes straight out of the margin — on a $100 item, contribution per unit falls from $60 to $50. To hold total gross profit flat, volume has to rise by 60 divided by 50, or 1.2x — that's 20% more units just to break even. So you're betting demand is elastic enough that a 10% discount drives a 20% volume increase. That's a high bar, and if volume only grows 10%, gross profit actually falls — so I'd want real evidence of price elasticity before signing off."
+          a: "A 10% price cut on a 60% gross margin product is brutal because it comes straight out of contribution. A 60% gross margin means COGS is 40% of price, so on a $100 item variable cost is $40 and contribution per unit falls from $60 to $50 after the cut. To hold total gross profit flat, volume has to rise by the ratio of old to new contribution — 60 divided by 50, or 1.2x, which is 20% more units just to break even. The clean general rule is that the required volume increase equals the price cut divided by gross margin minus the price cut: here 10 divided by (60 minus 10), which is 20%. That's a high bar — you're betting a 10% discount drives at least 20% more volume, and if it only grows 10 to 15%, gross profit actually falls — so I'd want solid price elasticity data before approving."
         },
         {
           type: "flip",
