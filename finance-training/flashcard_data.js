@@ -510,3 +510,95 @@ QUIZ_LIBRARY.push({
     }
   ]
 });
+
+// Cross-topic scenario flip cards — 15 interview scenarios mixing working capital,
+// the three statements, NPV/IRR, unit economics, SaaS metrics, valuation, and margins.
+QUIZ_LIBRARY.push({
+  id: "scenario_mix",
+  name: "Scenario Mix",
+  color: "#6366f1",
+  quizzes: [
+    {
+      id: "fc_scenarios",
+      title: "Cross-Topic Scenarios",
+      difficulty: "advanced",
+      questions: [
+        {
+          type: "flip",
+          q: "Your company just landed a big enterprise customer and revenue is up 40% this quarter, but the CFO is worried about running out of cash. How is that possible if sales are booming?",
+          a: "This is the classic growth-eats-cash problem — fast growth consumes working capital. As sales ramp, you build up receivables and pay for delivery, payroll, and suppliers well before the customer's cash actually lands. For example, $5M of new revenue collected on 60-day terms ties up roughly $820K in receivables before you see a dollar. That's why a profitable company can still go cash-negative when it scales — earnings are not the same as cash. The fix is managing the cash conversion cycle: collect faster, stretch payables, or raise financing to bridge the gap."
+        },
+        {
+          type: "flip",
+          q: "Walk me through what happens across all three financial statements when a company buys $1M of equipment with cash.",
+          a: "On the income statement nothing happens at purchase, but depreciation starts flowing through — say $100K a year over a 10-year life, which lowers pre-tax income. On the cash flow statement there's an immediate $1M outflow under investing activities. On the balance sheet, cash drops $1M and PP&E rises $1M, so total assets are unchanged the day you buy it; over time accumulated depreciation reduces PP&E and the after-tax depreciation reduces retained earnings. The key insight is that the full $1M hits cash right away but the P&L recognizes it slowly — and that timing mismatch is exactly why we need a separate cash flow statement."
+        },
+        {
+          type: "flip",
+          q: "Your team can spend $500K now on a project that returns $150K a year for 5 years, and the discount rate is 10%. Should you do it?",
+          a: "I'd run the NPV — discount the five $150K inflows at 10% and net out the $500K. The 5-year annuity factor at 10% is about 3.79, so the present value of the inflows is roughly $150K times 3.79, or $569K. Subtract the $500K cost and NPV comes to about positive $69K, so yes, it creates value. As a cross-check, the IRR is around 15%, comfortably above the 10% hurdle rate, which confirms the call. The one caveat is that NPV is only as good as the cash flow assumptions, so I'd pressure-test those $150K inflows before committing."
+        },
+        {
+          type: "flip",
+          q: "A SaaS company spends $12,000 to acquire a customer who pays $400/month at 80% gross margin and churns at 2% per month. Is this a good business?",
+          a: "Start with lifetime value: monthly gross profit is $400 times 80%, or $320, and at 2% monthly churn the average customer lasts 1 divided by 0.02, which is 50 months — so LTV is about $320 times 50, or $16,000. Against a $12,000 CAC, the LTV-to-CAC ratio is only about 1.3x, well short of the 3x you'd want. The payback period is $12,000 divided by $320, which is roughly 38 months — far past the 12-to-18-month range that's considered healthy. So despite the high price point, the economics don't work: acquisition is too expensive relative to how long customers stay. I'd fix CAC or churn before pouring more money into growth."
+        },
+        {
+          type: "flip",
+          q: "One SaaS company grows 50% with a -15% margin; another grows 20% with a 25% margin. Which is healthier?",
+          a: "My first screen is the Rule of 40 — growth rate plus profit margin should clear 40%. Company A is 50% minus 15%, which is 35%, just under the bar; Company B is 20% plus 25%, which is 45%, above it. So on that single metric B looks healthier because it's converting growth into a more sustainable model. But I'd dig deeper — A's burn might be justified if the market is huge and unit economics are sound, while B could be growth-constrained. Rule of 40 is a great first filter, but I'd confirm with net revenue retention and CAC payback before drawing a conclusion."
+        },
+        {
+          type: "flip",
+          q: "A company has a current ratio of 0.8 and a quick ratio of 0.4, but the CEO insists cash flow is fine. Should you be worried?",
+          a: "A current ratio below 1 means current liabilities exceed current assets — the company owes more over the next year than it can readily cover, which is a yellow flag. The quick ratio of 0.4 is more alarming because it strips out inventory: for every dollar of short-term obligations, only 40 cents sits in cash, receivables, and other liquid assets. That said, some businesses run thin liquidity by design — a retailer with fast inventory turns and generous supplier credit can operate below 1 safely. So I'd test the CEO's claim against the cash conversion cycle and actual operating cash flow; if cash genuinely comes in faster than bills come due, low ratios can be fine, but if it's just optimism, a quick ratio of 0.4 means one slow quarter could trigger a real liquidity crunch."
+        },
+        {
+          type: "flip",
+          q: "A vendor offers 2% off if you pay an invoice within 10 days instead of the normal 30. Is that a good deal?",
+          a: "This is the classic '2/10 net 30' early-payment discount, and the implied return is enormous. You're effectively earning 2% for paying 20 days early, and there are roughly 365 divided by 20, or about 18, of those 20-day windows in a year — so the simple annualized rate is about 2% times 18, or 36%, and compounded it's over 44%. Unless your cost of capital is higher than that, which almost no healthy company's is, you take the discount every single time. The only reason to pass is if you're so cash-strapped that holding onto cash for 20 more days is worth more than a 36% return — and that itself is a warning sign about the health of the business."
+        },
+        {
+          type: "flip",
+          q: "Revenue grew 30% but operating income grew 60%. Is that good, and what's driving it?",
+          a: "That's operating leverage working for you — operating income growing faster than revenue means a big chunk of your cost base is fixed, so incremental sales drop disproportionately to the bottom line. If fixed costs stay roughly flat while revenue climbs, each new dollar of sales carries a high contribution margin straight down to profit. It's a hallmark of a scalable model, especially software, where serving one more customer costs almost nothing. The catch is that the same leverage cuts the other way in a downturn — a 30% revenue drop would hit operating income by more than 30% — so I'd make sure the growth is durable before celebrating."
+        },
+        {
+          type: "flip",
+          q: "A competitor just got acquired for $300M at 10x ARR. Your company has $20M ARR but grows twice as fast. What might you be worth?",
+          a: "The useful read-across is the multiple, not the price — $300M at 10x implies the target had $30M of ARR. Applying a baseline 10x to my $20M ARR gives $200M, but multiples scale with growth, retention, and margins, so growing twice as fast could justify a premium of 15 to 20x, putting me in the $300M-to-$400M range. I'd triangulate that against public comps and the Rule of 40 rather than anchoring on one private deal. And I'd flag the caveat that a single transaction is noisy — strategic buyers overpay for synergies, so it may not reflect fair market value."
+        },
+        {
+          type: "flip",
+          q: "Your DSO is 60 days, DIO is 40 days, and DPO is 30 days. What's your cash conversion cycle and why should the CFO care?",
+          a: "Cash conversion cycle is DSO plus DIO minus DPO, so 60 plus 40 minus 30 equals 70 days. That means 70 days pass between paying for inventory and collecting cash from the customer — 70 days where the company is financing operations out of its own pocket. The CFO cares because every day of that cycle ties up cash that could fund growth or sit in the bank; on $100M of revenue, cutting 10 days frees up roughly $2.7M. The levers are collecting receivables faster, turning inventory quicker, or stretching payables — and improving the cycle is essentially free, internally generated financing."
+        },
+        {
+          type: "flip",
+          q: "Revenue came in 5% above budget but operating margin missed by 3 points. Walk me through how you'd investigate.",
+          a: "A favorable top line with an unfavorable margin tells me costs grew faster than the revenue beat, so I'd decompose both sides. On revenue I'd split the variance into volume versus price to see whether we sold more units or just charged more. On costs I'd isolate whether the problem is in COGS, which would be a gross margin issue, or in opex like a sales-hiring surge or marketing overspend. For instance, if we beat revenue by hiring aggressively ahead of plan, the margin miss might be deliberate investment rather than a problem. The whole point of variance analysis is to turn a number into a story leadership can actually act on."
+        },
+        {
+          type: "flip",
+          q: "You have two mutually exclusive projects: one with a higher NPV, one with a higher IRR. Which do you pick?",
+          a: "If I can only do one, I lean on NPV, because it measures the absolute dollars of value created while IRR is a percentage that can mislead on scale. A small project might post a 40% IRR but add only $50K of NPV, while a larger one at 20% IRR adds $2M — and the larger one makes shareholders meaningfully richer. IRR also carries technical traps: it assumes you reinvest cash flows at the IRR itself, and it can produce multiple answers when cash flows change sign. So I use IRR as a quick way to communicate returns, but I make the actual decision on NPV, assuming the capital is available."
+        },
+        {
+          type: "flip",
+          q: "A SaaS company shows $5M in revenue but $8M in cash collections this quarter. What does that gap tell you?",
+          a: "Collecting $3M more cash than you recognize as revenue means deferred revenue is growing — customers are prepaying for service you'll deliver later, which usually signals strong annual or multi-year bookings. That $3M lands on the balance sheet as deferred revenue, a liability, and it's actually a great signal: it's interest-free financing from customers and a leading indicator of future revenue. I'd confirm it's genuine billing timing rather than a one-off, but in general rising deferred revenue alongside growth is exactly what you want to see. It's also why SaaS businesses can be cash-flow positive while still showing fairly modest GAAP earnings."
+        },
+        {
+          type: "flip",
+          q: "Your CEO wants to cut prices 10% to win market share, and gross margin is 60%. How much extra volume do you need just to break even on gross profit?",
+          a: "A 10% price cut on a 60% margin product is brutal because it comes straight out of the margin — on a $100 item, contribution per unit falls from $60 to $50. To hold total gross profit flat, volume has to rise by 60 divided by 50, or 1.2x — that's 20% more units just to break even. So you're betting demand is elastic enough that a 10% discount drives a 20% volume increase. That's a high bar, and if volume only grows 10%, gross profit actually falls — so I'd want real evidence of price elasticity before signing off."
+        },
+        {
+          type: "flip",
+          q: "You're handed a company growing revenue 25% a year, but free cash flow is negative and debt is rising. Is this a problem?",
+          a: "It depends entirely on what the cash is funding. Growth at 25% naturally eats cash through working capital and capex, so negative free cash flow can be perfectly healthy if the returns justify it — I'd check whether the spend is buying efficient growth using LTV-to-CAC and the Rule of 40. The rising debt is the bigger flag, so I'd look at leverage and interest coverage to see whether the company can actually service what it's borrowing. If unit economics are strong and the debt is manageable, this is a business sensibly investing through its growth phase; if churn is high and coverage is thin, it's a company burning borrowed money to mask a broken model. It's the three statements together — P&L growth, cash burn, and balance sheet leverage — that tell you which one it is."
+        }
+      ]
+    }
+  ]
+});
