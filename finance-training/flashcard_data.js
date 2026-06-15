@@ -602,3 +602,348 @@ QUIZ_LIBRARY.push({
     }
   ]
 });
+
+// Applied Finance — five scenario decks (12 cards each): bonds, capital budgeting,
+// profitability & margins, cash flow & working capital, and financial ratios.
+QUIZ_LIBRARY.push({
+  id: "applied_finance",
+  name: "Applied Finance",
+  color: "#14b8a6",
+  quizzes: [
+    {
+      id: "fc_bonds",
+      title: "Bonds & Fixed Income",
+      difficulty: "intermediate",
+      questions: [
+        {
+          type: "flip",
+          q: "Market rates jump from 4% to 6%, and you're holding a bond paying a 4% coupon. What happens to its price and why?",
+          a: "The price falls, because bond prices and market yields move in opposite directions. Your bond pays a fixed 4% coupon, but new bonds now pay 6%, so no one will buy yours at face value when they can get a richer coupon elsewhere. The price drops until your bond's yield to maturity rises to match the 6% market rate. For a 10-year bond, a 2-point rate jump can knock the price down roughly 15%, because every fixed coupon is now discounted more heavily. That sensitivity is exactly what duration measures."
+        },
+        {
+          type: "flip",
+          q: "A bond has a 5% coupon but trades at a price that gives a 4% yield to maturity. Premium or discount, and why?",
+          a: "It's trading at a premium — above face value. When the coupon rate of 5% is higher than the market yield of 4%, investors will pay extra to capture that above-market income, so the price rises above par. That premium erodes back toward face value by maturity, which is why the yield to maturity ends up below the coupon. The rule is clean: coupon above yield means premium, coupon below yield means discount, and coupon equal to yield means it trades at par."
+        },
+        {
+          type: "flip",
+          q: "A bond has $1,000 face value, pays a $50 annual coupon, and trades at $950. Walk me through coupon rate, current yield, and roughly where YTM sits.",
+          a: "The coupon rate is fixed at $50 on $1,000 of face, so 5%. The current yield is the coupon over the price, $50 divided by $950, which is about 5.3%. The yield to maturity is higher still, because on top of the coupons you collect a $50 gain as the $950 price pulls up to $1,000 at maturity — so YTM sits above the 5.3% current yield. The ordering itself tells the story: for a discount bond, coupon rate is below current yield, which is below YTM."
+        },
+        {
+          type: "flip",
+          q: "Two bonds both yield 5%, but one matures in 2 years and the other in 20. Rates rise 1%. Which loses more, and roughly how much?",
+          a: "The 20-year bond loses far more, because longer maturity means higher duration, and duration is the multiplier on price sensitivity. A 2-year bond has a duration around 1.9, so a 1% rate rise costs it roughly 1.9% of its price; a 20-year bond might have a duration near 13, so the same move costs about 13%. That's the central trade-off in fixed income — reaching for the higher yield on long bonds means taking on a lot more interest-rate risk. If I expected rates to rise, I'd shorten duration to protect principal."
+        },
+        {
+          type: "flip",
+          q: "A Treasury yields 4% and a same-maturity corporate bond yields 7%. What explains the 3% gap, and what would widen it?",
+          a: "The 3% gap is the credit spread — the extra yield investors demand for taking on default risk that Treasuries don't carry, since the government is treated as risk-free. It compensates for the chance the company misses payments and for lower recovery if it defaults. The spread widens when the company's credit quality deteriorates, when the economy weakens and default risk rises broadly, or when investors turn risk-averse and flee to safety. In the 2008 crisis, high-yield spreads blew out past 15% as the market priced in a wave of defaults."
+        },
+        {
+          type: "flip",
+          q: "A zero-coupon bond pays $1,000 in 5 years and the market yield is 6%. What should it cost today, and how does the investor make money?",
+          a: "A zero pays no coupons, so its price is simply the present value of that single future payment: $1,000 divided by 1.06 to the fifth power, which is about $747. The investor makes money purely through price appreciation — buy at $747, and the bond pulls up to $1,000 at maturity, locking in the 6% yield. Because all the return is back-loaded into one final payment, zeros carry the highest duration for their maturity and are the most sensitive to rate moves. That makes them a sharp instrument for betting on falling rates."
+        },
+        {
+          type: "flip",
+          q: "A bond has a 6% annual coupon paid semiannually on $1,000 face. What does the holder actually receive, and when?",
+          a: "They receive $30 every six months, not $60 once a year — the 6% annual coupon splits into two semiannual payments of 3% each on the $1,000 face. Over the year that's still $60, but receiving it twice slightly raises the effective yield, because the first $30 can be reinvested sooner. It's also why bond math is usually done on a semiannual basis, halving both the coupon and the discount rate per period. Most US corporate and Treasury bonds pay semiannually, so that's the default assumption."
+        },
+        {
+          type: "flip",
+          q: "You buy a callable bond yielding 6%, and a year later rates drop to 3%. Good news or bad news for you?",
+          a: "It's a mixed bag, and often bad news. Normally falling rates are great for a bondholder because the price rises, but a callable bond gives the issuer the right to redeem it early at a set call price. With rates at 3%, the company will likely call your 6% bond and refinance cheaper, handing back your principal right when your reinvestment options are worse. That call feature caps your upside, which is exactly why callable bonds pay a higher yield — you're effectively selling the issuer an option."
+        },
+        {
+          type: "flip",
+          q: "Your bond yields a nominal 5% but inflation runs at 4%. What's your real return, and why does it matter?",
+          a: "The real return is roughly the nominal yield minus inflation, so about 1% — that's the actual gain in purchasing power. More precisely, using the Fisher relationship, it's 1.05 divided by 1.04 minus 1, which is about 0.96%. It matters because inflation quietly erodes fixed coupons — a $50 coupon buys less every year as prices climb. This is the core risk of long-dated fixed-rate bonds, and it's why investors worried about inflation reach for inflation-linked bonds like TIPS or stay in shorter maturities."
+        },
+        {
+          type: "flip",
+          q: "You have $100K for bonds but you're unsure where rates are headed. How would you structure it and why?",
+          a: "I'd build a bond ladder — split the $100K across maturities, say $20K each in 1, 3, 5, 7, and 10-year bonds. As each rung matures, I reinvest the proceeds at whatever rate prevails then, so I'm never fully locked in at the wrong moment. If rates rise, I reinvest maturing bonds at higher yields; if they fall, the longer bonds are still locked in at the old higher rates. A ladder smooths out both reinvestment risk and interest-rate risk without forcing me to predict the direction of rates."
+        },
+        {
+          type: "flip",
+          q: "The yield on 2-year Treasuries is higher than on 10-year Treasuries. What is that called, and what might it signal?",
+          a: "That's an inverted yield curve — short-term rates above long-term rates, which is unusual because investors normally demand more yield to lock money up longer. It often means markets expect the central bank to cut rates down the road, usually because they foresee an economic slowdown. Historically an inverted curve has been one of the most reliable recession signals, typically leading downturns by 6 to 18 months. For a finance team it matters because it shapes borrowing costs, refinancing timing, and how you think about deploying cash."
+        },
+        {
+          type: "flip",
+          q: "A company can raise $10M by issuing bonds at 6% or by issuing equity. From the company's side, what's the trade-off?",
+          a: "Debt is cheaper and doesn't dilute owners, but it's a fixed obligation. The 6% interest is tax-deductible, so the after-tax cost might be closer to 4.5% at a 25% tax rate, and existing shareholders keep their full stake. The catch is that interest must be paid in good times and bad — miss it and you risk default — whereas equity carries no mandatory payment. So debt lifts returns when business is strong but amplifies risk when it's weak; the right capital structure balances that cheaper cost against the danger of fixed payments."
+        }
+      ]
+    },
+    {
+      id: "fc_capital_budgeting",
+      title: "Capital Budgeting",
+      difficulty: "advanced",
+      questions: [
+        {
+          type: "flip",
+          q: "A project costs $1M today and returns $300K a year for 5 years. Your cost of capital is 8%. Should you do it?",
+          a: "I'd compute NPV — discount the five $300K cash flows at 8% and net the $1M cost. The 5-year annuity factor at 8% is about 3.99, so the present value of inflows is roughly $300K times 3.99, or $1.20M. Subtract the $1M and NPV is about positive $197K, so yes, it creates value. As a cross-check, the IRR is around 15%, comfortably above the 8% hurdle, which confirms it. I'd still stress-test the $300K figure, because NPV is only as good as the cash-flow assumptions behind it."
+        },
+        {
+          type: "flip",
+          q: "Project A needs $10K and has $5K NPV; Project B needs $1M and has $50K NPV. IRR favors A, NPV favors B. Which do you pick?",
+          a: "If they're mutually exclusive and capital isn't constrained, I pick B, because NPV measures the absolute dollars of value created, and B adds ten times more — $50K versus $5K. IRR makes A look better as a percentage, but a high rate on a tiny base doesn't enrich shareholders the way a solid return on a large base does. You can't bank a percentage; you bank dollars. The one exception is capital rationing — if funds are limited, I'd rank by NPV per dollar invested to squeeze the most value out of the budget."
+        },
+        {
+          type: "flip",
+          q: "Two projects each cost $100K. One returns $50K a year, the other $20K a year for twice as long. How do you weigh payback against NPV?",
+          a: "On payback, the first recovers its $100K in 2 years versus 5 for the second, so payback favors the fast one. But payback ignores everything after the cutoff and ignores the time value of money, so it can mislead. The second project might actually have the higher NPV if those longer-dated cash flows are large enough, even though you wait longer to break even. I use payback as a quick liquidity and risk screen — how fast do I get my money back — but I make the real go/no-go call on NPV."
+        },
+        {
+          type: "flip",
+          q: "You've already spent $2M on R&D. Finishing the product costs another $3M and it'll generate $4M of value. Do you continue?",
+          a: "Yes, continue — the $2M is a sunk cost and irrelevant now. The only question is forward-looking: spend $3M to get $4M, which is positive $1M of incremental value, so finishing is worth it. The $2M is gone whether you proceed or not, so letting it sway the decision would be the sunk-cost fallacy. The discipline in capital budgeting is to always weigh incremental future cash flows against incremental future costs and ignore money already spent."
+        },
+        {
+          type: "flip",
+          q: "Your cost of capital is 10%, but a project is expected to return only 9%. The division head says it's strategic. What's your take?",
+          a: "Purely on the numbers, a 9% return against a 10% cost of capital destroys value — you'd be earning less than it costs to fund the project, so NPV is negative. The hurdle rate exists precisely to stop us from accepting projects that return less than investors require. That said, I'd hear out the strategic case: sometimes a below-hurdle project unlocks future options, blocks a competitor, or opens a larger market. But I'd want that strategic value quantified and folded into the cash flows, not used as a vague reason to override the math."
+        },
+        {
+          type: "flip",
+          q: "You're evaluating a new product that will steal some sales from an existing product. How does that affect the analysis?",
+          a: "You have to count the cannibalization as a cost, because only incremental cash flows belong in the analysis — the lost profit on the existing product must be netted out of the new product's projections. If the new product generates $5M but pulls $2M of profit away from the current line, the true incremental benefit is $3M, and that's what goes into the NPV. Ignoring cannibalization is a classic way to overstate a project. The nuance is you only subtract sales you'd genuinely have kept — if a competitor would have taken them anyway, that's not real cannibalization."
+        },
+        {
+          type: "flip",
+          q: "Your project NPV is positive $500K in the base case but swings to negative $1M if volume comes in 20% low. How does that change your recommendation?",
+          a: "It tells me the project is highly sensitive to the volume assumption, so the headline positive NPV is fragile. I'd run sensitivity analysis to pinpoint which variable the NPV hinges on most — clearly volume here — and then judge how likely that downside really is. If a 20% miss is plausible, I'd want a margin of safety, a contingency plan, or a smaller pilot before committing fully. A positive expected NPV isn't enough on its own; I want to understand the range of outcomes and whether the downside is survivable."
+        },
+        {
+          type: "flip",
+          q: "You have five positive-NPV projects but only enough budget for two. How do you choose?",
+          a: "This is capital rationing, so I can't just take every positive-NPV project — I need the most value from a limited budget. I'd rank them by the profitability index, which is the present value of future cash flows divided by the initial investment, and pick the combination that delivers the most total NPV within the budget. A project returning $1.30 of present value per $1 invested beats one returning $1.15, even if the latter has a bigger absolute NPV. The goal is the highest total NPV the budget can buy, not just the largest individual projects."
+        },
+        {
+          type: "flip",
+          q: "A project's cash flows are forecastable for 5 years, but the asset keeps producing after that. How do you handle the years you can't forecast?",
+          a: "I'd estimate a terminal value to capture all the cash flows beyond the explicit forecast. A common approach treats the year-5 cash flow as a growing perpetuity — divide it by the discount rate minus the growth rate — then discount that lump sum back to today. For instance, a $200K cash flow growing at 2% with a 10% discount rate is worth $200K divided by 0.08, or $2.5M, at year 5, then discounted back. In many long-lived projects the terminal value is the majority of total NPV, so its assumptions deserve real scrutiny."
+        },
+        {
+          type: "flip",
+          q: "Two projects have the same total cash flows, but one front-loads them and one back-loads them. You raise the discount rate. Which is hurt more?",
+          a: "The back-loaded project is hurt more, because a higher discount rate penalizes distant cash flows far more heavily than near ones. Discounting compounds over time, so a cash flow 10 years out shrinks much more than one arriving next year when rates rise. The front-loaded project gets most of its value back early, where discounting barely bites. It's the same reason long-duration assets — growth stocks, long bonds, back-loaded projects — get hit hardest when rates rise: their value lives in the far future."
+        },
+        {
+          type: "flip",
+          q: "Machine A costs $50K and lasts 3 years; Machine B costs $80K and lasts 5 years. Both do the same job. How do you compare them fairly?",
+          a: "You can't just compare sticker prices when they last different lengths of time, so I'd convert each into an equivalent annual cost — spreading the present value of total costs over each machine's life as a level yearly figure. Machine A's $50K over 3 years at around 10% works out to roughly $20K a year; Machine B's $80K over 5 years to roughly $21K a year. On that apples-to-apples basis Machine A is slightly cheaper per year of service. The equivalent annual cost method is the right tool whenever you're comparing assets with different useful lives."
+        },
+        {
+          type: "flip",
+          q: "A risky project could be hugely profitable or a total loss. Instead of committing $100M now, how might you structure it to manage risk?",
+          a: "I'd stage the investment to preserve optionality — commit a small amount up front, say $10M for a pilot, then decide whether to scale based on what I learn. That turns an all-or-nothing bet into a series of smaller decisions, each contingent on the previous one working. It's the real-options mindset: the right to expand later if results are strong, or walk away cheaply if they're not, has genuine value. You give up some speed and economies of scale, but you cap the downside and only pour in the big money once the risk has come down."
+        }
+      ]
+    },
+    {
+      id: "fc_margins",
+      title: "Profitability & Margins",
+      difficulty: "intermediate",
+      questions: [
+        {
+          type: "flip",
+          q: "Walk me through gross margin, operating margin, and net margin using a company with $100 of revenue.",
+          a: "Start with $100 of revenue. Subtract COGS — say $40 — and you get $60 of gross profit, a 60% gross margin, which shows how profitable the core product is before overhead. Then subtract operating expenses like sales, R&D, and admin — say $35 — leaving $25 of operating profit, a 25% operating margin, which reflects running the whole business. Finally subtract interest and taxes — say $10 — and you're left with $15 of net income, a 15% net margin, the bottom-line profit for shareholders. Each step strips out a different layer of cost, so the three margins together show where the money goes."
+        },
+        {
+          type: "flip",
+          q: "You buy a product for $80 and sell it for $100. Is that a 20% margin or a 25% markup?",
+          a: "It's both, and people confuse them constantly. The margin is profit over the selling price — $20 over $100, which is 20%. The markup is profit over the cost — $20 over $80, which is 25%. Markup is always the higher number because the cost base is smaller than the price. It matters because if a manager says they need a 40% margin and you set prices using a 40% markup, you'll come up short on every single sale."
+        },
+        {
+          type: "flip",
+          q: "A company has high fixed costs and low variable costs. Sales rise 10%. What happens to operating profit, and what's the risk?",
+          a: "Operating profit rises by more than 10%, because with high fixed costs most of each incremental sales dollar drops straight to the bottom line — that's operating leverage. Once fixed costs are covered, the contribution margin on new sales flows through almost entirely as profit, so a 10% revenue gain might produce a 25% profit gain. The risk is symmetry: the same leverage works brutally in reverse, so a 10% sales drop could cut operating profit by 25% or more. High operating leverage is fantastic in a growing market and dangerous in a downturn."
+        },
+        {
+          type: "flip",
+          q: "Fixed costs are $500K a year, each unit sells for $100, and variable cost per unit is $60. How many units to break even?",
+          a: "Break-even is fixed costs divided by the contribution margin per unit. Contribution per unit is $100 minus $60, or $40, and $500K divided by $40 is 12,500 units. So you need to sell 12,500 units a year just to cover costs; every unit beyond that adds $40 to profit. If I wanted a $200K profit target, I'd add it to fixed costs — $700K divided by $40 is 17,500 units. It's a fast way to see how much volume risk the cost structure carries."
+        },
+        {
+          type: "flip",
+          q: "Product A has a 70% contribution margin, Product B has 30%. Total sales are flat but the mix shifts toward B. What happens to profit?",
+          a: "Profit falls even though revenue is unchanged, because you're selling more of the lower-margin product. Each dollar that shifts from A to B contributes 40 cents less toward fixed costs and profit — 70 cents versus 30 cents. This is why mix matters as much as volume: a company can hit its revenue target and still miss profit badly if the sales mix tilts toward cheaper items. I'd flag it to sales leadership, because incentives that reward revenue alone can quietly erode margins through mix."
+        },
+        {
+          type: "flip",
+          q: "Why do analysts look at EBITDA, and what can it hide?",
+          a: "EBITDA — earnings before interest, taxes, depreciation, and amortization — is a rough proxy for operating cash generation that strips out financing and accounting choices, so it's handy for comparing the core profitability of companies with different capital structures or tax situations. But it can hide a lot. By adding back depreciation it ignores the real cost of capital investment, so a capital-heavy business can look healthier than it is. It also ignores interest, a real cash cost for a leveraged company, and changes in working capital. That's why investors like Buffett and Munger are skeptical of leaning on it — depreciation reflects money that genuinely had to be spent. It's a useful starting point, never the whole story."
+        },
+        {
+          type: "flip",
+          q: "Revenue is growing but gross margin slipped from 65% to 58% over a year. How would you investigate?",
+          a: "A falling gross margin while revenue grows means costs are rising faster than price, so I'd decompose it three ways. First, pricing — are we discounting to drive that growth? Second, input costs — are COGS components like materials, hosting, or labor getting more expensive? Third, mix — are we selling more of a lower-margin product or to lower-margin customer segments? A 7-point drop could be entirely a mix shift toward a cheaper line, even if every individual product's margin held. The point is to turn the trend into one specific, fixable driver."
+        },
+        {
+          type: "flip",
+          q: "Revenue grew 12% this year. The CFO asks how much came from price versus volume. Why does she care?",
+          a: "She cares because price-driven and volume-driven growth are very different in quality. If most of the 12% came from raising prices, that's high-margin growth that flows almost entirely to profit and signals pricing power — though it may not repeat and could eventually dent demand. If it came from volume, it's more sustainable share growth but carries the variable costs of producing more. I'd decompose it — if prices rose about 5% and volume about 7%, I can tell her the growth is balanced and explain each one's margin impact. That price-versus-volume bridge is one of the most useful analyses in FP&A."
+        },
+        {
+          type: "flip",
+          q: "A software company's gross margin is 80% but a manufacturer's is 30%. Why the gap, and what does it mean for growth?",
+          a: "The gap comes from the cost of delivering one more unit. Software has near-zero marginal cost — once it's built, serving another customer costs almost nothing, so 80 cents of every revenue dollar is gross profit. A manufacturer pays for materials, labor, and capacity on every unit, so only 30 cents is left. It means the software company's profits can scale explosively as it grows, because revenue rises far faster than costs, while the manufacturer must keep spending to grow. That scalability is a big reason software businesses command premium valuations."
+        },
+        {
+          type: "flip",
+          q: "Sales wants to offer a 15% discount to close a big deal, and your gross margin is 50%. What does that discount do to profit on the deal?",
+          a: "A 15% discount on a 50% margin product takes a big bite, because it comes straight out of profit. On a $100 sale, the discount cuts the price to $85 while COGS stays at $50, so gross profit falls from $50 to $35 — a 30% hit to profit from a 15% price cut. To make up that lost profit, the larger order has to bring substantial extra volume. I'd push to learn whether the bigger deal genuinely requires the discount, or whether we're giving away margin we didn't need to."
+        },
+        {
+          type: "flip",
+          q: "Two competitors have identical profits today. One is mostly fixed costs, the other mostly variable. A recession cuts everyone's sales 20%. Who survives better?",
+          a: "The variable-cost company survives better, because its costs fall automatically as sales drop — sell 20% less and you spend roughly 20% less on inputs, so margins hold up. The fixed-cost company still owes its rent, salaries, and equipment regardless, so a 20% revenue drop hits profit much harder and can tip it into losses. That's operating leverage cutting the wrong way. The trade-off is that in a boom the fixed-cost company would have pulled ahead — its structure simply makes it more fragile in a downturn."
+        },
+        {
+          type: "flip",
+          q: "A manager wants to drop your lowest-margin product line to lift overall margin. Why might that be a mistake?",
+          a: "Because margin percentage and absolute profit dollars aren't the same thing. A low-margin product can still throw off real profit dollars and, importantly, help cover fixed costs that don't disappear when you drop it. If that line contributes $2M toward overhead, cutting it makes your average margin look prettier but leaves a $2M hole the remaining products must now absorb. The right question isn't 'what's the margin' but 'is the contribution positive and is it covering costs we'd otherwise still carry.' Optimizing the ratio can quietly destroy real profit."
+        }
+      ]
+    },
+    {
+      id: "fc_cashflow_wc",
+      title: "Cash Flow & Working Capital",
+      difficulty: "intermediate",
+      questions: [
+        {
+          type: "flip",
+          q: "A company reports $5M of net income but its cash balance fell during the year. How is that possible?",
+          a: "Net income and cash differ because the income statement runs on accrual accounting. The company might have booked revenue it hasn't collected yet — growing receivables tie up cash — or spent heavily on inventory, capex, or paying down debt, none of which fully show up in net income. For example, $5M of profit but $7M poured into receivables and equipment leaves you cash-negative for the year. That's exactly why the cash flow statement exists: to reconcile accrual profit back to the real movement of cash."
+        },
+        {
+          type: "flip",
+          q: "Your DSO is 50 days, inventory days are 60, and you pay suppliers in 40 days. What's your cash conversion cycle, and what would you do about it?",
+          a: "Cash conversion cycle is DSO plus inventory days minus payables days, so 50 plus 60 minus 40 equals 70 days. That's 70 days between paying for inventory and collecting from customers — 70 days you're financing out of your own pocket. To shorten it I'd push all three levers: tighten collections to cut DSO, turn inventory faster, and negotiate longer supplier terms. On $50M of revenue, trimming the cycle by 14 days frees up roughly $1.9M of cash — essentially free, internally generated financing."
+        },
+        {
+          type: "flip",
+          q: "How do you get from operating cash flow to free cash flow, and why do investors care more about FCF?",
+          a: "Free cash flow is operating cash flow minus capital expenditures — the cash left after the business pays to maintain and grow its asset base. Investors care because it's the cash actually available to return to shareholders, pay down debt, or reinvest, once the unavoidable spending is done. A company can post strong operating cash flow, but if it must plow most of it back into capex just to stay competitive, real free cash flow is thin. For example, $20M of operating cash flow minus $15M of capex leaves only $5M of true free cash flow — a very different story than the headline."
+        },
+        {
+          type: "flip",
+          q: "A fast-growing distributor is profitable but constantly short on cash. What's likely going on?",
+          a: "Growth is eating its working capital. As sales ramp, the company buys more inventory and extends more credit to customers, so cash gets locked up in inventory and receivables before it comes back in. The faster it grows, the bigger that drag becomes — which is why profitable companies can still run out of cash, sometimes called growing broke. The fix is financing the working capital with a credit line, tightening the cash conversion cycle, or slowing growth to a self-funding pace."
+        },
+        {
+          type: "flip",
+          q: "A subscription company has negative working capital and the CEO is thrilled. Why would that be good?",
+          a: "Negative working capital can be the sign of a fantastic model when it means customers pay before you incur costs. A subscription company that bills annually upfront collects cash today for service it delivers over the next 12 months, so it's effectively financed by its own customers through deferred revenue. That float can fund operations and growth without borrowing. Amazon and many SaaS businesses run on exactly this — here negative working capital isn't a liquidity problem, it's a competitive advantage."
+        },
+        {
+          type: "flip",
+          q: "Walk me through the three sections of the cash flow statement and what a healthy company's pattern looks like.",
+          a: "Operating activities is cash from the core business, investing is cash spent on or received from long-term assets like equipment and acquisitions, and financing is cash from debt, equity, and dividends. A healthy mature company usually shows strongly positive operating cash flow, negative investing as it reinvests, and negative financing as it pays down debt or returns cash to shareholders. A young growth company might show negative operating and investing but positive financing as it raises capital to fund the build-out. The pattern across the three sections tells you what stage and shape the business is in."
+        },
+        {
+          type: "flip",
+          q: "Your DSO jumped from 45 to 70 days this quarter. Walk me through what could be wrong.",
+          a: "A 25-day jump means customers are paying much more slowly, and I'd dig into why. It could be a collections problem — the AR team has fallen behind. It could be customer quality — we sold to weaker credits. It could be a few large customers in distress, or a deliberate loosening of terms to win deals. It might even be a revenue-quality red flag like channel stuffing near quarter-end. Each cause needs a different fix, but the cash impact is real: on $40M of revenue, 25 extra days ties up about $2.7M."
+        },
+        {
+          type: "flip",
+          q: "A retailer's inventory is growing faster than sales. Why is that a warning sign?",
+          a: "Inventory outpacing sales usually means products aren't moving as fast as expected, so cash is piling up on the shelves instead of converting to revenue. It ties up cash, raises storage and insurance costs, and risks obsolescence or future markdowns that crush margins. It can also be an early signal of softening demand that hasn't hit the sales line yet. I'd look at inventory turnover and days-inventory trends — if turnover is slowing, I'd expect discounting ahead and would question the revenue outlook."
+        },
+        {
+          type: "flip",
+          q: "Your CFO wants to extend supplier payment terms from 30 to 60 days to improve cash. What are the upsides and risks?",
+          a: "The upside is immediate: stretching payables from 30 to 60 days releases a one-time slug of cash, because you hold onto money longer before paying it out — on $60M of annual purchases, that extra 30 days frees up about $5M. It's essentially interest-free financing from suppliers. The risks are relationship and cost: suppliers may push back, drop early-payment discounts, raise prices, or deprioritize you. So I'd weigh the cash benefit against any discounts forgone and the strategic importance of each supplier before stretching everyone uniformly."
+        },
+        {
+          type: "flip",
+          q: "A retailer makes most of its profit in Q4 but has to build inventory in Q3. How does that shape cash management?",
+          a: "The mismatch between when cash goes out and when it comes in means the company needs a financing plan for the trough. In Q3 it's pouring cash into inventory ahead of the holidays, so it's at its tightest right before its best quarter. I'd arrange a seasonal credit line to bridge that gap, draw on it to fund the inventory build, then pay it down with the Q4 inflow. Cash management for a seasonal business is about forecasting the low point and making sure there's liquidity to get through it."
+        },
+        {
+          type: "flip",
+          q: "You sign a $1.2M annual contract billed upfront. How does it hit cash flow versus the income statement in the first month?",
+          a: "On cash flow, you collect the full $1.2M upfront, so there's a big positive inflow in month one. On the income statement, you recognize only $100K of revenue that month — one-twelfth — because revenue is earned as you deliver the service. The other $1.1M sits as deferred revenue, a liability on the balance sheet, and converts to revenue over the year. So in month one cash flow looks far stronger than profit, which is the classic cash-ahead-of-revenue dynamic that makes subscription businesses so cash-generative."
+        },
+        {
+          type: "flip",
+          q: "A company has a current ratio of 1.5 but a quick ratio of 0.6. What does the gap tell you?",
+          a: "The gap between the two is inventory — the quick ratio strips it out, and the big drop from 1.5 to 0.6 tells me a large chunk of current assets is tied up in inventory rather than cash or receivables. That's fine for a business with fast-moving, liquid inventory, but risky if that inventory is slow-moving or could go obsolete, because the company couldn't quickly turn it into cash to cover short-term bills. So I'd judge it against the industry — a 0.6 quick ratio is normal for a grocer with rapid turns but worrying for a company holding specialized goods. The two ratios together show how much liquidity depends on selling inventory."
+        }
+      ]
+    },
+    {
+      id: "fc_ratios",
+      title: "Financial Ratios & Analysis",
+      difficulty: "intermediate",
+      questions: [
+        {
+          type: "flip",
+          q: "Two companies both have a 15% return on equity. How would you tell which one is higher quality?",
+          a: "I'd break ROE apart with the DuPont framework — ROE equals net margin times asset turnover times financial leverage. Two companies can reach the same 15% very differently: one through strong margins and efficient asset use, the other by juicing it with heavy debt. The leverage-driven 15% is riskier because it leans on borrowing, which amplifies losses in a downturn. So I'd decompose both and favor the company whose ROE comes from genuine operating performance rather than balance-sheet risk."
+        },
+        {
+          type: "flip",
+          q: "A company has a 20% ROE but only a 5% ROA. What does that spread tell you?",
+          a: "The gap between ROE and ROA comes from leverage. ROA measures how well the company uses all its assets, while ROE measures returns to shareholders' equity alone — so when ROE is much higher than ROA, the company is using a lot of debt to amplify equity returns. A 20% ROE on a 5% ROA implies an equity multiplier of about 4, meaning assets are roughly four times equity, so it's heavily financed by debt. That's great when times are good but magnifies risk, because the debt must be serviced no matter how the business performs."
+        },
+        {
+          type: "flip",
+          q: "Is a current ratio of 3.0 good? The CFO is bragging about it.",
+          a: "Not necessarily — a high current ratio can actually signal inefficiency. A 3.0 means current assets are three times current liabilities, which looks safe, but it might mean the company is sitting on idle cash, bloated inventory, or uncollected receivables instead of putting that capital to work. Healthy liquidity depends on the industry, but somewhere around 1.5 to 2 is often the sweet spot. So I'd dig into what's driving the 3.0 — if it's piles of slow inventory or cash earning nothing, that's a capital-efficiency problem dressed up as financial strength."
+        },
+        {
+          type: "flip",
+          q: "Company A turns inventory 12 times a year, Company B turns it 4 times, same industry. What does that tell you?",
+          a: "Company A is far more efficient — turning inventory 12 times means it sells through its stock about every 30 days, versus 90 days for Company B. That ties up less cash, reduces storage and obsolescence costs, and signals stronger demand or tighter operations. Company B's 4 turns suggest overstocking, weaker sales, or poor inventory management, and more risk of markdowns. In the same industry that's a real edge for A — though I'd check A isn't turning so fast that it's stocking out and losing sales."
+        },
+        {
+          type: "flip",
+          q: "A company's interest coverage ratio is 1.5x. Should lenders be worried?",
+          a: "Yes, 1.5x is thin — a yellow-to-red flag. Interest coverage is EBIT divided by interest expense, so 1.5x means operating profit covers interest only one-and-a-half times, leaving very little cushion if earnings dip. A modest downturn could push coverage below 1, meaning the company can't cover interest from operations, which is the road to default. Lenders generally want at least 3x to 4x for comfort. At 1.5x I'd be looking hard at earnings stability and the debt maturity schedule."
+        },
+        {
+          type: "flip",
+          q: "A company has a debt-to-equity ratio of 2.0. Is that dangerous?",
+          a: "It depends entirely on the industry and the stability of cash flows. A 2.0 means twice as much debt as equity, which would be alarming for a volatile tech startup but completely normal for a utility or a real estate company with steady, predictable cash flows that can comfortably service debt. The real question is whether the business generates enough reliable cash to cover interest and principal, so I'd pair the debt-to-equity with interest coverage and the cash-flow profile. Leverage isn't inherently good or bad — it's about whether the cash flows can support it."
+        },
+        {
+          type: "flip",
+          q: "A discount grocer has razor-thin 2% net margins but a 25% ROE. How does that work?",
+          a: "It works through high asset turnover — the grocer earns very little on each sale but sells enormous volume and turns its assets over many times a year. Low margin times high turnover can produce a strong return on assets, and modest leverage lifts it to a 25% ROE. It's the classic high-volume, low-margin model: a supermarket might earn 2 cents on a dollar but run that dollar through the business many times over. Contrast that with a luxury brand earning fat margins on low volume — same ROE, opposite engine."
+        },
+        {
+          type: "flip",
+          q: "Someone hands you a single company's ratios and asks if it's healthy. What's missing?",
+          a: "Context. A ratio in isolation is nearly meaningless — I need to benchmark it against the company's own history to see the trend, against industry peers to see relative position, and against the business model to know what's normal. A 40% gross margin is great for a grocer and terrible for a software company. So I'd ask for at least three years of trend and a set of comparable companies before judging anything. Ratios are only useful as comparisons, not as absolutes."
+        },
+        {
+          type: "flip",
+          q: "Company A trades at a P/E of 40 and Company B at 10. Is B the better buy?",
+          a: "Not necessarily — a low P/E can be genuinely cheap or it can be a trap. The P/E reflects what the market will pay per dollar of earnings, and a high multiple like 40 usually prices in strong expected growth, while a low 10 may signal weak growth, high risk, or a declining business. To compare fairly I'd look at the PEG ratio, which divides P/E by the growth rate — A at 40 growing 40% has a PEG of 1.0, while B at 10 growing 5% has a PEG of 2.0, making A arguably the better value despite the higher headline multiple. Cheap on P/E isn't the same as cheap on value."
+        },
+        {
+          type: "flip",
+          q: "A company has a healthy 60% gross margin but a negative net margin. Where's the problem?",
+          a: "The problem is below the gross-profit line — the core product is profitable, but operating expenses, interest, or taxes are eating all of it and more. A 60% gross margin with a negative bottom line usually points to bloated opex: maybe the company is overspending on sales and marketing to chase growth, or carrying too much overhead and R&D for its revenue base. It's common in early-stage growth companies investing ahead of scale. I'd look at each opex line as a percentage of revenue to judge whether it's a deliberate growth investment or genuine inefficiency."
+        },
+        {
+          type: "flip",
+          q: "How do DSO, DPO, and inventory days connect to how much financing a company needs?",
+          a: "Together they set the cash conversion cycle, which drives how much working capital the company must fund. The longer it takes to collect receivables and sell inventory, and the faster you have to pay suppliers, the more cash is locked in the operating cycle and the more financing you need to bridge it. For example, a company with 60 days to collect, 60 days of inventory, and only 30 days to pay suppliers has 90 days of operations to finance. Improving any of the three shrinks that funding gap, which is why these operating metrics are really financing levers in disguise."
+        },
+        {
+          type: "flip",
+          q: "Net income is rising nicely but operating cash flow is falling. What's your reaction?",
+          a: "That divergence is a classic earnings-quality red flag, and it would make me cautious. Profit climbing while cash from operations falls suggests the earnings may not be backed by real cash — maybe the company is booking revenue it isn't collecting, with receivables ballooning, or capitalizing costs that should be expensed, or stuffing the channel to inflate sales. Over time cash flow and net income should track each other; a persistent gap where profit outruns cash is often how accounting problems first surface. I'd reconcile the two and scrutinize receivables and revenue recognition before trusting the profit growth."
+        }
+      ]
+    }
+  ]
+});
