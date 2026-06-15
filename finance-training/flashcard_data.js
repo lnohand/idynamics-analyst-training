@@ -576,7 +576,7 @@ QUIZ_LIBRARY.push({
         {
           type: "flip",
           q: "Revenue came in 5% above budget but operating margin missed by 3 points. Walk me through how you'd investigate.",
-          a: "A favorable top line with an unfavorable margin tells me costs grew faster than the revenue beat, so I'd decompose both sides. On revenue I'd split the variance into volume versus price to see whether we sold more units or just charged more. On costs I'd isolate whether the problem is in COGS, which would be a gross margin issue, or in opex like a sales-hiring surge or marketing overspend. For instance, if we beat revenue by hiring aggressively ahead of plan, the margin miss might be deliberate investment rather than a problem. The whole point of variance analysis is to turn a number into a story leadership can actually act on."
+          a: "A favorable top line with an unfavorable margin tells me costs grew faster than the revenue beat, so my focus goes to the cost side. I'd isolate whether the problem is in COGS, which would be a gross margin issue, or in opex like a sales-hiring surge or marketing overspend. I'd also confirm the revenue beat is high quality and not driven by heavy discounting that quietly dented margin. For instance, if we beat revenue by hiring aggressively ahead of plan, the margin miss might be deliberate investment rather than a problem. The whole point of variance analysis is to turn a number into a story leadership can actually act on."
         },
         {
           type: "flip",
@@ -786,8 +786,8 @@ QUIZ_LIBRARY.push({
         },
         {
           type: "flip",
-          q: "Revenue grew 12% this year. The CFO asks how much came from price versus volume. Why does she care?",
-          a: "She cares because price-driven and volume-driven growth are very different in quality. If most of the 12% came from raising prices, that's high-margin growth that flows almost entirely to profit and signals pricing power — though it may not repeat and could eventually dent demand. If it came from volume, it's more sustainable share growth but carries the variable costs of producing more. I'd decompose it — if prices rose about 5% and volume about 7%, I can tell her the growth is balanced and explain each one's margin impact. That price-versus-volume bridge is one of the most useful analyses in FP&A."
+          q: "Your gross margin is 40% and the CEO wants it at 50% within a year. What levers do you actually have?",
+          a: "Gross margin is gross profit over revenue, so to lift it from 40% to 50% I can pull on price or on cost. On price, raising prices flows almost entirely through to margin if volume holds, so even a few points of price helps — though I'd watch demand so I don't lose the units. On cost, I can lower COGS by renegotiating supplier contracts, improving production or hosting efficiency, and cutting waste. And on mix, I can steer sales toward higher-margin products or customers. On $10M of revenue, going from 40% to 50% means finding an extra $1M of gross profit, and a blend of a little price and a little COGS reduction is usually more realistic than betting everything on one lever."
         },
         {
           type: "flip",
