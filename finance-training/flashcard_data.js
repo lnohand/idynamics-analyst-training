@@ -791,6 +791,11 @@ QUIZ_LIBRARY.push({
         },
         {
           type: "flip",
+          q: "Revenue grew 12% this year. The CFO asks how much came from price versus volume. Why does she care?",
+          a: "She cares because price-driven and volume-driven growth are very different in quality. If most of the 12% came from raising prices, that's high-margin growth that flows almost entirely to profit and signals pricing power — though it may not repeat and could eventually dent demand. If it came from volume, it's more sustainable share growth but carries the variable costs of producing more. I'd decompose it — if prices rose about 5% and volume about 7%, I can tell her the growth is balanced and explain each one's margin impact. That price-versus-volume bridge is one of the most useful analyses in FP&A."
+        },
+        {
+          type: "flip",
           q: "A software company's gross margin is 80% but a manufacturer's is 30%. Why the gap, and what does it mean for growth?",
           a: "The gap comes from the cost of delivering one more unit. Software has near-zero marginal cost — once it's built, serving another customer costs almost nothing, so 80 cents of every revenue dollar is gross profit. A manufacturer pays for materials, labor, and capacity on every unit, so only 30 cents is left. It means the software company's profits can scale explosively as it grows, because revenue rises far faster than costs, while the manufacturer must keep spending to grow. That scalability is a big reason software businesses command premium valuations."
         },
