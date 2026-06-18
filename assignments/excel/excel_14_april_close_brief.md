@@ -1,4 +1,4 @@
-# Excel Assignment 10 — April 2026 Monthly Close
+# Excel Assignment 14 — April 2026 Monthly Close
 ### Idynamics Finance Analyst Training Program
 
 ---
@@ -226,18 +226,18 @@ New assignment = new branch:
 ```
 git checkout main
 git pull origin main
-git checkout -b student/excel_10_april_close
+git checkout -b student/excel_14_april_close
 ```
 
 When ready to submit:
 
 ```
-git add submissions/excel/excel_10_april_close.xlsx
-git commit -m "Add: 10 — April 2026 close (Actuals, Apr A vs F tab, KPI Tracker, WaterfallData)"
-git push origin student/excel_10_april_close
+git add submissions/excel/excel_14_april_close.xlsx
+git commit -m "Add: 14 — April 2026 close (Actuals, Apr A vs F tab, KPI Tracker, WaterfallData)"
+git push origin student/excel_14_april_close
 ```
 
-Open a PR from `student/excel_10_april_close` → `main`.
+Open a PR from `student/excel_14_april_close` → `main`.
 
 ---
 
@@ -256,12 +256,12 @@ Before pushing, update `my-notes/`:
 
 ## Submission
 
-File: `submissions/excel/excel_10_april_close.xlsx`
+File: `submissions/excel/excel_14_april_close.xlsx`
 
-Open a PR from `student/excel_10_april_close` → `main` with this description:
+Open a PR from `student/excel_14_april_close` → `main` with this description:
 
 ```
-## 10 — April 2026 Close
+## 14 — April 2026 Close
 
 - Actuals tab: Apr 2026 column added, inputs entered, formula rows derive
 - Apr 2026 A vs F tab added by copying Mar tab + updating config block only
@@ -295,6 +295,6 @@ before opening the PR.
 
 ---
 
-*Excel Assignment 10 — April 2026 Monthly Close*
+*Excel Assignment 14 — April 2026 Monthly Close*
 *Idynamics Finance Analyst Training Program*
 *June 2026*

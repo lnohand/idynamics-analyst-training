@@ -1,4 +1,4 @@
-# Excel Assignment 11 — May 2026 Monthly Close
+# Excel Assignment 15 — May 2026 Monthly Close
 ### Idynamics Finance Analyst Training Program
 
 ---
@@ -242,18 +242,18 @@ New assignment = new branch:
 ```
 git checkout main
 git pull origin main
-git checkout -b student/excel_11_may_close
+git checkout -b student/excel_15_may_close
 ```
 
 When ready to submit:
 
 ```
-git add submissions/excel/excel_11_may_close.xlsx
-git commit -m "Add: 11 — May 2026 close (Contraction movement, May A vs F tab, KPI Tracker, WaterfallData)"
-git push origin student/excel_11_may_close
+git add submissions/excel/excel_15_may_close.xlsx
+git commit -m "Add: 15 — May 2026 close (Contraction movement, May A vs F tab, KPI Tracker, WaterfallData)"
+git push origin student/excel_15_may_close
 ```
 
-Open a PR from `student/excel_11_may_close` → `main`.
+Open a PR from `student/excel_15_may_close` → `main`.
 
 ---
 
@@ -272,12 +272,12 @@ Before pushing, update `my-notes/`:
 
 ## Submission
 
-File: `submissions/excel/excel_11_may_close.xlsx`
+File: `submissions/excel/excel_15_may_close.xlsx`
 
-Open a PR from `student/excel_11_may_close` → `main` with this description:
+Open a PR from `student/excel_15_may_close` → `main` with this description:
 
 ```
-## 11 — May 2026 Close
+## 15 — May 2026 Close
 
 - Actuals tab: Contraction row added; Closing MRR logic extended; May 2026 column entered
 - May 2026 A vs F tab added by copying Apr tab + updating config block, with Contraction movement
@@ -313,6 +313,6 @@ before opening the PR.
 
 ---
 
-*Excel Assignment 11 — May 2026 Monthly Close*
+*Excel Assignment 15 — May 2026 Monthly Close*
 *Idynamics Finance Analyst Training Program*
 *June 2026*
