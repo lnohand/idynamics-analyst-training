@@ -2,93 +2,112 @@
 
 **PR #14 · branch `student/excel_14_april_close`**
 
-The plumbing held up. You added one Actuals column, copied the March tab,
-changed two config cells, and the workbook recalculated April end to end —
-that's the payoff the redesign was built for, and it worked. Closing MRR ties
-to the penny ($156,830.50), Opening MRR derives from March's Closing, GRR/NRR
-are dynamic with no hardcoded columns, and the KPI Tracker pulls April without
-disturbing the prior months. The churn write-up nails the hard gate.
+*(Updated review — supersedes the first pass. Two corrections to the earlier
+version: the S&M issue was on us, not you; and I've now reviewed the Billing
+Reconciliation tab, which the first pass missed.)*
 
-But three input/data errors and two commentary errors made it through, and a
-couple of them cascade. This needs another pass before it merges.
+The four-step close worked end to end — Closing MRR ties to the penny
+($156,830.50), Opening MRR derives from March's Closing, GRR/NRR are dynamic with
+no hardcoded columns, the KPI Tracker pulls April without disturbing prior months,
+and the churn write-up nails the hard gate. The reconciliation you carried into
+this file now ties on both bridges — good work; the annuals you were stuck on are
+sorted. Below are the close fixes and the reconciliation cleanup.
 
 ---
 
-## Fix 1 — S&M is wrong: $29,000 entered, should be $32,000
+## A — On S&M: that one was on us
 
-The brief tells you explicitly in Part 1: *"Read April's S&M of $32,000 off
-[Lisa's] message and enter it from there."* You entered **$29,000** — March's
-number, carried forward. Check the `Actuals` Apr column (E7).
+You were right — there was no April OpEx message in #finance, so you had no source
+and carried March's $29,000 forward. That's the sensible thing to do with missing
+data, and you shouldn't have been dinged for it. **Lisa has now posted April's
+numbers** to #finance:
 
-This one cascades through the whole cost story:
+| Line | April actual |
+|------|--------------|
+| S&M | $32,000 |
+| R&D | $23,000 |
+| G&A | $20,000 |
+| **Total OpEx** | **$75,000** |
 
-| Line | You have | With S&M = $32,000 |
-|------|----------|--------------------|
-| Total OpEx | $73,000 | $76,000 |
-| EBITDA | $36,781 | ~$33,781 |
-| EBITDA margin | 23.5% | ~21.5% |
-| Monthly CAC | $14,500 | $16,000 |
-| OpEx vs plan | $1k favorable | ~$2k **un**favorable |
+Update the three INPUT cells in the `Actuals` Apr column from her message. That
+changes Total OpEx to $75,000, EBITDA to $34,750 (22.16% margin), and monthly CAC
+to $16,000 — then re-read your cost commentary against the corrected figures (see
+Fix A3).
 
-So the headline "EBITDA beat plan / OpEx came in light" is an artifact of the
-wrong input. Fix the input first, then re-read your commentary against the
-corrected numbers.
+---
 
-## Fix 2 — Active Subscriptions: you have 54, it should be 55
+## B — Close fixes
 
-The self-check expects **55**. Your `Actuals` Apr column shows **54**, and the
-A-vs-F KPI row reports the month-over-month change as **0** — i.e. you've
-recorded no net movement in subscriptions. But April had both new
-subscriptions *and* the one cancellation. Net it out from the snapshot: the new
-subs added this month, minus the single cancelled subscription, should leave
-you one ahead of March's 54. Go back to the April 30 snapshot and reconcile the
-count.
+### B1 — Active Subscriptions: you have 54, should be 55
+Your `Actuals` Apr column shows **54**, and the KPI row reports the
+month-over-month change as **0**. April had new subscriptions *and* the one
+cancellation — net the snapshot out and you should land one ahead of March's 54.
+This is also why your commentary says *"only bringing in 1"* new logo while your
+own Actuals show **2 new customers** (E14 = 2). Reconcile the two.
 
-This is also why your commentary says *"only bringing in 1"* new logo while
-your own Actuals and KPI tab show **2 new customers** (E14 = 2). Those two
-numbers can't both be right — line them up.
+### B2 — WaterfallData has no April rows
+Part 7 asks for April's rows directly below March; the table stops at March's
+Closing MRR (row 22). Add the seven movement rows (Opening, New, Expansion,
+Contraction = 0, Churned, Net New, Closing) with the `Apr-26` label from the same
+`TEXT/DATE` pattern, so Power BI's month slicer picks April up.
 
-## Fix 3 — WaterfallData has no April rows
+### B3 — Cost commentary needs a rewrite against the corrected OpEx
+Once you enter the real numbers, the cost story flips. With S&M $32k / R&D $23k /
+G&A $20k:
+- **Total OpEx is $75,000 vs $74,000 plan — $1,000 *over*** (not under).
+- S&M $2k over, **G&A $1k over** (your draft said G&A *fell* — it rises either way),
+  R&D $2k under.
+- EBITDA $34,750 is still a touch above the $34,048 plan, so the headline is
+  "roughly on plan," not a beat driven by light spend.
 
-Part 7 asks you to add April's rows directly below March. They aren't there —
-the table stops at March's Closing MRR (row 22). Your PR self-check marked this
-✅, but it wasn't done. Add the seven movement rows (Opening, New, Expansion,
-Contraction = 0, Churned, Net New, Closing) with the `Apr-26` label generated
-by the same `TEXT/DATE` pattern, so Power BI's month slicer picks April up.
+### B4 — "Retention metrics aren't affected" is wrong
+The *logo / customer count* is unaffected by a revenue churn — that part you
+explained well. But a revenue churn **does** lower NRR and GRR; it's exactly why
+your NRR landed at 99.6%. Reword: the logo is retained, the revenue is not, and
+the retention metrics reflect the lost revenue.
 
-## Fix 4 — Cost commentary contradicts the tab
-
-You wrote that OpEx fell *"in each of the three categories... a decrease of
-$3,000 in both R&D and G&A."* Look at your own P&L:
-
-- R&D: $25,000 → $22,000 = **−$3,000** ✅
-- G&A: $19,000 → $22,000 = **+$3,000** — G&A *rose* $3,000, it didn't fall
-- S&M: −$1,000 (and that's before Fix 1 corrects it upward)
-
-G&A went the opposite direction from what you wrote. Once Fix 1 lands, the
-whole paragraph flips anyway — OpEx is over plan, not under — so rewrite this
-section from the corrected figures.
-
-## Fix 5 — "Retention metrics aren't affected" is wrong
-
-In the churn paragraph you say the revenue churn means *"our active customer
-count [stays] the same and our retention metrics aren't affected."* Half right.
-The **logo / customer count** is unaffected — that's the correct insight, and
-you explained it well. But **revenue retention is absolutely affected**: a
-revenue churn reduces NRR and GRR. That's literally why your NRR landed at
-99.6% instead of above 100%. Tighten the wording: the *logo* is retained, the
-*revenue* is not — and the retention metrics reflect the lost revenue.
-
-## Fix 6 — Update your notes
-
+### B5 — Update your notes
 The brief lists four `my-notes/` updates (April snapshot query, revenue-vs-logo
-churn, the four-step close in practice). Your branch changed only the workbook —
-no notes were touched, though the PR says they were. Add them.
+churn, the four-step close in practice). The branch changed only the workbook.
 
-(Minor, while you're in there: the KPIs section is still titled "March 2026 —
-SaaS KPIs" and the forecast column header still reads "Forecast - Mar 26" on
-the April tab — stale labels copied from March. And the file sits at the repo
-root rather than `submissions/excel/`.)
+*(Minor: KPI section still titled "March 2026 — SaaS KPIs" and the forecast column
+header still reads "Forecast - Mar 26" on the April tab — stale labels copied from
+March. File also sits at repo root rather than `submissions/excel/`.)*
+
+---
+
+## C — Billing Reconciliation tab (the column-E version)
+
+Both bridges tie to zero in both months, and the hard part is right: you found all
+five prior-billed annuals (SUB006/009/016/025/031 = $30,870/mo) for January, and
+correctly extended it to seven for February once the two Pacific annuals also stop
+billing ($36,755.50). The `SUMIF(...,"Annual",...) * 11/12` for billing excess is
+clean. Four things to finish it:
+
+### C1 — February Total Invoiced: $114,144 vs $113,974.29
+The Feb billing file sums to **$113,974.29** — the −$169.71 SUB050 credit note is
+in it. You add the $169.71 *back* to report $114,144, then net it out again in
+Bridge 2. That contradicts both the billing file and your own Part 6 note ("Total
+billed will also be reduced"). Pick the treatment your commentary already
+describes: leave the credit note *in* Total Invoiced (= $113,974.29). Then Bridge 2
+needs only the +$675 SUB028 line — drop the separate SUB050 line.
+
+### C2 — Don't hardcode the annual-MRR line
+`F13`/`G13` type the seats and prices as literals (`31*180 + 36*150 + …`). The
+values are right, but it's the same trap as a stale self-check cell — the day a
+seat count changes, this silently goes wrong and no one notices. Reference the
+subscription cells (Engine / your sub base) so the line recomputes itself.
+
+### C3 — Quantify the deferred revenue
+Commentary point 3 asks for the **balance**, named. You say it was "high." State
+it: **$64,740.50 at January 31**, created by the two Pacific Analytics annuals
+(SUB002 $46,800, SUB054 $23,826) — cash collected, not yet earned.
+
+### C4 — Delete the stale left-hand reconciliation (columns A–C)
+The old version is still on the tab and still *doesn't* tie (differences of
+$30,870 / $30,276). Two reconciliations side by side, one broken, is exactly what
+an auditor flags. Remove the A–C block so only the correct column-E version
+remains.
 
 ---
 
@@ -97,17 +116,15 @@ root rather than `submissions/excel/`.)
 | | |
 |---|---|
 | Four-step close worked: one Actuals column + two config cells | ✅ |
-| April Closing MRR = $156,830.50 | ✅ |
-| Opening MRR derives from March Closing (not typed) | ✅ |
+| April Closing MRR = $156,830.50; Opening derives from March | ✅ |
 | NRR = 99.6% — correctly lands just under 100% | ✅ |
 | GRR/NRR dynamic, no hardcoded column letters | ✅ |
-| Config block: only the two cells changed | ✅ |
 | KPI Tracker April column wired; prior months intact | ✅ |
-| Quarterly metrics left as dashes | ✅ |
-| Commentary key-metrics line is formula-driven | ✅ |
 | Churn correctly identified as revenue, not logo (hard gate) | ✅ |
+| Reconciliation: both bridges tie; all 5 (Jan) / 7 (Feb) annuals found | ✅ |
+| Annual billing excess via SUMIF × 11/12 | ✅ |
+| Part 5 (SUB012 = $2,185 for January) — correct | ✅ |
 
-Six fixes. The structure is sound — the failures are data accuracy (S&M, sub
-count, missing waterfall rows) and commentary that didn't get re-read against
-the numbers. Fix the S&M input first; several of the others fall out of it.
-Push to the same branch when done.
+The close fixes are data accuracy (subs, OpEx now sourced, waterfall rows) and a
+commentary rewrite; the reconciliation is cleanup, not a redo. Push to the same
+branch when done.
