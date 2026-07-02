@@ -62,8 +62,7 @@ new part: `INDEX` takes a second argument, `INDEX(block, row, column)`.)*
 
 **B3.** Find the **plan** whose Price/seat is **90**, using INDEX/MATCH (a left-lookup).
 
-**B4 — no hints.** Same idea as B2, on your own: from Table 2, return **Active Cust.** for
-**February**.
+**B4.** From Table 2, return **Active Cust.** for **February**.
 
 ## C — LET
 
