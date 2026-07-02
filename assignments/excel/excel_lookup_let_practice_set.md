@@ -37,7 +37,8 @@ Work off these two small tables.
 the name to its **left** — the thing VLOOKUP can't do.)
 
 **A3.** Look up plan **"Team"** (it doesn't exist) and return **"no plan"** instead of an
-error.
+error. *Hint: you don't need `IFERROR` — XLOOKUP has a built-in **4th argument**,
+`if_not_found`: what to show when there's no match.*
 
 **A4.** From Table 2, return **MRR** for whatever month is typed in cell **H1**. Write it so
 that changing `H1` from `"Apr"` to `"May"` updates the answer with no edit to the formula.
@@ -60,6 +61,9 @@ Give both results.
 new part: `INDEX` takes a second argument, `INDEX(block, row, column)`.)*
 
 **B3.** Find the **plan** whose Price/seat is **90**, using INDEX/MATCH (a left-lookup).
+
+**B4 — no hints.** Same idea as B2, on your own: from Table 2, return **Active Cust.** for
+**February**.
 
 ## C — LET
 
@@ -90,6 +94,7 @@ Growth's row once, pull both values, multiply. Give the number (it should match 
 | B2b | 4 (Apr is the 4th month) |
 | B2c | 99.6% |
 | B3 | Scale |
+| B4 | 41 (Active Cust., Feb) |
 | C1 | 11,340 (12,600 × 0.9) |
 | C2 | 9,900 (45 × 220) |
 
