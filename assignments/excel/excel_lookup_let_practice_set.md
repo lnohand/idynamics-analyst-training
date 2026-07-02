@@ -47,8 +47,17 @@ Give both results.
 
 **B1.** Same as A1 (Scale's Price/seat), but with **INDEX/MATCH** instead of XLOOKUP.
 
-**B2.** **Two-way lookup:** from Table 2, return **NRR in Apr** — find the row by metric name
-*and* the column by month, both dynamically. (Two `MATCH`es, one `INDEX`.)
+**B2 — two-way lookup, built up in three steps** (goal: **NRR in Apr** from Table 2):
+
+- **B2a — find the row.** Use `MATCH` to find which **row** `"NRR"` is on within the metric
+  labels `A2:A4`. What number does it return?
+- **B2b — find the column.** Use `MATCH` to find which **column** `"Apr"` is on within the
+  month header `B1:F1`. What number?
+- **B2c — combine.** Feed both into one `INDEX` over the data block `B2:F4`:
+  `INDEX(B2:F4, ⟨your B2a⟩, ⟨your B2b⟩)`. What value comes back?
+
+*(This is the same `MATCH` you already use to pick a month — now on **both** axes. The only
+new part: `INDEX` takes a second argument, `INDEX(block, row, column)`.)*
 
 **B3.** Find the **plan** whose Price/seat is **90**, using INDEX/MATCH (a left-lookup).
 
@@ -77,7 +86,9 @@ Growth's row once, pull both values, multiply. Give the number (it should match 
 | A3 | no plan |
 | A4 | Apr → 156,831 · May → 160,308 |
 | B1 | 90 |
-| B2 | 99.6% |
+| B2a | 2 (NRR is the 2nd metric) |
+| B2b | 4 (Apr is the 4th month) |
+| B2c | 99.6% |
 | B3 | Scale |
 | C1 | 11,340 (12,600 × 0.9) |
 | C2 | 9,900 (45 × 220) |
