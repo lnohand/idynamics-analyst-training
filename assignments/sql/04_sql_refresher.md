@@ -52,7 +52,7 @@ is always `customer_id`.
 - **Filter:** `status = 'active'`
 - **Sort:** `subscription_id` ascending
 
-**Self-check:** **51 rows.** Every row's status is active (none cancelled).
+**Self-check:** **55 rows.** Every row's status is active (none cancelled).
 
 ---
 
@@ -70,10 +70,10 @@ active vs cancelled.
 
 | status | subscription_count |
 |---|---|
-| active | **51** |
-| cancelled | **11** |
+| active | **55** |
+| cancelled | **12** |
 
-Total should be **62** subscriptions.
+Total should be **67** subscriptions.
 
 ---
 
@@ -91,11 +91,11 @@ constantly.
 - **Filter:** `status = 'active'`
 - **Sort:** `company_name` ascending
 
-**Self-check:** **51 rows** (same as Q1 — the join adds columns, not rows).
+**Self-check:** **55 rows** (same as Q1 — the join adds columns, not rows).
 The `region` column shows only these 3 values: Eastern Canada,
 Western Canada, Central Canada.
 
-> If you get **more** than 51 rows, your join condition is wrong (a missing
+> If you get **more** than 55 rows, your join condition is wrong (a missing
 > or incorrect `ON` clause multiplies rows). If you get **fewer**, you may
 > have written an INNER JOIN where a customer record is missing — check
 > your join key.
@@ -116,7 +116,7 @@ each `region`. Same join as Q3, but now aggregate.
 - **Sort:** `active_subscriptions` descending
 
 **Self-check:** **3 rows** (one per region). The three counts must **sum
-to 51** (all active subscriptions accounted for).
+to 55** (all active subscriptions accounted for).
 
 ---
 
@@ -133,7 +133,7 @@ subscriptions.
 - **Join:** `subscription_events` INNER JOIN `customers` ON `customer_id`
 - **Sort:** `event_count` descending
 
-**Self-check:** **3 rows** (one per region). The counts must **sum to 97**
+**Self-check:** **3 rows** (one per region). The counts must **sum to 105**
 (the total number of rows in `subscription_events`).
 
 > Sanity check: run `SELECT COUNT(*) FROM subscription_events;` on its own.
