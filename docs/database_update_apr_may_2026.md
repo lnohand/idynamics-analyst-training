@@ -68,7 +68,7 @@ VALUES
 UPDATE subscriptions SET seats = 24, updated_at = '2026-04-14 00:00:00' WHERE subscription_id = 'SUB035';
 
 -- Cancellation: SUB045
-UPDATE subscriptions SET status = 'churned', cancelled_date = '2026-04-24',
+UPDATE subscriptions SET status = 'cancelled', cancelled_date = '2026-04-24',
   cancellation_reason = 'Price too high', updated_at = '2026-04-24 00:00:00'
 WHERE subscription_id = 'SUB045';
 
@@ -78,7 +78,7 @@ VALUES
   ('EVT102', 'SUB066', 'CUST044', '2026-04-09', 'created',   NULL,  NULL,  NULL,    NULL,             '2026-04-09'),
   ('EVT103', 'SUB035', 'CUST035', '2026-04-14', 'seats_change', '20', '24', 'seats', 'Team expansion', '2026-04-14'),
   ('EVT104', 'SUB067', 'CUST045', '2026-04-21', 'created',   NULL,  NULL,  NULL,    NULL,             '2026-04-21'),
-  ('EVT105', 'SUB045', 'CUST010', '2026-04-24', 'cancelled', 'active','churned','status','Price too high','2026-04-24');
+  ('EVT105', 'SUB045', 'CUST010', '2026-04-24', 'cancelled', 'active','cancelled','status','Price too high','2026-04-24');
 ```
 
 ### Confirm the load (not the close — these just prove the data landed)
@@ -88,7 +88,7 @@ VALUES
 SELECT subscription_id, customer_id, seats, price_per_seat
 FROM subscriptions WHERE start_date BETWEEN '2026-04-01' AND '2026-04-30';
 
--- SUB035 should show 24 seats; SUB045 should show status 'churned'
+-- SUB035 should show 24 seats; SUB045 should show status 'cancelled'
 SELECT subscription_id, seats, status FROM subscriptions WHERE subscription_id IN ('SUB035','SUB045');
 ```
 
@@ -122,7 +122,7 @@ UPDATE subscriptions SET seats = 27, updated_at = '2026-05-15 00:00:00' WHERE su
 UPDATE subscriptions SET seats = 19, updated_at = '2026-05-12 00:00:00' WHERE subscription_id = 'SUB051';
 
 -- Cancellation: SUB026
-UPDATE subscriptions SET status = 'churned', cancelled_date = '2026-05-23',
+UPDATE subscriptions SET status = 'cancelled', cancelled_date = '2026-05-23',
   cancellation_reason = 'Missing features', updated_at = '2026-05-23 00:00:00'
 WHERE subscription_id = 'SUB026';
 
@@ -133,7 +133,7 @@ VALUES
   ('EVT107', 'SUB051', 'CUST014', '2026-05-12', 'seats_change', '23',  '19',  'seats', 'Team downsizing',  '2026-05-12'),
   ('EVT108', 'SUB029', 'CUST029', '2026-05-15', 'seats_change', '22',  '27',  'seats', 'Team expansion',   '2026-05-15'),
   ('EVT109', 'SUB069', 'CUST047', '2026-05-19', 'created',      NULL,  NULL,  NULL,    NULL,               '2026-05-19'),
-  ('EVT110', 'SUB026', 'CUST026', '2026-05-23', 'cancelled',    'active','churned','status','Missing features','2026-05-23');
+  ('EVT110', 'SUB026', 'CUST026', '2026-05-23', 'cancelled',    'active','cancelled','status','Missing features','2026-05-23');
 ```
 
 ### Confirm the load
@@ -143,7 +143,7 @@ VALUES
 SELECT subscription_id, customer_id, seats, price_per_seat
 FROM subscriptions WHERE start_date BETWEEN '2026-05-01' AND '2026-05-31';
 
--- SUB029 -> 27 seats; SUB051 -> 19 seats; SUB026 -> 'churned'
+-- SUB029 -> 27 seats; SUB051 -> 19 seats; SUB026 -> 'cancelled'
 SELECT subscription_id, seats, status FROM subscriptions WHERE subscription_id IN ('SUB029','SUB051','SUB026');
 ```
 
