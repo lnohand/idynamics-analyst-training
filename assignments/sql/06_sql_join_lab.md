@@ -15,11 +15,16 @@
 > *different* answers, so you can see exactly what each one keeps and
 > drops. Then we use the right ones on the real database.
 >
-> Format is different this time: for Q1 you **predict before you run**.
-> Write your predictions down first — that's the deliverable I care about.
+> Format is different this time, and it's how assignments will work from
+> now on: **you get the business ask and a self-check — no column lists,
+> no "use this clause" hints.** In real life nobody tells you which
+> columns to use; you get the right data for the ask, and the self-check
+> tells you whether you did. For Q1 specifically, you **predict before
+> you run** — write your predictions down first; that's the deliverable
+> I care about.
 >
 > There's a reference at `docs/sql_joins_cheatsheet.md`. Rule: consult it
-> **after** you've made your predictions, not before.
+> **after** you've attempted, not before.
 >
 > — David
 
@@ -69,9 +74,9 @@ the cheatsheet earns its keep.)
 
 ## Question 2 — The audit question (this is what RIGHT/OUTER joins are for)
 
-Write a query that returns the invoices whose `customer_id` does not exist
-in `lab_customers` — return exactly three columns: `invoice_id`,
-`customer_id`, `amount`.
+Finance needs to chase the bad invoices from the old billing system: which
+invoices point at a customer that doesn't exist? They'll need to know which
+invoice, who it claims to bill, and for how much.
 
 **Self-check:** 2 rows — I4 and I5, amounts totalling **$950**.
 
@@ -83,9 +88,8 @@ the same query — and which one would you rather read?
 
 ## Question 3 — Real database: is anything unmatched?
 
-Write a query that returns any customer in `customers` that has **zero
-rows at all** in `subscriptions` — return exactly `customer_id`,
-`company_name`.
+Data-quality check on our real tables: do we have any customer on the
+books with no subscription history at all — not even a cancelled one?
 
 **Self-check: 0 rows.** That empty result is not a broken query — it *is*
 the answer, and it's the exact reason your SQL 05 LEFT JOINs matched the
@@ -96,29 +100,30 @@ and INNER JOIN return identical results.
 
 ## Question 4 — Real database: who has no ACTIVE subscription?
 
-Now the question that actually bites. Write a query returning every
-customer with **no active subscription** — exactly `customer_id`,
-`company_name`. You'll need a LEFT JOIN, the IS NULL trick, and the
-`status = 'active'` condition placed **in the ON clause**.
+Now the question that actually bites. Customer success wants the win-back
+list: **which customers have no active subscription?** They need to know
+who to call, so identify the company, not just an ID.
 
-**Self-check: exactly 1 row.** It's a company from Eastern Canada.
+**Self-check: exactly 1 row.** It's a company from Eastern Canada. If you
+get 0 rows, the self-check is telling you your query is wrong — don't
+explain it away; the cheatsheet's trap section is your friend.
 
-Then run the variant with `status = 'active'` moved to the WHERE clause
-instead, and note its row count. **In the PR, paste both row counts and
-one line explaining the difference** — this is the single most common
-LEFT JOIN bug in real analyst work, and it's also what quietly happened
-in your SQL 05 Q5.
+Once you have the 1-row version: your query has an `active` condition
+somewhere. **Move that condition to the other possible place (ON clause ↔
+WHERE clause), run it again, and paste both row counts in the PR with one
+line explaining the difference.** This is the single most common LEFT JOIN
+bug in real analyst work — and it's what quietly happened in your
+SQL 05 Q5.
 
 ---
 
 ## Question 5 — Redo of SQL 05 Q5, done right
 
 "Top customers" hid the zeros. The board question is really: **all 45
-customers with their active monthly-billed MRR, including the ones at
-$0** — return exactly `company_name`, `monthly_mrr`, highest first, no
-LIMIT. Zeros must show as `0`, not NULL (COALESCE), and both the
-`status = 'active'` and `billing_cycle = 'Monthly'` conditions belong in
-the ON clause — think about why.
+customers with their active monthly-billed MRR, including the ones at $0**
+— highest first, and the $0 customers must show an actual `0` the board
+can read, not a blank or NULL. Q4 just taught you the trap this question
+is built on; this is where you prove the lesson transferred.
 
 **Self-check:** **45 rows**; top customer **$9,275.00**; the whole column
 sums to **$120,075.00** (same monthly book as SQL 05 — it must still tie);
