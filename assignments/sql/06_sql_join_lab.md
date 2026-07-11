@@ -1,39 +1,27 @@
-# SQL Assignment 06: The Join Lab — INNER / LEFT / RIGHT / FULL OUTER
+# SQL Assignment 06: Joins Refresher — INNER vs LEFT
 ### Idynamics Finance Analyst Training Program
 
 ---
 
 > **From:** David Chen, VP Finance
 > **To:** Michael
-> **Subject:** Why your LEFT JOINs "worked" — and why that was luck
+> **Subject:** A 30-minute join tune-up
 >
-> In SQL 05 you used LEFT JOIN where the task called for INNER, and got
-> identical results. That wasn't correct — it was lucky: our data happens
-> to have no unmatched rows on that key, so the two joins collapse into
-> the same thing. The day the data has a gap, the wrong join silently
-> gives a wrong answer. This lab makes the four join types produce four
-> *different* answers, so you can see exactly what each one keeps and
-> drops. Then we use the right ones on the real database.
->
-> Format is different this time, and it's how assignments will work from
-> now on: **you get the business ask and a self-check — no column lists,
-> no "use this clause" hints.** In real life nobody tells you which
-> columns to use; you get the right data for the ask, and the self-check
-> tells you whether you did. For Q1 specifically, you **predict before
-> you run** — write your predictions down first; that's the deliverable
-> I care about.
->
-> There's a reference at `docs/sql_joins_cheatsheet.md`. Rule: consult it
-> **after** you've attempted, not before.
+> Reviewing SQL 05 I noticed you used LEFT JOIN where the task called for
+> INNER — and it *happened* to give identical results. That's luck, not
+> correctness, and the day the data has a gap the wrong join silently
+> gives a wrong answer. It's been a while since you worked with joins
+> daily, so here's a short refresher: the concept first, shown end to
+> end, then four quick exercises. In practice INNER and LEFT cover ~99%
+> of analyst work, so that's all we do here.
 >
 > — David
 
 ---
 
-## Question 1 — Build the lab, predict, then run
+## The concept, shown once
 
-Create these two throwaway tables in your database — paste exactly as-is
-(this setup is given; the exercise starts after it):
+Two tiny throwaway tables. Create them in your database — paste as-is:
 
 ```sql
 CREATE TABLE lab_customers (customer_id TEXT, company_name TEXT);
@@ -47,99 +35,122 @@ INSERT INTO lab_invoices VALUES
   ('I4','C6',700), ('I5','C7',250);
 ```
 
-Study the data for a minute: some customers have no invoices, some have
-two, and two invoices point at customers that don't exist (imported from
-the old billing system, say).
+Note what's lopsided about this data: **C2, C4, C5 have no invoices**, and
+**I4, I5 point at customers that don't exist** (imported from the old
+billing system, say).
 
-**Before running anything, write down in your `.sql` file as a comment: how
-many rows will each of these four queries return?**
+**INNER JOIN = only rows that match on both sides.** Run it:
 
 ```sql
-SELECT * FROM lab_customers c INNER JOIN lab_invoices i ON c.customer_id = i.customer_id;
-SELECT * FROM lab_customers c LEFT JOIN lab_invoices i ON c.customer_id = i.customer_id;
-SELECT * FROM lab_customers c RIGHT JOIN lab_invoices i ON c.customer_id = i.customer_id;
-SELECT * FROM lab_customers c FULL OUTER JOIN lab_invoices i ON c.customer_id = i.customer_id;
+SELECT c.customer_id, c.company_name, i.invoice_id, i.amount
+FROM lab_customers c
+INNER JOIN lab_invoices i ON i.customer_id = c.customer_id;
 ```
 
-Then run all four. **In the PR description, paste a small table: join type,
-your predicted count, actual count — plus one sentence per join naming
-exactly which rows appeared or vanished and why.** If any prediction was
-wrong, that sentence is where you work out what you'd missed. (Now is when
-the cheatsheet earns its keep.)
+```
+customer_id | company_name     | invoice_id | amount
+------------+------------------+------------+-------
+C1          | Aurora Analytics | I1         | 500
+C1          | Aurora Analytics | I2         | 300
+C3          | Cascade Retail   | I3         | 450
+```
 
-**Self-check:** the four actual counts are all different, and they are
-**3, 6, 5, 8** in the order listed above.
+3 rows. Borealis, Dominion, Evergreen are **gone** — no invoice, no row.
+The orphan invoices I4/I5 are gone too. INNER JOIN is a *filter*.
+
+**LEFT JOIN = every row from the left table survives; where there's no
+match, the right side comes back as NULL.** Same query, one word changed:
+
+```sql
+SELECT c.customer_id, c.company_name, i.invoice_id, i.amount
+FROM lab_customers c
+LEFT JOIN lab_invoices i ON i.customer_id = c.customer_id;
+```
+
+```
+customer_id | company_name     | invoice_id | amount
+------------+------------------+------------+-------
+C1          | Aurora Analytics | I1         | 500
+C1          | Aurora Analytics | I2         | 300
+C2          | Borealis Media   | NULL       | NULL
+C3          | Cascade Retail   | I3         | 450
+C4          | Dominion Freight | NULL       | NULL
+C5          | Evergreen Health | NULL       | NULL
+```
+
+6 rows. Nobody vanished — the customers with no invoices are kept, with
+NULLs. LEFT JOIN is *protective*.
+
+**That's the whole difference.** The question to ask before every join:
+*"if something on the left has no match, do I want to see it or not?"*
+Want to see it → LEFT. Only care about matches → INNER.
+
+Two working consequences of those NULLs:
+
+1. **The IS NULL trick:** filter `WHERE i.invoice_id IS NULL` on the LEFT
+   JOIN above and you get exactly the customers with no invoices — the
+   unmatched rows. A LEFT JOIN plus IS NULL is an audit.
+2. **⚠ The trap — extra conditions go in ON, not WHERE.** If you want
+   "all customers, matched only against their *large* invoices", the
+   `amount > 400` condition must live in the ON clause:
+   `LEFT JOIN lab_invoices i ON i.customer_id = c.customer_id AND i.amount > 400`.
+   Put it in WHERE instead and the NULL rows get executed on sight
+   (NULL is never `> 400`) — your LEFT JOIN silently becomes an INNER
+   JOIN. This exact bug is what happened in your SQL 05 Q5.
+
+(There are two more types — RIGHT JOIN, which is just LEFT with the tables
+swapped, and FULL OUTER JOIN, which keeps unmatched rows from *both* sides;
+you used that one in SQL 02's waterfall. Both are rare in practice. Details
+in `docs/sql_joins_cheatsheet.md` if you're curious.)
 
 ---
 
-## Question 2 — The audit question (this is what RIGHT/OUTER joins are for)
+## Now you — four quick exercises
 
-Finance needs to chase the bad invoices from the old billing system: which
-invoices point at a customer that doesn't exist? They'll need to know which
-invoice, who it claims to bill, and for how much.
+Same rules as SQL 06 onward: business ask + self-check, no how-hints. The
+concept section above is all you need.
 
-**Self-check:** 2 rows — I4 and I5, amounts totalling **$950**.
+### Exercise 1 — on the lab tables
+Sales wants to call every customer who has never received an invoice.
+Who are they?
 
-**In the PR, one line:** you can write this with a RIGHT JOIN from
-`lab_customers`, or as a LEFT JOIN with the tables swapped. Why are those
-the same query — and which one would you rather read?
+**Self-check: 3 rows.**
 
----
+### Exercise 2 — real database
+Data-quality check: do we have any customer on the books with no
+subscription history at all — not even a cancelled one?
 
-## Question 3 — Real database: is anything unmatched?
+**Self-check: 0 rows** — and that empty result *is* the answer: nothing is
+unmatched. It's also exactly why your SQL 05 LEFT JOINs matched the INNER
+results. **In the PR, one line:** when do LEFT and INNER return identical
+results?
 
-Data-quality check on our real tables: do we have any customer on the
-books with no subscription history at all — not even a cancelled one?
+### Exercise 3 — real database
+Customer success wants the win-back list: which customers currently have
+**no active subscription**? They need company names to call.
 
-**Self-check: 0 rows.** That empty result is not a broken query — it *is*
-the answer, and it's the exact reason your SQL 05 LEFT JOINs matched the
-INNER results. **In the PR, one line:** state the rule for when LEFT JOIN
-and INNER JOIN return identical results.
+**Self-check: exactly 1 row** — a company from Eastern Canada. If you get
+0 rows, re-read the trap in the concept section; don't explain the
+mismatch away.
 
----
+Then: your query has an `active` condition somewhere. **Move it to the
+other possible place (ON ↔ WHERE), run again, and paste both row counts in
+the PR with one line on why they differ.**
 
-## Question 4 — Real database: who has no ACTIVE subscription?
+### Exercise 4 — redo of SQL 05 Q5, done right
+The board question was never "top 5" — it's **all 45 customers with their
+active monthly-billed MRR, including the $0 ones**, highest first. The $0
+customers must show a real `0` the board can read, not a blank.
 
-Now the question that actually bites. Customer success wants the win-back
-list: **which customers have no active subscription?** They need to know
-who to call, so identify the company, not just an ID.
-
-**Self-check: exactly 1 row.** It's a company from Eastern Canada. If you
-get 0 rows, the self-check is telling you your query is wrong — don't
-explain it away; the cheatsheet's trap section is your friend.
-
-Once you have the 1-row version: your query has an `active` condition
-somewhere. **Move that condition to the other possible place (ON clause ↔
-WHERE clause), run it again, and paste both row counts in the PR with one
-line explaining the difference.** This is the single most common LEFT JOIN
-bug in real analyst work — and it's what quietly happened in your
-SQL 05 Q5.
-
----
-
-## Question 5 — Redo of SQL 05 Q5, done right
-
-"Top customers" hid the zeros. The board question is really: **all 45
-customers with their active monthly-billed MRR, including the ones at $0**
-— highest first, and the $0 customers must show an actual `0` the board
-can read, not a blank or NULL. Q4 just taught you the trap this question
-is built on; this is where you prove the lesson transferred.
-
-**Self-check:** **45 rows**; top customer **$9,275.00**; the whole column
-sums to **$120,075.00** (same monthly book as SQL 05 — it must still tie);
-and **exactly 3 customers show $0**.
-
-**In the PR, one line:** those three $0 customers are not the same story.
-One of them genuinely has nothing active — which one? — and something
-different is true of the other two. What is it? (Hint: it's a column
-you've been filtering on all assignment.)
+**Self-check:** 45 rows; top customer **$9,275.00**; the column sums to
+**$120,075.00** (same monthly book as SQL 05 — it must still tie);
+**exactly 3 customers show $0**. **In the PR, one line:** those three $0
+customers are not the same story — one has nothing active at all, but
+something different is true of the other two. What?
 
 ---
 
 ## Cleanup
-
-When you're done, drop the lab tables so the database stays canonical for
-future assignments:
 
 ```sql
 DROP TABLE lab_customers;
@@ -149,8 +160,7 @@ DROP TABLE lab_invoices;
 ## Submission
 
 - Branch `submission/sql-06-join-lab`, file
-  `submissions/sql/06_sql_join_lab.sql` (predictions included as comments).
-- PR description must contain: the Q1 predicted-vs-actual table with your
-  four sentences, the Q2/Q3/Q4/Q5 one-liners, Q4's two row counts, and
-  your actual Q5 top-5 values.
+  `submissions/sql/06_sql_join_lab.sql`.
+- PR description: your actual row counts for every exercise, Exercise 3's
+  two counts, and the three one-liners (Ex 2, Ex 3, Ex 4).
 - If anything doesn't reconcile, say so in the PR — don't hide a mismatch.
