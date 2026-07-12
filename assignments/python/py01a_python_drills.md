@@ -64,26 +64,90 @@ DEALS = [
 
 A list of dicts — each dict is one deal in the sales pipeline. `for deal in DEALS:` gives you one dict at a time; `deal["amount"]` reads a field (all PY01 moves). One more: `DEALS[0]` is the FIRST dict in the list — handy as a starting value when you need to track a best-so-far.
 
-## Four new tools (read before the drills)
+## Four new tools (read before the drills — type each example in and RUN it; the outputs shown are exactly what you should see)
 
-**1. `elif` — more than two branches.** You know `if`/`else`; `elif` chains them:
+### 1. `elif` — more than two branches
+
+You know `if`/`else`: one test, two outcomes. But "which tier is this deal?" has THREE outcomes, and that's what `elif` ("else-if") is for — a chain of tests.
+
+How Python executes a chain: **top to bottom, and it STOPS at the first test that's true.** Everything below the winner is skipped — not tested, not run. If nothing wins, `else` catches whatever's left.
+
+Trace it by hand with `amount = 72`: is `72 >= 100`? No → drop to the `elif`. Is `72 >= 50`? Yes → `label = "medium"`, chain over, `else` never looked at.
 
 ```python
-if amount >= 100:
-    label = "big"
-elif amount >= 50:
-    label = "medium"      # only checked if the first test failed
-else:
-    label = "small"
+for amount in [156, 72, 20]:
+    if amount >= 100:
+        label = "big"
+    elif amount >= 50:
+        label = "medium"
+    else:
+        label = "small"
+    print(amount, "->", label)
+```
+```
+156 -> big
+72 -> medium
+20 -> small
 ```
 
-Order matters — the first true branch wins and the rest are skipped.
+**The classic mistake is ordering the tests wrong.** Swap the first two tests (`>= 50` first) and run it again — you get `156 -> medium`, because 156 IS `>= 50`, that test wins first, and the `>= 100` line below never gets a chance. Rule of thumb: **test the most demanding condition first.**
 
-**2. `+=` — running totals.** `total = total + x` has a shorthand: `total += x`. Start the variable at `0` BEFORE the loop, add inside the loop, use it after.
+### 2. `+=` — running totals
 
-**3. `range()` — loops that count.** `for month in range(1, 7):` runs the block with `month` = 1, 2, 3, 4, 5, 6 (the end number is NOT included).
+To add up a list, you need a variable that *survives* the loop — created before it, updated inside it, read after it. That's called an **accumulator**, and `total += x` is the update (it's exactly `total = total + x`, just shorter).
 
-**4. `and` — two conditions at once.** `if mrr > 50000 and month < 12:` runs only when BOTH are true.
+```python
+total = 0                 # 1) start at zero, BEFORE the loop
+for x in [10, 25, 5]:
+    total += x            # 2) each pass adds one more value
+    print("after adding", x, "total is", total)
+print("final:", total)    # 3) after the loop: the answer
+```
+```
+after adding 10 total is 10
+after adding 25 total is 35
+after adding 5 total is 40
+final: 40
+```
+
+Watch the middle column grow — that's the accumulator doing its job, one pass at a time. It's the same idea as your PY01 best-so-far tracker, except this one *adds* instead of *replaces*. Counting works the same way: `count += 1` inside an `if`.
+
+**The classic mistake:** putting `total = 0` INSIDE the loop. Then every pass wipes the total back to zero, and you end with just the last value (5, not 40). If your total suspiciously equals the final item — that's what happened.
+
+### 3. `range()` — loops that count
+
+Your loops so far walked a list of things. `range(start, stop)` lets you loop over *numbers* instead — month 1, month 2, month 3… — without building a list by hand.
+
+```python
+for month in range(1, 4):
+    print("month", month)
+```
+```
+month 1
+month 2
+month 3
+```
+
+Note what it did NOT print: month 4. **The stop number is where it stops — it's never included.** So "six months" is `range(1, 7)` → 1, 2, 3, 4, 5, 6. (Why? So the gap between the numbers is the count: 7 − 1 = 6 months. Every programming language you'll meet does some version of this, and everyone trips on it exactly once.)
+
+**The two classic mistakes:** `range(6)` — with one number it starts at ZERO (0…5), so your "months" are off by one; and `range(1, 6)` when you meant six months — you get five. If your last month is missing, check the stop number.
+
+### 4. `and` — two conditions at once
+
+Sometimes one test isn't enough: "MRR is above target AND it's still the first year." `and` glues two conditions into one — **true only when BOTH sides are true.**
+
+```python
+mrr = 52000
+month = 3
+print(mrr > 50000 and month < 12)   # True  and True  -> True
+print(mrr > 50000 and month < 3)    # True  and False -> False
+```
+```
+True
+False
+```
+
+You'll use it in D4 for a "set it only once" pattern: `if mrr > 50000 and first_above == 0:` — condition one says "we've crossed the line," condition two says "and we haven't recorded it yet." Both must hold, so the variable gets written exactly once and then the `and` protects it forever after.
 
 ## The drills
 
