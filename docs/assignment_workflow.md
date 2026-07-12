@@ -1,107 +1,177 @@
 # Assignment Workflow — Start Clean, Commit Clean, Every Time
 ### iDynamics Finance Analyst Training Program
 
-Follow this for EVERY assignment. It exists because the most expensive git problems don't look like problems until your PR contains three assignments at once.
+Follow this for EVERY assignment, top to bottom. Each step says **where you must be standing** and **what you should see** — if what you see doesn't match, stop there and ping me; don't push through.
 
-## The 60-second version
+## Rule zero — every command runs from the repo root
 
-| Phase | Commands |
-|---|---|
-| Before starting | `git checkout main` → `git pull origin main` → activate venv → `pip install -r assignments/python/requirements.txt` → `git checkout -b submission/pyNN-<slug>` |
-| While working | `git status` early and often |
-| Before committing | `git status` → `git add submissions/python/pyNN_<slug>/` → `git commit -m "PYnn: <what you did>"` |
-| Before pushing | `git diff origin/main...HEAD --name-only` — the list you see IS your PR |
-| Submit | `git push origin submission/pyNN-<slug>` → open PR → paste evidence + self-check |
-| After merge | `git checkout main` → `git pull origin main` |
+The **repo root** is the folder that contains `assignments/`, `submissions/`, `docs/`, and `.git`. On your machine that's:
 
-## Step by step, with the WHY
+```
+C:\Users\venti\Downloads\idynamics-training\idynamics-analyst-training
+```
 
-### 1. Start from main — always
+How to be there, reliably: open VS Code → File → **Open Folder** → pick that folder → View → **Terminal**. The built-in terminal always opens AT the repo root. That's the whole trick — if you use VS Code's terminal, you're in the right place by default.
+
+**How to verify you're in the right place** (do this whenever unsure):
+
+```powershell
+pwd          # should print the path above
+git status   # should answer something about a branch — ANY answer is fine
+```
+
+If `git status` says `fatal: not a git repository` → you're in the wrong folder. `cd` to the repo root (or reopen the folder in VS Code) before doing anything else.
+
+---
+
+## PHASE 1 — Before you start (get the latest, make your branch)
+
+**You are in: repo root.** Every step below, same place.
+
+**1.1 Switch to main.** You're probably still on your LAST assignment's branch — VS Code shows the current branch in the bottom-left corner.
 
 ```powershell
 git checkout main
+```
+You should see: `Switched to branch 'main'` (or `Already on 'main'`).
+
+**1.2 Pull the latest.** This downloads the new brief, updated requirements, and anything I've fixed since your last pull.
+
+```powershell
 git pull origin main
 ```
+You should see: either `Already up to date.` or a list of changed files. Both are good.
 
-**Why both:** you're probably still standing on your LAST assignment's branch (check the bottom-left corner of VS Code — it shows the current branch). A new branch grows from wherever you're standing. Branch from an old submission branch and your new PR will drag every commit of the old assignment along with it — the reviewer sees two assignments tangled into one, and the PR can't be merged until it's rebuilt. Starting from a freshly-pulled `main` is what makes your PR contain your work and nothing else.
+**Why 1.1 before 1.2:** `git pull origin main` only updates the branch you're standing on. Pull while standing on an old branch and main stays stale — you'd start the new assignment from old material.
 
-`git pull` also brings down the newest brief and any updated `requirements.txt` — briefs do get amended.
-
-### 2. Environment check (30 seconds)
+**1.3 Wake up the environment.**
 
 ```powershell
 .venv\Scripts\Activate.ps1
 pip install -r assignments/python/requirements.txt
 ```
+You should see: the `(.venv)` prefix on your prompt, and pip saying either "already satisfied" (usual) or installing something new (means the requirements changed — also fine).
 
-If everything's already installed, pip prints "already satisfied" — that's the good outcome, not an error. This exists so a requirements change never surprises you mid-assignment.
-
-### 3. Create the assignment branch — from main, named by the convention
+**1.4 Create the assignment branch — from main, named exactly as the brief says.**
 
 ```powershell
 git checkout -b submission/py02-asset-classes
 git branch --show-current
 ```
+You should see: the second command prints exactly the branch name you just created. That's your receipt.
 
-The second command is your receipt — it must print the branch you just named. Naming convention: `submission/pyNN-<slug>` exactly as the brief states (singular `submission`, dashes in the slug). One assignment = one branch = one PR, always.
+**Why this ordering is sacred:** a new branch grows FROM WHEREVER YOU'RE STANDING. Standing on freshly-pulled main → your branch contains your work and nothing else. Standing on an old assignment's branch → your new PR drags the whole old assignment along, and it can't be merged until someone untangles it.
 
-### 4. Work — and know what you're changing
+---
 
-Do your work in the assignment's folder (`submissions/python/pyNN_<slug>/`), run scripts from the repo root as usual. Along the way:
+## PHASE 2 — While you work
+
+**2.1 Where your file lives.** Create and edit the assignment file DIRECTLY in its submissions folder — in VS Code's Explorer: right-click `submissions/python/` → New Folder (e.g. `py02_asset_classes`) → right-click that → New File (e.g. `asset_classes.py`). Working in the right place from the start means there's nothing to move later.
+
+**2.2 If you worked somewhere else anyway** (a scratch file on the Desktop, a copy in Downloads — it happens): copy it into the assignment folder before committing. Two ways:
+
+- **Drag & drop** the file from Windows Explorer into the correct folder in VS Code's sidebar, or
+- in the terminal (from repo root):
+  ```powershell
+  Copy-Item C:\Users\venti\Desktop\asset_classes.py submissions\python\py02_asset_classes\
+  dir submissions\python\py02_asset_classes
+  ```
+  You should see: your file in the `dir` listing. Git only sees files INSIDE the repo folder — a file on your Desktop does not exist as far as the PR is concerned.
+
+**2.3 Run your script — from the repo root, always** (paths inside briefs assume it):
+
+```powershell
+python submissions/python/py02_asset_classes/asset_classes.py
+```
+
+**2.4 Check in with git while you work:**
 
 ```powershell
 git status
 ```
+You should see: your assignment files in red ("Untracked" or "modified"). Red = git noticed them but they're not staged yet — normal. **If you see files you don't recognize** (a stray HTML at the root, `scratch.py`, anything mentioning `.venv`) — deal with them NOW: delete, move out of the repo, or ask me.
 
-Run it whenever you pause. Red files = changed but not staged. If you see files you don't recognize — a stray HTML at the repo root, a `scratch.py`, anything in `.venv` — deal with them NOW (move, delete, or ignore), not at commit time.
+---
 
-### 5. Stage deliberately — add the folder, never "everything"
+## PHASE 3 — Commit and push
+
+**You are in: repo root**, on your assignment branch (check the bottom-left corner).
+
+**3.1 Stage YOUR folder by name — never everything:**
 
 ```powershell
 git add submissions/python/py02_asset_classes/
 git status
 ```
+You should see: your assignment's files now in GREEN ("Changes to be committed"), and nothing else green. **Never use `git add .`** — it grabs everything lying around, which is exactly how stray files end up in PRs. If the brief names an extra file elsewhere, add it by its explicit path.
 
-Add the assignment folder by name. **Do not use `git add .`** — it stages everything that happens to be lying around, and that's how scratch files and stray outputs end up in PRs. If the brief names another file to include, add it explicitly by path. The second `git status` confirms: green list = exactly the brief's deliverables, nothing else.
-
-### 6. Commit with a message that says what it is
+**3.2 Commit:**
 
 ```powershell
-git commit -m "PY02: asset classes panel — indices table + styled HTML"
+git commit -m "PY02: asset classes panel - indices table + styled HTML"
 ```
+You should see: a summary like `2 files changed`. If it says "nothing to commit" → step 3.1 didn't stage anything; run `git status` and look again.
 
-### 7. The pre-push check — 10 seconds that prevent the worst PR problems
+**3.3 The pre-push gate — 10 seconds, every time:**
 
 ```powershell
 git diff origin/main...HEAD --name-only
 ```
+You should see: **a list containing ONLY this assignment's files.** That list is exactly what your PR will show me. If ANY file from an older assignment appears → do not push; paste the list in Slack. At this stage it's a 2-minute fix; after pushing it's everyone's problem.
 
-This prints exactly the files your PR will show. Read the list. **Every file should belong to THIS assignment.** If anything from an older assignment appears, stop — don't push — and paste the list in Slack; it means the branch didn't start from main, and pushing makes it everyone's problem instead of a 2-minute fix.
-
-### 8. Push and open the PR
+**3.4 Push:**
 
 ```powershell
 git push origin submission/py02-asset-classes
 ```
+You should see: git creating the remote branch and printing a link — GitHub will also show a "Compare & pull request" button on the repo page.
 
-GitHub will show a "Compare & pull request" button. The PR description carries the full evidence package, every time:
-- every 📋 paste the brief asks for
-- the self-check, ticked **line by line** (like your PY01 — that's the standard now)
+**3.5 Open the PR.** Base `main` ← your branch. The description carries the full evidence package: every 📋 paste the brief asks for + the self-check ticked line by line (like your PY01 — that's the standard now).
 
-### 9. After the merge — reset for next time
+---
+
+## PHASE 4 — After the merge
+
+Right after I merge (not next week — future-you forgets):
 
 ```powershell
 git checkout main
 git pull origin main
 ```
+You should see: your merged work now arriving into your local main. You're reset and ready for the next assignment. Optional tidy: `git branch -d submission/py02-asset-classes`.
 
-Do this right after a PR merges, not when the next assignment starts — future-you always forgets. (Optional tidy-up: `git branch -d submission/py02-asset-classes` deletes the local copy of the merged branch.)
+---
+
+## Special case — "re-pull, I've updated the brief"
+
+If I announce a brief change **before you've started**: you're on main anyway — just `git pull origin main`.
+
+If it happens **mid-assignment** (you're on your branch already):
+
+```powershell
+git checkout main
+git pull origin main
+git checkout submission/py02-asset-classes
+git merge main
+```
+You should see: the updated brief available on your branch, your work untouched. If git says anything about "conflict" — stop and ping me, don't improvise.
+
+---
+
+## Troubleshooting quick table
+
+| You see | It means | Do |
+|---|---|---|
+| `fatal: not a git repository` | Wrong folder | `cd` to the repo root / reopen folder in VS Code |
+| `can't open file ... No such file or directory` when running a script | You're not at the repo root, or the file isn't where you think | `pwd`, then `dir` the folder the path points to |
+| `nothing to commit` | Nothing staged | `git status`, then `git add <your folder>` |
+| Old assignment's files in the 3.3 list | Branch didn't start from main | Don't push — paste the list in Slack |
+| No `(.venv)` prefix in the prompt | venv not active in THIS terminal | `.venv\Scripts\Activate.ps1` |
 
 ## VS Code equivalents (once the commands make sense)
 
 - Current branch + switching: bottom-left corner of the window
-- `git status` / staging: the Source Control icon (branch with dots) — stage individual files with the `+` next to each, never the top-level `+` on "Changes"
-- Commit: type the message in the box, Ctrl+Enter
-- Push: "Sync Changes" / "Publish Branch" button
+- `git status` / staging: the Source Control icon — stage individual files with the `+` next to each; never the top-level `+` on all of "Changes"
+- Commit: message in the box, Ctrl+Enter · Push: "Sync Changes" / "Publish Branch"
 
-The terminal commands come first in this guide because they're what you'll find in every job, every tutorial, and every error message — the buttons are shortcuts for later.
+The terminal commands come first in this guide because they're what every job, tutorial, and error message speaks — the buttons are shortcuts for later.
