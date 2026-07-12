@@ -166,6 +166,7 @@ Build all four in `drills.py`, each printing its section in order.
 
 ## Submission
 
+- Follow `docs/assignment_workflow.md` — the start-clean/commit-clean steps for every assignment (folders, branching from main, the pre-push check)
 - Branch: `submission/py01a-python-drills`
 - File: `drills.py`
 - PR description: **📋 the Part 0 terminal paste, 📋 the full program output**, and the self-check.
