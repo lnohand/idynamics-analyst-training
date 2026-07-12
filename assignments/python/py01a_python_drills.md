@@ -35,6 +35,17 @@
    - Activate the venv in the terminal as always (`.venv\Scripts\Activate.ps1`).
 5. **📋 Paste in your PR:** the terminal lines from step 4 — the `pwd` output, the `mkdir`, and that final `dir` showing `drills.py` exists.
 
+## The scenario — a sales pipeline
+
+Every SaaS company keeps a **pipeline**: the list of deals sales is working on that haven't closed yet. Each deal has a dollar size, and finance looks at this list constantly, asking the same few questions every week:
+
+- **How big is each deal?** Big deals ("Enterprise") get executive attention and are riskier to count on; small ones ("SMB") close often but move the needle less. Tiering the pipeline is how you talk about it without reading 200 rows.
+- **What's the total, and how much sits in the big deals?** Total pipeline vs. quota tells you if the quarter is even possible; concentration in a few large deals tells you how fragile that answer is.
+- **What are the extremes?** The biggest deal is the one whose slip wrecks the forecast; the smallest tells you where the noise floor is.
+- **If revenue keeps growing at this rate, when do we hit a target?** The classic planning question — compounding forward.
+
+Those four questions ARE the four drills below. The Python patterns you'll use (a function that classifies, a loop with a running total, a best-so-far tracker, a compounding loop) are the same ones you'll use on the market board — and in any analyst job. The pipeline here is fictional and tiny so you can check every answer by hand.
+
 ## The data (paste at the top of `drills.py`)
 
 ```python
