@@ -158,6 +158,34 @@ You should see: the updated brief available on your branch, your work untouched.
 
 ---
 
+## Special case — removing a file you shouldn't have committed
+
+Sometimes a file ends up in the repo that shouldn't be there — a scratch copy, or a file you made in the wrong folder and then re-created in the right one (so now there are two). Deleting it from the folder in Explorer isn't enough: git is still **tracking** it, so you have to tell git it's gone, then commit that removal like any other change. One command does both:
+
+```powershell
+git rm drills/pf1.py
+```
+You should see: `rm 'drills/pf1.py'`, and `git status` now shows `deleted: drills/pf1.py` staged (green). `git rm` both deletes the file AND stages the deletion.
+
+Then commit and push exactly as always:
+
+```powershell
+git commit -m "Remove stray drills/pf1.py"
+git push
+```
+Then run the pre-push gate (3.3) to confirm it's gone:
+
+```powershell
+git diff origin/main...HEAD --name-only
+```
+You should see: your real files, and NOT the one you just removed. The now-empty folder disappears on its own — git doesn't track empty folders.
+
+**Moving a file is the same idea** — a delete of the old path plus an add of the new one. If you built a file in the wrong place and remade it correctly, `git rm` the wrong copy and `git add` the right one, then commit both together.
+
+**VS Code way:** right-click the file in the Explorer → **Delete** → it shows up as a staged deletion in the Source Control panel; commit + push as usual.
+
+---
+
 ## Troubleshooting quick table
 
 | You see | It means | Do |
@@ -167,6 +195,7 @@ You should see: the updated brief available on your branch, your work untouched.
 | `nothing to commit` | Nothing staged | `git status`, then `git add <your folder>` |
 | Old assignment's files in the 3.3 list | Branch didn't start from main | Don't push — paste the list in Slack |
 | No `(.venv)` prefix in the prompt | venv not active in THIS terminal | `.venv\Scripts\Activate.ps1` |
+| A file you deleted still shows up in the PR | You deleted it in the folder but didn't tell git | `git rm <path>`, then commit + push |
 
 ## VS Code equivalents (once the commands make sense)
 
