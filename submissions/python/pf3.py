@@ -24,7 +24,7 @@ print(f"Total pipeline: ${total:,}")
 big = 0
 biggington = 0
 for deal in DEALS:
-    if deal["amount"] > 50000:
+    if deal["amount"] >= 50000:
         big += 1
         biggington += deal["amount"]
 print(f"{big} deals worth ${biggington:,}")
