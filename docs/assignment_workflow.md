@@ -46,11 +46,20 @@ You should see: either `Already up to date.` or a list of changed files. Both ar
 
 **1.3 Wake up the environment.**
 
+**First time on a machine only — create the venv.** The `.venv` folder is not stored in git (it's specific to your computer), so a fresh clone won't have one yet. You build it **once**:
+
+```powershell
+py -3.14 -m venv .venv
+```
+You should see: a new `.venv` folder appear in the repo root. Do this once per clone — never again after that.
+
+**Every session — activate, then a quick install check:**
+
 ```powershell
 .venv\Scripts\Activate.ps1
 pip install -r assignments/python/requirements.txt
 ```
-You should see: the `(.venv)` prefix on your prompt, and pip saying either "already satisfied" (usual) or installing something new (means the requirements changed — also fine).
+You should see: the `(.venv)` prefix appear on your prompt — that's activation, and you do it in **every new terminal** (it's per-terminal, not permanent). Then pip mostly printing "Requirement already satisfied" — that line means it's just **checking**, not reinstalling. Packages install *into* `.venv` and stay there; the only times pip actually installs anything are right after you created a fresh venv, or when I tell you I've changed the requirements. If you don't see the `(.venv)` prefix, activation didn't take — run the activate line again in this terminal.
 
 **1.4 Create the assignment branch — from main, named exactly as the brief says.**
 
@@ -195,6 +204,7 @@ You should see: your real files, and NOT the one you just removed. The now-empty
 | `nothing to commit` | Nothing staged | `git status`, then `git add <your folder>` |
 | Old assignment's files in the 3.3 list | Branch didn't start from main | Don't push — paste the list in Slack |
 | No `(.venv)` prefix in the prompt | venv not active in THIS terminal | `.venv\Scripts\Activate.ps1` |
+| `The module '.venv' could not be loaded`, or activate "not recognized" | No `.venv` folder in this clone yet (it's not in git) | Create it once: `py -3.14 -m venv .venv`, then activate |
 | A file you deleted still shows up in the PR | You deleted it in the folder but didn't tell git | `git rm <path>`, then commit + push |
 
 ## VS Code equivalents (once the commands make sense)
