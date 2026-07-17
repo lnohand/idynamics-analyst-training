@@ -22,7 +22,7 @@
 
 ## Part 1 — a peek ahead (given code, just run it)
 
-You won't understand every line here yet — by assignment PY04 you will. Save it as `submissions/python/py02_asset_classes/sp500_preview.py`, run it from the repo root, and open the result:
+You won't understand every line here yet — by assignment PY04 you will. Save it as `submissions/python/py02_asset_classes/sp500_preview.py`, run it from the repo root, and open the result. (Same standing rule as the table: if it errors instead of writing the file, that's the data provider, not you — paste it and stop.)
 
 ```python
 import yfinance as yf

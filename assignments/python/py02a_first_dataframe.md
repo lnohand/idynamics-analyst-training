@@ -19,9 +19,10 @@
 > This part introduces one genuinely new tool — the pandas **DataFrame** — and
 > reuses the yfinance quote pull you already wrote in PY01.
 >
-> Standing rules apply: stuck >15 min → paste what you see and stop; any
-> HTTP or rate-limit error → that's the data provider, not your code — paste
-> it and stop.
+> Standing rules apply: stuck >15 min → paste what you see and stop. And any
+> error that names the network, a ticker, or yfinance — or any error you're
+> confident you didn't cause — is almost always the data provider, not your
+> code: paste it and stop.
 >
 > — David
 
@@ -63,7 +64,7 @@ The finished table is sorted so the best performer (highest **1D %**) is on top.
 
 In PY01 you collected results by looping tickers and storing numbers. A **DataFrame** is the next step up: a table object — think of a SQL result set, or a range in Google Sheets — that Python can sort, do math on, and turn into a web page. It's the workhorse of every analyst's Python code, and you'll use it in every assignment from here on.
 
-You need three moves today. Type each example in and run it — the output shown is exactly what you should see.
+You need four moves today. Type each example in and run it — the output shown is exactly what you should see.
 
 ### 1. Build a DataFrame from a list of dicts
 
@@ -89,26 +90,9 @@ NASDAQ 100 29825.11  0.33
 
 `print(df.to_string(index=False))` is how you print a DataFrame cleanly — the `index=False` part hides pandas' automatic row-number column, which you don't want.
 
-### 2. Sort it
+### 2. Loop a dict of name → symbol pairs with `.items()`
 
-`df.sort_values("1D %", ascending=False)` hands back the *same table, re-ordered* by the column you name. `ascending=False` means biggest first:
-
-```python
-df_sorted = df.sort_values("1D %", ascending=False)
-print(df_sorted.to_string(index=False))
-```
-```
-     Index     Last  1D %
-   S&P 500  7575.39  0.42
-NASDAQ 100 29825.11  0.33
-  CBOE VIX    15.03 -5.11
-```
-
-Same three rows — now ordered best-to-worst by `1D %`. Notice the rows moved together: sorting a DataFrame keeps each row intact, it just reorders them.
-
-### 3. Loop a dict of name → symbol pairs with `.items()`
-
-You'll build your `rows` list by looping the five indices. When you need *both* the name and the symbol out of a dict, `.items()` hands you both at once:
+You'll build your table by looping the five indices. When you need *both* the name and the symbol out of a dict, `.items()` hands you both at once:
 
 ```python
 INDICES = {"S&P 500": "^GSPC", "CBOE VIX": "^VIX"}
@@ -121,6 +105,52 @@ CBOE VIX -> ^VIX
 ```
 
 `name` is the key, `symbol` is the value — one pair per pass. (Plain `for name in INDICES:` gives you only the keys, like in PF; `.items()` gives you both.)
+
+### 3. Assemble the rows with a loop
+
+Real data doesn't arrive as a finished list — you build it. In PF3 you made a running total by starting at `0` and adding inside the loop; assembling a *list of rows* is the same habit, one level up: **start with an empty list, and `.append()` one row-dict each pass.** (`list.append(x)` adds `x` to the end of a list.)
+
+```python
+import pandas as pd
+
+INDICES = {"S&P 500": "^GSPC", "CBOE VIX": "^VIX"}
+rows = []                                           # start empty, like a running total starts at 0
+for name, symbol in INDICES.items():
+    rows.append({"Index": name, "Symbol": symbol})  # append one row-dict each pass
+df = pd.DataFrame(rows)
+print(df.to_string(index=False))
+```
+```
+   Index Symbol
+ S&P 500  ^GSPC
+CBOE VIX   ^VIX
+```
+
+After the loop, `rows` holds one dict per index — exactly the list `pd.DataFrame` wants. That's the real build: loop the five indices, append a row-dict for each, then hand the finished list to `pd.DataFrame`.
+
+### 4. Sort it
+
+`df.sort_values("1D %", ascending=False)` hands back the *same table, re-ordered* by the column you name. `ascending=False` means biggest first (build a small table first so the example stands alone):
+
+```python
+import pandas as pd
+
+df = pd.DataFrame([
+    {"Index": "CBOE VIX",   "Last": 15.03,    "1D %": -5.11},
+    {"Index": "S&P 500",    "Last": 7575.39,  "1D %": 0.42},
+    {"Index": "NASDAQ 100", "Last": 29825.11, "1D %": 0.33},
+])
+df_sorted = df.sort_values("1D %", ascending=False)
+print(df_sorted.to_string(index=False))
+```
+```
+     Index     Last  1D %
+   S&P 500  7575.39  0.42
+NASDAQ 100 29825.11  0.33
+  CBOE VIX    15.03 -5.11
+```
+
+Same three rows — now ordered best-to-worst by `1D %`. Notice the rows moved together: sorting a DataFrame keeps each row intact, it just reorders them.
 
 One small helper you'll use: **`round(number, 2)`** rounds to two decimals — `round(0.42371, 2)` gives `0.42`, `round(31.749, 2)` gives `31.75`. Round each number as you put it into its row.
 
@@ -137,7 +167,7 @@ In PY01 you wrote a small function that pulled a ticker's `lastPrice` and `previ
 - point change = `last − previous_close`
 - percent change = `(last − previous_close) / previous_close × 100`
 
-Wrap those in a function that takes a symbol and returns all three, exactly like your PY01 helper returned two. (If yfinance throws an HTTP/rate-limit error, that's the provider — paste it and stop, per the standing rule.)
+Wrap those in a function that takes a symbol and returns all three, exactly like your PY01 helper returned two. Because it returns three values, you unpack three when you call it — `last, chg, pct = get_quote(symbol)` — the same move as PY01's two-value unpack, just one more name. (If pulling a quote throws an error, that's the provider — paste it and stop, per the standing rule.)
 
 ## Your task
 
@@ -172,4 +202,4 @@ The numbers change with the live market, so these check the *shape*, not exact v
 - Branch: `submission/py02-asset-classes`
 - File so far: `submissions/python/py02_asset_classes/asset_classes.py`
 - Commit this part on its own, e.g. `PY02-a: indices table printed to console`.
-- **📋 In the PR description, paste your console table** and tick this self-check. (Full PR write-up comes together once 02-c is done.)
+- **📋 Save your console table** — you'll paste it, with this self-check ticked, into the PR description when you open the PR at the end of 02-c. (One PR covers all three parts.)
