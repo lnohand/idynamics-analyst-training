@@ -201,6 +201,8 @@ You should see: your real files, and NOT the one you just removed. The now-empty
 |---|---|---|
 | `fatal: not a git repository` | Wrong folder | `cd` to the repo root / reopen folder in VS Code |
 | `can't open file ... No such file or directory` when running a script | You're not at the repo root, or the file isn't where you think | `pwd`, then `dir` the folder the path points to |
+| `FileNotFoundError: ... No such file or directory` when a script tries to *write* a file | The path inside `open(...)`/`write_html(...)` is relative to the folder you RAN from, not the folder the script lives in — and you ran it from the wrong folder | `cd` back to the repo root and run it again. **Don't edit the path in the code** — the path is correct for the repo root |
+| `ImportError: Missing optional dependency '...'` (e.g. `jinja2`) | A required package isn't installed in this venv | `pip install -r assignments/python/requirements.txt` — it's an install, not a code bug |
 | `nothing to commit` | Nothing staged | `git status`, then `git add <your folder>` |
 | Old assignment's files in the 3.3 list | Branch didn't start from main | Don't push — paste the list in Slack |
 | No `(.venv)` prefix in the prompt | venv not active in THIS terminal | `.venv\Scripts\Activate.ps1` |

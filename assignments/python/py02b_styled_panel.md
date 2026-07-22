@@ -23,6 +23,28 @@
 
 ---
 
+## Where this fits
+
+PY02 is **one script, built in three parts**, on one branch with one PR:
+
+| Part | What you do | File |
+|---|---|---|
+| 02-a | build the table, print it to the console | `asset_classes.py` |
+| **02-b (you are here)** | **style that same file's `df` into a web page** | **same `asset_classes.py`** |
+| 02-c | a preview of what's coming + start your own repo | `sp500_preview.py` |
+
+You are **editing the file you already wrote in 02-a** — not starting a new one.
+
+## Before you start
+
+If you skipped the `jinja2` install back in 02-a, do it now — this is the part that needs it:
+
+```powershell
+pip install -r assignments/python/requirements.txt
+```
+
+The Styler below builds its HTML with `jinja2`. Without it you'll get `ImportError: Missing optional dependency 'jinja2'`, which means "run the line above," not "your code is wrong."
+
 ## What we're adding
 
 Your 02-a script ends with a sorted DataFrame `df` and a console print. We're adding one thing: writing that `df` out as a styled **HTML file** — the actual panel. Same data, now colored and formatted for a screen.
@@ -54,6 +76,28 @@ Reading it line by line:
 - **`with open(...) as f: f.write(styled.to_html())`** — `styled.to_html()` turns the styled table into a chunk of HTML text, and this writes that text into a file. (`with open(path, "w")` opens a file for **w**riting and closes it for you when the block ends — the standard way to write a file in Python.)
 
 > **The classic mistake — given code still has a contract.** The `subset=["1D Change", "1D %"]` names your columns *exactly*. If your DataFrame's columns are spelled differently — `"1D Chg"`, or a stray space — `.map` finds nothing and your colors silently don't appear. If the page opens with no green/red, check that your column names match these strings letter for letter.
+
+### One thing about that file path — read this before you run it
+
+The path `"submissions/python/py02_asset_classes/asset_classes.html"` is **relative to the folder you run the command from — not the folder the script lives in.** This trips up everyone once, so let's make it concrete.
+
+Your script sits *inside* `py02_asset_classes/`, but the path is written to work when you run it **from the repo root** — the same place you run every command in this course (rule zero in `docs/assignment_workflow.md`: you're always standing in the repo root). From there, `submissions/python/py02_asset_classes/asset_classes.html` points exactly where it should:
+
+```powershell
+# standing in the repo root — CORRECT
+python submissions/python/py02_asset_classes/asset_classes.py
+```
+
+If instead you `cd` into `py02_asset_classes/` first and run `python asset_classes.py`, Python looks for a *`submissions/` folder inside `py02_asset_classes/`*, doesn't find one, and stops with:
+
+```
+FileNotFoundError: [Errno 2] No such file or directory:
+  'submissions/python/py02_asset_classes/asset_classes.html'
+```
+
+**The fix is to move yourself, not to edit the path.** `cd` back to the repo root and run it again. Do **not** rewrite the path to patch around where you happen to be standing — the path in the given code is correct, and the graded file has to keep it. (This is the same rule for the `sp500_preview.py` path in 02-c.)
+
+**In VS Code, the usual cause is opening the wrong folder.** Open **`idynamics-analyst-training` itself** (File → Open Folder → pick the repo folder), *not* the folder that contains it. VS Code's terminal starts wherever the open folder is — if you opened one level too high, `pwd` shows the parent and every write path is off by the repo name. Check with `pwd` (PowerShell): it should end in `\idynamics-analyst-training`. If you find yourself typing `idynamics-analyst-training\` into a path to make it work, that's the tell — you're a folder too high; reopen the repo folder instead.
 
 ## Your task
 

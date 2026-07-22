@@ -20,6 +20,25 @@
 
 ---
 
+## Where this fits
+
+This is the **last of PY02's three parts**, all on one branch, all one PR:
+
+| Part | What you did | File |
+|---|---|---|
+| 02-a | built the indices table, printed it | `asset_classes.py` |
+| 02-b | styled it into an HTML panel | same `asset_classes.py` + `asset_classes.html` |
+| **02-c (you are here)** | **run a chart preview + start your portfolio repo** | `sp500_preview.py` |
+
+At the end of this part you **open the single PR** that covers all three. The order matters, so here it is up front:
+
+1. Finish Part 1 (run the preview, commit both files).
+2. Finish Part 2 **step A** — create your portfolio repo and its README **now**.
+3. **Open the PR** for the whole PY02 branch (the Submission section at the bottom).
+4. Finish Part 2 **step B** — *after* this PR is merged, copy your panel into the portfolio repo and drop the repo link in the PR comments.
+
+So: the portfolio repo gets **created** before the PR, but your panel only gets **copied into it** after the PR is merged. Don't wait on the merge to open the PR.
+
 ## Part 1 — a peek ahead (given code, just run it)
 
 You won't understand every line here yet — by assignment PY04 you will. Save it as `submissions/python/py02_asset_classes/sp500_preview.py`, run it from the repo root, and open the result. (Same standing rule as the table: if it errors instead of writing the file, that's the data provider, not you — paste it and stop.)
@@ -42,12 +61,17 @@ That's a year of the S&P 500, interactive — open `sp500_preview.html` and hove
 
 This project runs on public market data and generic Python — none of it is iDynamics-confidential. That makes it ideal **portfolio material**, and I want you to treat it that way from the start. Two worlds, kept separate: the *work process* (briefs, feedback, grades) stays here in the training repo; the *finished product* lives in a repo of your own.
 
-Do this once:
+**Step A — do this now, before you open the PR:**
 
 1. **Create a public repo on your personal GitHub.** Name it like a product, not homework — `market-dashboard` is a good choice; your call. If you haven't made one before: github.com → **New repository** → set it **Public** → check **"Add a README"** → **Create**. Then `git clone` it to a folder **outside** the training repo (so the two never mix).
 2. **Write a short README in your own words** — 2–4 sentences: what it is, what it's built with (Python, pandas), and where it's headed (a live market board). Written like it's yours, because it is.
-3. **After this PR is merged here**, copy your finished `asset_classes.py` into that repo and commit it as a normal feature — a message like `Add asset classes panel: major indices with 1D change`. **Not** "assignment 02." It's a project, not a course.
-4. **Drop the repo link in this PR's comments** once it's up.
+
+That's enough to open the PR — the repo exists and has a README, which is all the self-check needs. Now go to the Submission section and open the PR, then come back for step B.
+
+**Step B — after this PR is merged here:**
+
+3. Copy your finished `asset_classes.py` into that repo and commit it as a normal feature — a message like `Add asset classes panel: major indices with 1D change`. **Not** "assignment 02." It's a project, not a course.
+4. **Drop the repo link in this PR's comments** once it's up (you can do this as soon as the repo exists — it doesn't have to wait for the merge).
 
 **One rule — keep the two worlds clean:** only your own code crosses over. No briefs, no self-check tables, no grades, no mention of iDynamics or training in the public repo. If you're about to paste something and you didn't write it, it doesn't go.
 

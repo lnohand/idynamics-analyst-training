@@ -37,7 +37,9 @@ git pull origin main
 pip install -r assignments/python/requirements.txt
 ```
 
-The first command brings in this assignment; the second is the usual safety check (you'll see "already satisfied" for most lines — that's fine). One package is new this assignment, `jinja2`, but you don't need it until part 02-b.
+The first command brings in this assignment; the second is the usual safety check (you'll see "already satisfied" for most lines — that's fine).
+
+One package is new this assignment: **`jinja2`**. Run the install now even though nothing uses it until 02-b — it's what the styled HTML page is built on. If you skip it, 02-b will stop with `ImportError: Missing optional dependency 'jinja2'` the moment you try to style the table. That error means "run the install line above," not "something is wrong with your code."
 
 ## What we're building
 
@@ -162,7 +164,24 @@ One small helper you'll use: **`round(number, 2)`** rounds to two decimals — `
 
 ## Reusing your PY01 quote pull
 
-In PY01 you wrote a small function that pulled a ticker's `lastPrice` and `previousClose`. Reuse that shape here, but return **three** numbers per index — the last level, the point change, and the percent change:
+In PY01 you wrote a small function that pulled a ticker's `lastPrice` and `previousClose`. That code is yours and it's already on `main` — open `submissions/python/py01_python_warmup/watchlist.py` and look at it before you start here. You're reusing it, not rewriting it from memory.
+
+Two reminders so nothing is guesswork. Your script needs **two** imports at the top:
+
+```python
+import pandas as pd
+import yfinance as yf
+```
+
+and the quote pull itself is the same pair of `fast_info` lookups you used in PY01:
+
+```python
+info = yf.Ticker(symbol).fast_info
+info["lastPrice"]        # where it is now
+info["previousClose"]    # where it closed yesterday
+```
+
+Reuse that shape here, but return **three** numbers per index — the last level, the point change, and the percent change:
 
 - point change = `last − previous_close`
 - percent change = `(last − previous_close) / previous_close × 100`
