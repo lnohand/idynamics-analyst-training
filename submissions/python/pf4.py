@@ -12,7 +12,7 @@ DEALS = [
 
 # E1
 def format_deal(deal):
-    return f"Name: {deal['name']}, Amount: ${deal['amount']:,}"
+    return f"{deal['name']}: ${deal['amount']:,}"
 
 print(format_deal(DEALS[0]))
 
@@ -32,7 +32,7 @@ print(tier(47500))
 # E3
 
 for deal in DEALS:
-    print(f"Name: {deal["name"]}, Tier: {tier(deal["amount"])}")
+    print(f"{deal["name"]} - {tier(deal["amount"])}")
 
 # E4, This question was very hard! I liked it!
 
@@ -55,6 +55,6 @@ def biggest_deal(deals):
 
 largest = biggest_deal(DEALS)
 
-print(f"{len(DEALS)} deals worth ${total_value(DEALS):,}")
+print(f"Pipeline: {len(DEALS)} deals worth ${total_value(DEALS):,}")
 
-print(f"{format_deal(largest)}, Tier: {tier(largest['amount'])}")
+print(f"Largest: {format_deal(largest)} ({tier(largest['amount'])})")
