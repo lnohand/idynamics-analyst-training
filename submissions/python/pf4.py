@@ -1,0 +1,60 @@
+DEALS = [
+    {"name": "Acadia Software",    "amount": 18500},
+    {"name": "Blue Harbor Foods",  "amount": 4200},
+    {"name": "Cobalt Mining Co",   "amount": 156000},
+    {"name": "Delta Logistics",    "amount": 47500},
+    {"name": "Echo Media Group",   "amount": 8900},
+    {"name": "Foothills Energy",   "amount": 92300},
+    {"name": "Glacier Insurance",  "amount": 3100},
+    {"name": "Harborview Clinics", "amount": 61000},
+    {"name": "Ironwood Labs",      "amount": 50000},
+]
+
+# E1
+def format_deal(deal):
+    return f"{deal['name']}: ${deal['amount']:,}"
+
+print(format_deal(DEALS[0]))
+
+# E2
+def tier(amount):
+    if amount >= 100000:
+        return "Enterprise"
+    elif amount >= 50000:
+        return "Mid-Market"
+    else:
+        return "SMB"
+    
+print(tier(156000))   
+print(tier(50000))   
+print(tier(47500))
+
+# E3
+
+for deal in DEALS:
+    print(f"{deal["name"]} - {tier(deal["amount"])}")
+
+# E4, This question was very hard! I liked it!
+
+def total_value(deals):
+    piz = 0
+    for deal in deals:
+        piz += deal["amount"]
+    return piz
+    
+print(f"${total_value(DEALS):,}") 
+
+# E5, this question was hellish.
+
+def biggest_deal(deals):
+    biggest = deals[0]                        
+    for deal in deals:
+        if deal["amount"]> biggest["amount"]:
+            biggest = deal
+    return biggest
+
+largest = biggest_deal(DEALS)
+
+print(f"Pipeline: {len(DEALS)} deals worth ${total_value(DEALS):,}")
+
+print(f"Largest: {format_deal(largest)} ({tier(largest['amount'])})")
