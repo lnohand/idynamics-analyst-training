@@ -85,3 +85,81 @@ were about *what the question asked*, not about SQL mechanics you don't know. Th
 Redo the six on this branch, paste the new output in the PR description, and we're set for PY03.
 
 — David
+
+
+---
+
+# Redo Review — 2026-07-27
+**Reviewed by:** David Chen — I ran the file and every SQL query again.
+
+Michael —
+
+The most important thing first, because it's the thread running through every miss: **you're not
+running the file and reading your output against what each question actually asked.** If you had,
+you'd have caught most of these yourself before the PR — they're right there in your own printout:
+
+- **B1** prints a table with two columns, `Index` and `Last`. The question hands you `rows`, which
+  has a **`1D %`** column. Your output is missing it — one glance shows the table doesn't match
+  what the question gave you.
+- **B2** was meant to be sorted by `1D %`, best first. Your output is ordered by `Last`
+  (Dow, NASDAQ, S&P). Read the order against the ask and it doesn't line up.
+- **B3** was meant to be a *table*. Your output is three plain text lines (`S&P 500: 6800.00`) —
+  that's not a DataFrame at all.
+- **A2** says *loop over `DEALS`*. Your code never touches `DEALS` — it counts the four tier-test
+  numbers from A1 instead. The ask names the list to use; the code uses a different one.
+
+None of that needs my answer key to spot — it needs you to run the file and read each block of
+output next to the question that produced it. That's also why the submit rule says **paste your
+full program output**: it isn't paperwork, it's the step that would have caught all of this. Your
+PR description still has your pre-redo notes and no output. Fix that habit first: **run it, read it
+against the ask, then submit.**
+
+Now the good news, and it's real — **the hard stuff landed:**
+
+- **A3** — your function loops its parameter now, and `total_value(SMALL)` correctly prints
+  `$3,000`. The parameter finally clicked.
+- **A4** — you `return` the deal and reuse it: `Largest: Cobalt Mining Co: $156,000`. Return landed.
+- **C4 / C5** — both fixed: `HAVING` on the count, and the LEFT JOIN with `status = 'active'` in the
+  `ON` clause + `IS NULL`. **All five SQL answers are correct** — clean section.
+
+So this isn't a concepts problem. It's a *check-your-own-work* problem, plus one area we're going
+to slow down on.
+
+## Section B (the DataFrames) — stop here for now
+
+Don't redo Section B yet. You flagged DataFrames as your weak spot, and you're right — so before
+you touch the checkpoint again, **finish DataFrame Drill 1** (the work-along I sent you) and send
+me your *Check yourself* answers. The drill is literally these three moves: build a table and print
+it with no row-number column (that's B1), sort it largest-first with no index (B2), and loop a dict
+with `.items()` into a list of row-dicts → DataFrame plus the one-dict trap (B3). Once the drill
+feels natural, the Section B redo is a ten-minute job. Doing it the other way round — redo first,
+drill later — is what got us here.
+
+## Two fixes you can make right now (outside Section B)
+
+1. **A2** — give it its own block that loops `DEALS` and counts amounts ≥ $50,000. The answer is
+   **4** (Cobalt, Foothills, Harborview, Ironwood). Right now A2 is tangled into your A1 loop —
+   pull it out, and label each answer (`# A1`, `# A2`, …) so they stop bleeding into each other.
+2. **`import yfinance`** — delete it. Nothing in this file uses it, and on a machine that doesn't
+   have it installed, that one line stops the whole program before it prints anything
+   (`ModuleNotFoundError`). A checkpoint that doesn't use a library shouldn't import it.
+
+## Your C5 question
+
+You asked whether your first instinct — putting the status condition in the join — was right.
+**Yes.** That's exactly where it belongs: the condition goes in the `ON` clause, which is why it
+"wouldn't work" as a plain `WHERE`. The only miss was the *value* — for "no active subscription"
+you match on `status = 'active'` and keep the rows that found no match (`IS NULL`); `cancelled`
+answers a different question ("has a cancelled sub"). And for what it's worth, the version you
+actually submitted gets this exactly right.
+
+## Next steps
+
+1. Finish DataFrame Drill 1; send me the *Check yourself* answers.
+2. Fix A2 and drop the `yfinance` import on this branch.
+3. Redo Section B **after** the drill.
+4. Update the PR description with your real pasted program output + each query result.
+
+Same branch — push the fixes and I'll take another look.
+
+— David
