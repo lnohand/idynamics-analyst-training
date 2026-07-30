@@ -25,3 +25,7 @@ venv/
 *.csv
 *.db
 *.sqlite
+
+# Student scratch / practice files (work-along, never submitted)
+scratch.py
+scratch*.py
