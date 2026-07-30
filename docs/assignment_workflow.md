@@ -46,11 +46,20 @@ You should see: either `Already up to date.` or a list of changed files. Both ar
 
 **1.3 Wake up the environment.**
 
+**First time on a machine only — create the venv.** The `.venv` folder is not stored in git (it's specific to your computer), so a fresh clone won't have one yet. You build it **once**:
+
+```powershell
+py -3.14 -m venv .venv
+```
+You should see: a new `.venv` folder appear in the repo root. Do this once per clone — never again after that.
+
+**Every session — activate, then a quick install check:**
+
 ```powershell
 .venv\Scripts\Activate.ps1
 pip install -r assignments/python/requirements.txt
 ```
-You should see: the `(.venv)` prefix on your prompt, and pip saying either "already satisfied" (usual) or installing something new (means the requirements changed — also fine).
+You should see: the `(.venv)` prefix appear on your prompt — that's activation, and you do it in **every new terminal** (it's per-terminal, not permanent). Then pip mostly printing "Requirement already satisfied" — that line means it's just **checking**, not reinstalling. Packages install *into* `.venv` and stay there; the only times pip actually installs anything are right after you created a fresh venv, or when I tell you I've changed the requirements. If you don't see the `(.venv)` prefix, activation didn't take — run the activate line again in this terminal.
 
 **1.4 Create the assignment branch — from main, named exactly as the brief says.**
 
@@ -158,15 +167,47 @@ You should see: the updated brief available on your branch, your work untouched.
 
 ---
 
+## Special case — removing a file you shouldn't have committed
+
+Sometimes a file ends up in the repo that shouldn't be there — a scratch copy, or a file you made in the wrong folder and then re-created in the right one (so now there are two). Deleting it from the folder in Explorer isn't enough: git is still **tracking** it, so you have to tell git it's gone, then commit that removal like any other change. One command does both:
+
+```powershell
+git rm drills/pf1.py
+```
+You should see: `rm 'drills/pf1.py'`, and `git status` now shows `deleted: drills/pf1.py` staged (green). `git rm` both deletes the file AND stages the deletion.
+
+Then commit and push exactly as always:
+
+```powershell
+git commit -m "Remove stray drills/pf1.py"
+git push
+```
+Then run the pre-push gate (3.3) to confirm it's gone:
+
+```powershell
+git diff origin/main...HEAD --name-only
+```
+You should see: your real files, and NOT the one you just removed. The now-empty folder disappears on its own — git doesn't track empty folders.
+
+**Moving a file is the same idea** — a delete of the old path plus an add of the new one. If you built a file in the wrong place and remade it correctly, `git rm` the wrong copy and `git add` the right one, then commit both together.
+
+**VS Code way:** right-click the file in the Explorer → **Delete** → it shows up as a staged deletion in the Source Control panel; commit + push as usual.
+
+---
+
 ## Troubleshooting quick table
 
 | You see | It means | Do |
 |---|---|---|
 | `fatal: not a git repository` | Wrong folder | `cd` to the repo root / reopen folder in VS Code |
 | `can't open file ... No such file or directory` when running a script | You're not at the repo root, or the file isn't where you think | `pwd`, then `dir` the folder the path points to |
+| `FileNotFoundError: ... No such file or directory` when a script tries to *write* a file | The path inside `open(...)`/`write_html(...)` is relative to the folder you RAN from, not the folder the script lives in — and you ran it from the wrong folder | `cd` back to the repo root and run it again. **Don't edit the path in the code** — the path is correct for the repo root |
+| `ImportError: Missing optional dependency '...'` (e.g. `jinja2`) | A required package isn't installed in this venv | `pip install -r assignments/python/requirements.txt` — it's an install, not a code bug |
 | `nothing to commit` | Nothing staged | `git status`, then `git add <your folder>` |
 | Old assignment's files in the 3.3 list | Branch didn't start from main | Don't push — paste the list in Slack |
 | No `(.venv)` prefix in the prompt | venv not active in THIS terminal | `.venv\Scripts\Activate.ps1` |
+| `The module '.venv' could not be loaded`, or activate "not recognized" | No `.venv` folder in this clone yet (it's not in git) | Create it once: `py -3.14 -m venv .venv`, then activate |
+| A file you deleted still shows up in the PR | You deleted it in the folder but didn't tell git | `git rm <path>`, then commit + push |
 
 ## VS Code equivalents (once the commands make sense)
 
