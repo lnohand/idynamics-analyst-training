@@ -130,13 +130,109 @@ yourself what the question told you to *do*, then check your code does that.
    updates itself.
 2. Fill in the PR description with the checklist above, plus your Q3 output, your Q6 loop **and** its
    output, and your written Q7 answer.
-3. I saw your checkpoint push tonight and I'm reviewing it separately on that PR. Short version:
-   A2 and the `yfinance` import are both still there, and a few answers that had already landed came
-   undone. Keep that work on the **checkpoint branch**, not this one — and hold off until my review
-   lands so you're not fixing against old notes.
+3. Do the checkpoint fixes **in this same PR** too — see the section below. That's a change from what
+   I said earlier; read it before you touch anything.
 4. Once Q6 shows a real loop, Section B unlocks and you redo it.
 
-You're closer than you think on this one. The concepts are in — build the table with the loop once,
-by yourself, and that's the gap closed.
+---
+
+## Your branch — and where your "lost" checkpoint work actually is
+
+**Start with the good part: your checkpoint work is not gone.** You told me you'd made all the
+checkpoint changes, found them missing when you went to commit, and retyped them from memory. You
+don't have to. The version where A3 and A4 were already correct is sitting safe in **this PR** — I'm
+looking at it right now. Nothing to recover, nothing to retype.
+
+Here's why, and it's the same branch habit we need to fix.
+
+### What happened
+
+When you start an assignment, the workflow doc has you do this first:
+
+```
+git checkout main
+git pull origin main
+git checkout -b student/new-assignment-name
+```
+
+You've been doing a new *name* every time — good, that part stuck. But the first two lines got
+skipped, so each new branch was cut from **wherever you were standing**, which was your last
+assignment's branch. Every branch since PF1 on July 15 is one long chain:
+
+```
+PF1 → PF2/3 → PF4 → checkpoint1 → dataframe_drill
+```
+
+`student/dataframe_drill` was cut from `student/checkpoint1`, not from `main`.
+
+**Before you type `git checkout -b`, run `git branch --show-current`. It must say `main`.** If it says
+your last assignment's branch, you're about to stack on top of it. That one check is the whole fix.
+
+### The consequences — three of them
+
+**1. Your PR shows files you never touched.** PR #25 is a one-file drill, but GitHub lists **seven**
+changed files: the drill plus `checkpoint1.py`, `checkpoint1.sql`, and all four `pf` files. They ride
+along because they're commits on your branch that never reached `main` on their own. Harmless, but it
+means neither of us can see at a glance what you actually changed — and *you* can't use "Files
+changed" as a check on your own work.
+
+**2. Your two PRs disagree about the same file.** This is the one that bit you. `checkpoint1.py` now
+exists in two different states: the good version in **this PR**, and the retyped-from-memory version
+in **PR #24**. Same filename, two histories, because you pushed the retyped one to the checkpoint
+branch and this branch never received it.
+
+**3. It did *not* cause the lost work.** I want to be clear so you're not chasing the wrong thing:
+switching branches never silently deletes edits. `git checkout -b` carries them with you, and
+`git checkout <branch>` either carries them or stops with an error. Something else wiped that file —
+most likely the **Discard Changes** button (the ↩ icon) in VS Code's Source Control panel, which sits
+right next to the **+** stage icon and reverts the file with one confirmation click. Look before you
+click that one; it's the only button in VS Code that can undo an hour of work.
+
+And the habit that makes it a non-event: **commit early and often, even half-finished.** A commit is a
+save point. `git commit -m "WIP: A2 and A3"` costs you nothing, can be amended, and means no button
+in any editor can take that work away. Uncommitted work is the only work you can lose.
+
+### What to do — the checkpoint fixes go in this PR
+
+Just this once we're going to use one PR for both, because this branch holds the good copy and I'd
+rather fix your file than re-litigate your history. **From the next assignment, back to one branch per
+assignment, cut from `main`.**
+
+Step 1 — get on this branch and pull main into it (this also collapses that seven-file list down to
+three, and brings you this feedback file):
+
+```
+git checkout student/dataframe_drill
+git pull origin main
+```
+
+Step 2 — open `submissions/python/checkpoint1.py`. **Check the top of A3: it should already say
+`return total`, and A4 should say `return biggest`.** If it does, that's your real work, intact. Leave
+those two alone — don't paste in what you retyped last night; the retyped version changed both back to
+`print`, which is a step backwards.
+
+Step 3 — make only the three fixes that are still genuinely open, all in Section A:
+
+- **A2** — give it its own block that loops `DEALS` and counts amounts `>= 50000`. The answer is **4**.
+  Right now it's tangled into your A1 loop and counting the four tier-test numbers, so it prints `3`.
+- **`import yfinance`** — delete line 2. Nothing in the file uses it.
+- **A1 detail** — `Enterprise` should be `>= 100000`, not `> 100000`. And drop `61000` from the tier
+  loop; that amount is only there for the one `and` band check.
+
+Step 4 — **leave Section B alone.** It's still held until the drill clears. Anything you did to B last
+night we'll redo properly afterwards.
+
+Step 5 — commit and push:
+
+```
+git add submissions/python/checkpoint1.py submissions/python/dataframe_drill1_portfolio.py
+git commit -m "Fix: drill Q3/Q6/Q7 and checkpoint A1/A2, drop yfinance"
+git push origin student/dataframe_drill
+```
+
+I'll close PR #24 — everything moves here.
+
+You're closer than you think on the drill. The concepts are in — build the table with the loop once,
+by yourself, and that's the gap closed. And you lost less than you thought last night.
 
 — David
