@@ -29,25 +29,23 @@ for deal in [156000, 50000, 47500, 61000]:
         print("Mid-Market")
     else:
         print("SMB")
+    if deal >= 50000 and deal < 100000:
+            print("True")
+    else:
+        print("False")
     if deal >= 50000:
         biggest += 1
 print(f"There are {biggest} deals worth more than $50,000")
-
-deal = 61000
-if deal >= 50000 and deal < 100000:
-    print("True")
-else:
-        print("False")
 
 # A3
 def total_value(deals):
     total = 0
     for deal in deals:
         total += deal["amount"]
-    return total
+    print(total)
 
-print(f"${total_value(DEALS):,}")
-print(f"${total_value(SMALL):,}")
+total_value(DEALS)
+total_value(SMALL)
 
 # A4
 def biggest_deal(deals):
@@ -55,22 +53,11 @@ def biggest_deal(deals):
     for deal in deals:
         if deal["amount"] > biggest["amount"]:
             biggest = deal
-    return biggest
-
-print(f"Largest: {biggest_deal(DEALS)["name"]}: ${biggest_deal(DEALS)["amount"]:,}")
+    print(f"Largest: {deal["name"]}: ${deal["amount"]:,}")
 
 biggest_deal(DEALS)
 
 # Section B
-
-piz = []
-
-for name, last in INDICES.items():
-
-    piz.append({
-        "Index": name,
-        "Last": last
-        })
 
 rows = [
     {"Index": "S&P 500",    "Last": 6800.00,  "1D %": 0.42},
@@ -78,11 +65,9 @@ rows = [
     {"Index": "Dow Jones",  "Last": 44000.00, "1D %": 0.08},
 ]
 
-df = pd.DataFrame(piz)
+df = pd.DataFrame(rows)
 
-print(df.to_string(index=False))
-
-df = df.sort_values("Last", ascending=False)
+df = df.sort_values("1D %", ascending=False)
 
 print(df.to_string(index=False))
 
