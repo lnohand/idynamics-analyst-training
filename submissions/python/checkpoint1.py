@@ -1,5 +1,4 @@
 import pandas as pd
-import yfinance as yf
 
 DEALS = [
     {"name": "Acadia Software",    "amount": 18500},
@@ -23,13 +22,14 @@ INDICES = {"S&P 500": 6800.00, "NASDAQ 100": 25000.00, "Dow Jones": 44000.00}
 # A1 + A2
 biggest = 0
 for deal in [156000, 50000, 47500, 61000]:
-    if deal > 100000:
+    if deal >= 100000:
         print("Enterprise")
     elif deal >= 50000:
         print("Mid-Market")
     else:
         print("SMB")
-    if deal >= 50000:
+for deal in DEALS:
+    if deal["amount"] >= 50000:
         biggest += 1
 print(f"There are {biggest} deals worth more than $50,000")
 
