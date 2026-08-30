@@ -31,7 +31,7 @@
 ## Before You Start — Load April
 
 Run the **April block** of the database load brief before you touch Excel:
-`db_update_apr_may_2026_brief.md`.
+`docs/database_update_apr_may_2026.md`.
 
 - First complete **Step 0** (the SUB012 prerequisite) if you haven't already —
   it brings your database current with the March close. Your March 31 snapshot

@@ -29,10 +29,32 @@
 
 ---
 
+## Before You Start — Get the Right Workbook
+
+**Build May on the corrected April workbook from `main`, not on your local copy.**
+
+April's workbook had a defect on our side, not yours. The event-table lookup windows stopped at
+`Engine` row 102 while April's events sit at rows 103–106, so every formula reading that table
+silently excluded April. That has been fixed —
+`submissions/excel/excel_14_april_close_clean.xlsx` on `main` is the corrected file.
+
+This matters for May in particular: on the uncorrected copy the logo-churn flag scores May's
+SUB026 cancellation as *not* a logo churn — the exact signal this assignment is built around —
+and the Waterfall reconciliation can never reach $0.00.
+
+```
+git checkout main
+git pull origin main
+```
+
+Then start from that file. You are not being asked to repair April; that is already done.
+
+---
+
 ## Before You Start — Load May
 
 Run the **May block** of the database load brief before you touch Excel:
-`db_update_apr_may_2026_brief.md`.
+`docs/database_update_apr_may_2026.md`.
 
 - April must already be closed and its block already loaded. Step 0 (the SUB012
   prerequisite) should long since be done.
@@ -42,13 +64,13 @@ Run the **May block** of the database load brief before you touch Excel:
 
 Run the load's "confirm the load" queries to prove the data landed — in particular,
 confirm the contraction (SUB051 down to 19 seats) and the cancellation (SUB026 →
-churned) before you start the close.
+cancelled) before you start the close.
 
 ---
 
 ## What You're Building
 
-A clean monthly close on the redesigned workbook (carried forward from assignment 10),
+A clean monthly close on the redesigned workbook (carried forward from assignment 14),
 **plus** a one-time structural change to handle contraction:
 
 1. **Actuals tab** — add the May 2026 column, **add a Contraction row**, and extend the
@@ -84,8 +106,15 @@ Before you open Excel, confirm from the data:
 Run your COGS query at `2026-05-31`. Same structure as prior months.
 
 **S&M, R&D, and G&A** come from Lisa's monthly close message in #finance-ops — same
-source as always. Do **not** pull OpEx from SQL. Read May's S&M of $29,000 off her
-message.
+source as always. Do **not** pull OpEx from SQL. May's drop reads:
+
+| Line | May 2026 |
+|------|----------|
+| S&M | $29,000 |
+| R&D | $24,000 |
+| G&A | $21,000 |
+
+Enter all three as inputs. Total OpEx derives — do not type it.
 
 Write down your actuals before going to Excel.
 
@@ -134,9 +163,16 @@ The same template close, with the contraction movement now flowing through:
 3. **Add the Contraction movement to the waterfall section** on this tab if your monthly
    template doesn't already surface it. The waterfall needs a Contraction row that reads
    May's contraction from the `Actuals` May column (via the config month label, the same
-   way every other actual is pulled), and the Closing MRR on the tab must include it.
-   Everything else should self-configure off the two config cells — comparison column off
-   the prior tab, GRR/NRR off May's Retention column, month-end date deriving to May 31.
+   way every other actual is pulled), and **both derived movement rows — Net New MRR
+   and Closing MRR — must include it**. The copied tab leaves contraction out of both, so
+   check each formula rather than assuming Closing is the only one: if Net New still reads
+   New + Expansion − Churn, your Closing MRR can tie while the Net New you carry into
+   `WaterfallData` (Part 7) is overstated.
+
+   Everything else on the tab should self-configure off the two config cells —
+   comparison column off the prior tab, month-end date deriving to May 31. **GRR and NRR
+   are the exception**: they read sheets that don't cover May yet. See Part 4 before you
+   expect them to resolve.
 
 Keep the existing waterfall/P&L/KPIs/commentary layout and the
 Actual / Forecast / $ Variance / % Variance / F/U structure. Carry the Forecast column
@@ -159,6 +195,23 @@ cell still showing a hardcoded number hasn't been converted.
 
 ## Part 4 — KPIs Section (May 2026 A vs F Tab)
 
+> **Do this before you expect the KPI rows to resolve.** GRR and NRR don't read
+> `Actuals` — they match the tab's **config month cell** against the `Retention` sheet,
+> which is driven by the `Waterfall` sheet, which is driven by the `Engine` table. Note
+> that `Waterfall` is the Engine-driven monthly grid — it is **not** the `Waterfall Data`
+> tab you update in Part 7. That chain currently stops at April: `Engine` ends at April's
+> last event, `Waterfall`'s last month row is April, and `Retention` has no May column.
+> Until you extend all three, both cells return `#N/A`, and the Part 5 commentary gate —
+> which requires NRR pulled from a cell, never typed — cannot be met.
+>
+> Work upstream first: get May's events into `Engine`; add May's row to `Waterfall` (it
+> does not extend itself, and check whether the summary rows beneath the table still point
+> at the last month); then add May's column to `Retention`. **Match the date convention
+> already used in those sheets' month headers** — the lookup is an exact match, so a date
+> in the wrong form returns `#N/A` even when the column exists. The lookup range on the
+> A vs F tab already reaches far past April, so you should not need to widen it — if you
+> find yourself editing that range, you've fixed the wrong thing.
+
 The KPIs section carries over from the copied tab. Confirm each reads May:
 
 | Metric | Source |
@@ -167,8 +220,8 @@ The KPIs section carries over from the copied tab. Confirm each reads May:
 | Active Subscriptions | from `Actuals` May column |
 | ARPA | derived |
 | Gross Margin | derived |
-| GRR | dynamic Retention lookup at May month-end |
-| NRR | dynamic Retention lookup at May month-end |
+| GRR | dynamic Retention lookup on the config month |
+| NRR | dynamic Retention lookup on the config month |
 | Quick Ratio | derived |
 | S&M (actual) | from `Actuals` May column — originally Lisa's #finance-ops message |
 | CAC — this month | monthly S&M ÷ May new customers |
@@ -259,14 +312,13 @@ Open a PR from `student/excel_15_may_close` → `main`.
 
 ## Keep Your Notes Current
 
-Before pushing, update `my-notes/`:
+Before pushing, update `my_notes/`:
 
 | File | What to add |
 |------|------------|
-| `my-notes/sql_queries.sql` | May snapshot query; the `subscription_events` query that isolates a seat *decrease* (contraction) from an expansion and from a cancellation |
-| `my-notes/kpi_definitions.md` | **Contraction** as a movement type — what it is, how it differs from churn and from expansion, where it sits in the waterfall and what sign it carries; how contraction affects NRR; logo churn vs revenue churn recap with the April/May examples |
-| `my-notes/excel_techniques.md` | How you extended the Actuals tab and the Closing MRR logic to add a movement row without disturbing closed months |
-| `my-notes/git_commands.md` | Nothing new — verify your workflow notes are current |
+| `my_notes/sql_queries.md` | May snapshot query; the `subscription_events` query that isolates a seat *decrease* (contraction) from an expansion and from a cancellation |
+| `my_notes/kpi_definitions.md` | **Contraction** as a movement type — what it is, how it differs from churn and from expansion, where it sits in the waterfall and what sign it carries; how contraction affects NRR; logo churn vs revenue churn recap with the April/May examples |
+| `my_notes/excel_techniques.md` | How you extended the Actuals tab and the Closing MRR logic to add a movement row without disturbing closed months |
 
 ---
 
@@ -303,9 +355,12 @@ before opening the PR.
 | May Opening MRR | Derived from April Closing — not typed |
 | Contraction row added to Actuals and included in Closing MRR logic | ✅ |
 | Closed months (Jan–Apr) unchanged after adding the Contraction row | ✅ |
+| May Net New MRR (all four movements) | $3,245.00 |
 | May Closing MRR | $160,075.50 |
 | Active Subscriptions | 56 |
 | Config block: only the two config cells changed vs the Apr tab | ✅ |
+| `Engine` / `Waterfall` / `Retention` extended through May | ✅ |
+| GRR / NRR resolve to values, not `#N/A` | ✅ |
 | GRR / NRR formulas: no hardcoded column letters | ✅ |
 | WaterfallData: May rows added below April, Contraction row populated | ✅ |
 | KPI Tracker May column filled | ✅ |
