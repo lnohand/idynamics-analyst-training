@@ -1,0 +1,40 @@
+#!/bin/sh
+# Blocks a commit that would put a failing assignment brief on main.
+# Checks A1/A2/A3/E3 from BRIEF_RELEASE_PROCESS.md via tools/check_brief.py.
+#
+# Escape hatch: git commit --no-verify  (use it deliberately, not to get past a real failure)
+# Override workbook: BRIEF_WORKBOOK=path/to.xlsx git commit ...
+
+REPO=$(git rev-parse --show-toplevel)
+CHECKER="$REPO/tools/check_brief.py"
+[ -f "$CHECKER" ] || exit 0
+
+BRIEFS=$(git diff --cached --name-only --diff-filter=ACM | grep '^assignments/.*\.md$' || true)
+[ -z "$BRIEFS" ] && exit 0
+
+command -v python3 >/dev/null 2>&1 || { echo "pre-commit: no python3, skipping brief checks"; exit 0; }
+python3 -c "import openpyxl" 2>/dev/null || {
+  echo "pre-commit: openpyxl not installed — running path/xref checks only (workbook checks skipped)"
+  NO_WB=1
+}
+
+# Default to the highest-numbered clean close workbook; advances on its own.
+if [ -z "$BRIEF_WORKBOOK" ]; then
+  BRIEF_WORKBOOK=$(ls "$REPO"/submissions/excel/excel_*_clean.xlsx 2>/dev/null | sort -V | tail -1)
+fi
+
+STATUS=0
+for b in $BRIEFS; do
+  if [ -n "$NO_WB" ] || [ -z "$BRIEF_WORKBOOK" ]; then
+    python3 "$CHECKER" "$REPO/$b" --repo "$REPO" || STATUS=1
+  else
+    python3 "$CHECKER" "$REPO/$b" --repo "$REPO" --workbook "$BRIEF_WORKBOOK" || STATUS=1
+  fi
+done
+
+if [ "$STATUS" -ne 0 ]; then
+  echo ""
+  echo "COMMIT BLOCKED — a brief failed verification."
+  echo "Fix the issues above, or bypass deliberately with: git commit --no-verify"
+fi
+exit $STATUS
