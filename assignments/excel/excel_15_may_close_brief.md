@@ -78,7 +78,7 @@ A clean monthly close on the redesigned workbook (carried forward from assignmen
 2. **May 2026 A vs F tab** — copy the Apr tab, update the config block, add the
    Contraction movement, verify
 3. **KPI Tracker tab** — fill in the May 2026 column
-4. **WaterfallData tab** — add May's rows (now including a Contraction row)
+4. **Waterfall Data tab** — add May's rows (now including a Contraction row)
 
 Plus the May management commentary, a hard gate, which must cover the contraction
 signal and the logo-vs-revenue churn contrast.
@@ -158,6 +158,9 @@ moves Closing MRR.
 The same template close, with the contraction movement now flowing through:
 
 1. **Copy** the `Apr 2026 A vs F` tab. Rename the copy exactly: `May 2026 A vs F`.
+   Note the April tab's real name ends in a **trailing space** (`Apr 2026 A vs F `).
+   Anywhere you type that name into a formula it must match exactly, space included —
+   this is a common source of `#REF!`. Your new tab's name has no trailing space.
 2. **Update the config block** — set the current-month date to May and the prior-month
    tab name to `Apr 2026 A vs F`.
 3. **Add the Contraction movement to the waterfall section** on this tab if your monthly
@@ -167,7 +170,7 @@ The same template close, with the contraction movement now flowing through:
    and Closing MRR — must include it**. The copied tab leaves contraction out of both, so
    check each formula rather than assuming Closing is the only one: if Net New still reads
    New + Expansion − Churn, your Closing MRR can tie while the Net New you carry into
-   `WaterfallData` (Part 7) is overstated.
+   `Waterfall Data` (Part 7) is overstated.
 
    Everything else on the tab should self-configure off the two config cells —
    comparison column off the prior tab, month-end date deriving to May 31. **GRR and NRR
@@ -265,7 +268,7 @@ Payback stay as dashes in the May column — quarterly metrics.
 
 ---
 
-## Part 7 — Update WaterfallData Tab
+## Part 7 — Update Waterfall Data Tab
 
 Add May's rows directly below the existing April rows, same columns: Month, Movement,
 Actual, Forecast, Variance.
@@ -302,7 +305,7 @@ When ready to submit:
 
 ```
 git add submissions/excel/excel_15_may_close.xlsx
-git commit -m "Add: 15 — May 2026 close (Contraction movement, May A vs F tab, KPI Tracker, WaterfallData)"
+git commit -m "Add: 15 — May 2026 close (Contraction movement, May A vs F tab, KPI Tracker, Waterfall Data)"
 git push origin student/excel_15_may_close
 ```
 
@@ -334,7 +337,7 @@ Open a PR from `student/excel_15_may_close` → `main` with this description:
 - Actuals tab: Contraction row added; Closing MRR logic extended; May 2026 column entered
 - May 2026 A vs F tab added by copying Apr tab + updating config block, with Contraction movement
 - KPI Tracker updated with May column
-- WaterfallData updated with May rows (Contraction row now populated)
+- Waterfall Data updated with May rows (Contraction row now populated)
 - May commentary present (contraction signal + logo vs revenue churn contrast)
 - Closed months unchanged after adding the Contraction row
 - my-notes/ updated
@@ -362,7 +365,7 @@ before opening the PR.
 | `Engine` / `Waterfall` / `Retention` extended through May | ✅ |
 | GRR / NRR resolve to values, not `#N/A` | ✅ |
 | GRR / NRR formulas: no hardcoded column letters | ✅ |
-| WaterfallData: May rows added below April, Contraction row populated | ✅ |
+| Waterfall Data: May rows added below April, Contraction row populated | ✅ |
 | KPI Tracker May column filled | ✅ |
 | Commentary present, covering the contraction signal and logo-vs-revenue churn | ✅ (hard gate) |
 
