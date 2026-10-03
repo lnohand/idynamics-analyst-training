@@ -83,3 +83,48 @@ The brief asks for `submissions/sql/07_sql_month_end_list.sql`; yours is
 Commit the fixes to the **same branch** and push — PR #28 updates itself. In the PR
 description, update Step 4 with your new third count and Step 7 with your new
 explanation.
+
+---
+
+# Round 2 — accepted and merged
+
+**Commit `e517ab4`**
+
+Fixes 1 and 2 are done. Your Step 4 third count now uses your Step 3 `WHERE`
+exactly as written, so the check can actually catch a mistake. Step 7 now has its
+two count queries.
+
+Step 7's *why* is still missing, so here is the answer. Read it carefully, because
+every close query from here on depends on it.
+
+## Why `status` gets 30 April wrong
+
+The `status` column holds **today's** status. It is not a history. It gets
+overwritten each time something happens to the subscription.
+
+SUB026 was active through April. On 23 May it was cancelled, and at that moment
+its `status` was changed from `active` to `cancelled`. The old value is gone. The
+table does not remember that it said `active` on 30 April.
+
+When you filter on `status = 'active'` for 30 April, you are applying **today's**
+answer to an April question. SUB026 was paying us on 30 April, but the status
+query drops it because of something that happened three weeks later.
+
+The dates still hold the history. `start_date` and `cancelled_date` let you rebuild
+the state of the business on **any** day: started by then, and not cancelled by
+then. This is why every month-end query uses dates and never `status`. `status`
+only answers "what is true right now?", and a close is never about right now.
+
+A one-sentence version you could give in an interview: *"`status` is a current
+snapshot that gets overwritten, so it can't tell you what was active on a past date,
+but the start and cancel dates can."*
+
+## File names
+
+The branch ended up with two files: your new `07_month_end_list.sql` and the old
+`sql_07_month_end_list.sql`. I merged the PR and fixed this on `main` myself. The
+current version is now `submissions/sql/07_sql_month_end_list.sql`, and I deleted
+the old file. Next time, use `git mv old_name new_name` to rename a file. That way
+git records a rename, not an extra copy.
+
+On to SQL 08.
