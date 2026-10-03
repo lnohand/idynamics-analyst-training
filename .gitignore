@@ -25,6 +25,8 @@ venv/
 *.csv
 *.db
 *.sqlite
+# ...except the frozen month-end lists: they ARE the close record and must be committed
+!closes/**/*.csv
 
 # Student scratch / practice files (work-along, never submitted)
 scratch.py
