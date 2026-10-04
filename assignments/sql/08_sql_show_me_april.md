@@ -27,7 +27,7 @@ Assignment") — fetch, then **Create new branch from…** → `origin/main`.
 Do not start it from your SQL 07 branch. Do all of this assignment on the new branch.
 
 Commit order:
-1. the two **closes/2026-05/** files, alone (Step 5)
+1. the three **closes/2026-05/** files, alone (Step 5)
 2. your step file, **submissions/sql/08_sql_show_me_april.sql**
 
 ---
@@ -85,40 +85,90 @@ some of the three numbers but not the others?
 
 ### Step 5 — Save May's list
 
-May is closed too. Nothing has been loaded into the database since 31 May; June
-data goes in after you've done this step.
+**What this step is for.** May is closed, and we've reported $160,075.50 of MRR.
+In this step you save the list of subscriptions behind that number, and prove the
+saved file adds up to it.
 
-Write the 31 May list query, one row per subscription active on 31 May, with these
-columns in this order, named exactly:
+Nothing has been loaded into the database since 31 May; June data goes in after
+you've done this step.
+
+**How analysts organize a close.** Finance teams don't use git. They keep **one
+folder per month** on a shared drive, and everything that supports that month's
+numbers goes in it:
+
+- the query that produced the data
+- the data extract itself
+- the check that shows the extract agrees with what was reported
+
+Once the month is closed, nothing in that folder changes. If something turns out
+to be wrong later, the correction goes into the next month, with a note. A reviewer,
+an auditor, or you six months from now should be able to open the folder and
+follow May's number without asking anyone.
+
+**Set this up on your own computer:**
+
+```
+Documents/
+  iDynamics Close/
+    2026-05 May/
+      month_end_list.sql
+      subscriptions_2026-05-31.csv
+      check_2026-05-31.xlsx
+```
+
+Start each month's folder name with the year and month as numbers (`2026-05`), so
+the folders sort in date order. June
+will get its own folder next to this one.
+
+**1. Write the query.** One row per subscription active on 31 May, with these
+columns, in this order, named exactly:
 
 `subscription_id, customer_id, plan_name, billing_cycle, seats, price_per_seat, discount_percent, mrr`
 
-ordered by `subscription_id`. Same rules as SQL 07: active is decided by
-dates, MRR rounded to 2 decimals per subscription.
+Order by `subscription_id`. Same rules as SQL 07: active is decided by the dates,
+and MRR is rounded to 2 decimals per subscription. Save it in the May folder as
+**month_end_list.sql**.
 
-Then save two files into a new **closes/2026-05/** folder at the top level of the
-repo, next to `docs/` and `assignments/` (in VS Code: right-click → New Folder):
+**2. Export the result** to the May folder as **subscriptions_2026-05-31.csv**:
 
-- the query itself, as **month_end_list.sql**
-- its result, exported from DBeaver as **subscriptions_2026-05-31.csv**
+- right-click the result grid → **Export data** → **CSV**
+- keep the header row and the comma delimiter
+- on the Output page, choose the folder and type the file name
 
-*DBeaver export:* right-click the result grid → **Export data** → **CSV** → keep the
-header row and the comma delimiter → on the Output page choose the folder and type
-the file name. DBeaver adds a timestamp to the name by default — make sure the file
-is named exactly as above.
+DBeaver adds a timestamp to the name by default. Delete it.
 
-**Check the file, not the database — before you commit it.** Open the CSV in Excel.
-From the file alone, work out total MRR, the number of subscriptions and the number
-of different customers. They must equal your SQL 07 Step 6 totals. Close the file
-**without saving** — Excel would change it.
+**3. Prove the file is right.** Your query was right in SQL 07. What you haven't
+checked is the **file**, and the file is what people will rely on. Exports go wrong
+in quiet ways:
 
-*Hint for the distinct count:* `=COUNTA(UNIQUE(range))` counts the different values
-in a range. Select only the customer IDs themselves — not the header, and no empty
-cells; either one counts as an extra value.
+- you exported the result of an earlier version of the query
+- the grid had a filter on
+- an old file with the right name is the one you're looking at
 
-Then **commit these two files on their own, as the first commit on your branch**,
-with the message `Save May 2026 month-end list`. Write down that commit's hash
-(VS Code: Source Control → the commit in the graph, or `git log --oneline`).
+None of these give an error. The only way to know the file is right is to add it up
+and compare it with what was reported.
+
+Open a **new blank workbook** in Excel → **Data → From Text/CSV** → select the CSV
+→ **Load**. This copies the data into the workbook and leaves the CSV untouched.
+Next to the data, work out:
+
+- total MRR
+- number of subscriptions
+- number of different customers (*hint:* `=COUNTA(UNIQUE(range))`)
+
+Type your SQL 07 Step 6 totals beside them, with a difference column. All three
+differences must be 0. Save the workbook in the May folder as
+**check_2026-05-31.xlsx**.
+
+**Never open the CSV itself in Excel and save it.** Excel rewrites the file when it
+saves: 1985.50 becomes 1985.5, and formatting changes. The extract has to stay
+exactly as it came out of the database.
+
+**4. Hand it in.** Git is how you send your work to me; it isn't part of the
+analyst's process. Copy the three files from your May folder into a new
+**closes/2026-05/** folder at the top level of the repo, next to `docs/` and
+`assignments/`. Commit those three files on their own, as the first commit on your
+branch, with the message `Save May 2026 month-end list`.
 
 ### Step 6 — Sarah, in December
 
@@ -130,16 +180,15 @@ re-run the query?
 
 ## Submission
 
-- Branch `student/sql_08_show_me_april`, three files:
+- Branch `student/sql_08_show_me_april`, four files:
   **closes/2026-05/month_end_list.sql**, **closes/2026-05/subscriptions_2026-05-31.csv**,
-  **submissions/sql/08_sql_show_me_april.sql**.
+  **closes/2026-05/check_2026-05-31.xlsx**, **submissions/sql/08_sql_show_me_april.sql**.
 - PR description:
   - **Step 1–2:** your three April numbers, the three reported ones, the differences
   - **Step 3:** where the April list is; then each change that moved April, its
     amount, and the total
   - **Step 4:** your answer
-  - **Step 5:** the three totals you got from the CSV, and the hash of the commit
-    that saved it
+  - **Step 5:** the three totals from your check workbook
   - **Step 6:** your answer
 - If something doesn't add up and you couldn't find out why, say so in the PR.
   That's a good answer. Hiding it isn't.
