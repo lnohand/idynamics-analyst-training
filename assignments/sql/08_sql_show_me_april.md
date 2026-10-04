@@ -86,8 +86,8 @@ some of the three numbers but not the others?
 ### Step 5 — Save May's list
 
 **What this step is for.** May is closed, and we've reported $160,075.50 of MRR.
-In this step you save the list of subscriptions behind that number, and prove the
-saved file adds up to it.
+Sooner or later someone will ask *which subscriptions make up that number?* In this
+step you save that list, and prove the saved file adds up to it.
 
 Nothing has been loaded into the database since 31 May; June data goes in after
 you've done this step.
