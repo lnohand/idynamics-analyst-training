@@ -952,3 +952,24 @@ QUIZ_LIBRARY.push({
     }
   ]
 });
+
+// Month-End Close — interview Q&A tied to the close assignments (one card per unit as they're taught)
+QUIZ_LIBRARY.push({
+  id: "month_end_close",
+  name: "Month-End Close",
+  color: "#0d9488",
+  quizzes: [
+    {
+      id: "fc_reconciliation",
+      title: "Reconciliation",
+      difficulty: "intermediate",
+      questions: [
+        {
+          type: "flip",
+          q: "Our CRM shows 1,240 active customers and the billing system shows 1,215. How would you figure out where the 25 come from?",
+          a: "I wouldn't start by comparing totals or sorting the two exports side by side. I'd reconcile them at customer level. I'd pull both lists, check that each one has every customer ID only once, and then build a single list of every ID that appears in either system. For each ID I'd flag whether it's in the CRM, in billing, or both, and bring in the amounts with SUMIFS so a missing customer shows as zero instead of an error. Before reading any rows, I'd check that my table's counts and totals match each source exactly, so I know nothing got lost. Then the 25 break into groups, for example customers marked active in the CRM who were never invoiced, or cancellations billing has processed but the CRM hasn't. Each group gets a reason. I did exactly this comparing our April and May subscription lists: 57 IDs, three of them in only one list, and both totals tied to the cent."
+        }
+      ]
+    }
+  ]
+});
