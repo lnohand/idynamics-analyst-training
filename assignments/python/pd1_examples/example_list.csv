@@ -1,0 +1,6 @@
+subscription_id,customer_id,plan_name,billing_cycle,mrr
+SUB901,CUST901,Sales Hub,Monthly,1200
+SUB902,CUST902,Sales Hub,Annual,3000
+SUB903,CUST903,Marketing Pro,Monthly,800
+SUB904,CUST901,Marketing Pro,Monthly,950
+SUB905,CUST904,Platform Suite,Annual,6000

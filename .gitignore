@@ -31,3 +31,5 @@ venv/
 # Student scratch / practice files (work-along, never submitted)
 scratch.py
 scratch*.py
+# PD1 example data (small made-up list the brief teaches with)
+!assignments/python/pd1_examples/example_list.csv
