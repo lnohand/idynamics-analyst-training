@@ -19,120 +19,187 @@ Expect about 3 hours.
 
 ---
 
-## The rule for June
+## Your files
 
-**The frozen list is June's closing.** Don't run the list query again to get a new
-one. Your workbook has to agree with it, not the other way round. (You will still
-query the events to build June in your workbook: that's Step 1.)
+| Name in this brief | File | Where |
+|---|---|---|
+| **May list** | `subscriptions_2026-05-31.csv` | `iDynamics Close/2026-05 May` |
+| **June list** | `subscriptions_2026-06-30.csv` | `iDynamics Close/2026-06 Jun` |
+| **May workbook** | `excel_15_may_close.xlsx` (the fixed one, on `main`) | repo |
+| **Events query** | `mrr_events.sql` | repo, `submissions/sql` |
 
----
+Both lists are frozen. **Use them as they are. Don't run the list query
+(`month_end_list.sql`) again** to make new ones. The June list is June's closing:
+your workbook has to agree with it, not the other way round.
 
-## Step 1: Put June in your workbook
-
-Save a copy of your fixed May workbook as **`workbook_2026-06.xlsx`** in
-`2026-06 Jun/Reporting` and build June in it. Quick reminder: run your
-events query (`mrr_events.sql`) for June, add the rows to the **Engine**, and let
-June's **Actuals** column read from the Engine. You only need
-the **Engine** and June's **Actuals** column: opening, the four movements, closing,
-subscriptions, customers. The rest of the pack (A vs F, KPIs, P&L) waits until June
-ties.
-
-This month you tie **totals**: opening, closing MRR, subscriptions and customers.
-The split between the four movements is tied from next month.
-
-Build every June figure from the workbook's own sources. **A number copied from the
-list can't be tied to the list.**
-
-**Save the SQL you ran** to get June into the workbook, exactly as you ran it, as
-**`june_workbook_query.sql`** in `2026-06 Jun/Reporting`. Anyone checking your June
-numbers needs to see where they came from.
+Everything you hand in goes in **`iDynamics Close/2026-06 Jun/Reporting`**.
 
 ---
 
-## Step 2: Compare, using the method
+## Step 1: Put June in the workbook
 
-You'll compare June with the lists the way you learned in Assignment 17 (Compare
-Two Lists): sources untouched on their own tabs, one row per ID from every source,
-0 when missing, and the checks that prove nothing was lost or doubled. No reminder
-of the steps this time. Using the method is part of what's checked.
+1. Save a copy of the May workbook as **`workbook_2026-06.xlsx`** in `Reporting`.
+2. Run the events query for June only: add a filter so it returns only events dated
+   1 to 30 June 2026.
+3. Paste those rows into the **Engine** table, below the last May row. The query
+   returns `month` as text (`2026-06`): change it to a date (1 Jun 2026), like the
+   rows above. Then copy the formula columns (`movement` to `is_logo_reactivation`)
+   down from the last May row to your new rows.
+4. On the **Actuals** tab, add a June column next to May, and fill in only these
+   rows:
+   - **Opening MRR** and **Closing MRR**: copy May's formulas across.
+   - **New MRR, Expansion MRR, Contraction MRR, Churned MRR**: add up June's Engine
+     rows for each movement. Actuals keeps Contraction and Churned as positive
+     amounts.
+   - **Active Subscriptions**: how many subscriptions are active at the end of June.
+   - **Active Customers**: how many different customers have at least one active
+     subscription at the end of June.
 
-**One thing is new: look at each source's key before you compare.** This time you
-have three sources, and they aren't the same kind of list. For each one, answer:
+   Work out both counts from the Engine.
 
-1. What is the list's primary key, the field that is different on every row?
-2. Can the same `subscription_id` appear more than once in it?
-3. So how do you bring that source's values into Recon, and which of the Assignment
-   17 checks still apply to it?
+Leave June's other cells on Actuals empty, and leave every other tab as it is. They
+wait until June ties.
 
-Answer in one line per source, in a note on the Recon tab and in your email.
+**Never use the June list to fill in the workbook.** A number copied from the list
+can't be tied to the list.
+
+Save the query exactly as you ran it, June filter included, as
+**`june_workbook_query.sql`** in `Reporting`. Anyone checking your June numbers needs
+to see where they came from.
+
+This month only the **totals** are tied: opening MRR, closing MRR, subscriptions and
+customers. The four movements are tied from July.
 
 ---
 
-## Step 3: The tie-out file
+## Step 2: Before you compare, look at each source's key
 
-A check doesn't live inside the thing it checks. Make a separate file,
-**`tieout_2026-06.xlsx`**, in **`2026-06 Jun/Reporting`** on the drive. Build it so
-July takes ten minutes: copy, replace the sources, change the month, update the source names.
+You will compare three sources:
+
+- the **May list**
+- the **June list**
+- the workbook's **June Engine rows** (the rows you added in Step 1)
+
+They aren't the same kind of list. For each source, answer:
+
+1. What is its primary key: the field that is different on every row?
+2. Can the same `subscription_id` appear on more than one row?
+3. So how do you bring its amounts into Recon, and which of the Assignment 17 checks
+   still apply to it?
+
+Write one line per source. When you build the Recon tab in Step 3, put the three
+lines in a note on it. They also go in your email.
+
+---
+
+## Step 3: Build the tie-out file
+
+The check must not live inside the thing it checks, so make a separate file:
+**`tieout_2026-06.xlsx`** in `Reporting`. It has these tabs:
 
 ```
 tieout_2026-06.xlsx
   Summary         ← the only tab a reviewer needs to read
-  Recon           ← one row per subscription (Assignment 17's method)
-  src_List_Jun    ← frozen June list, untouched
-  src_List_May    ← frozen May list, untouched
-  src_Workbook    ← your workbook's June Engine rows + June Actuals column, as values
-  (src_Workbook_corrected ← only if you had to fix something: Step 4)
+  Recon           ← one row per subscription
+  src_List_Jun    ← the June list, imported, untouched
+  src_List_May    ← the May list, imported, untouched
+  src_Workbook    ← from workbook_2026-06.xlsx: the June Engine rows and the June
+                    Actuals column, pasted as values
+  (src_Workbook_corrected ← only if you have to fix the workbook: Step 4)
 ```
 
-**Summary:**
-- Header: the month (one cell; everything else refers to it), what this file
-  checks (one line), each source with its file name and the date and time you took it, prepared by + date.
-- **Tie table:** workbook | list | difference for **opening MRR** (your May closing
-  against the May list) and for **closing MRR, subscriptions and customers** (against
-  the June list). Opening first: if May doesn't tie, nothing in June can.
-- **Reconciling items:** one line per explained difference: amount, explanation,
-  Corrected or Open.
-- **Unexplained** = the closing MRR difference − reconciling items. It must be **0**. A number
-  that forces it to 0 without an explanation is a plug, and we never plug.
+Build it so that July takes ten minutes: copy the file, replace the src tabs, change
+the month cell, update the file names in the header.
 
-**Recon:** the Assignment 17 method with three sources. Columns: subscription ID · in May?
-· in June? · May MRR · June MRR · list change (June − May) · workbook's June change
-(its Engine rows for that subscription, added up) · Difference (workbook − list
-change). The Difference total must equal the closing MRR difference minus the
-opening difference, before any correction.
+### Recon
 
-**Rules:** every amount traces to a source tab; the only thing you type that isn't
-text, a date or a time is the month (reconciling amounts come from Recon); checks show a number, not "looks fine". Paste workbook figures **as values** and
-note the file name and the date and time you copied them: the tie-out records what
-the workbook said when you checked it.
+Use Assignment 17's method: untouched src tabs, every ID from every source listed
+once, 0 when an ID is missing from a source, and the check table that proves nothing
+was lost or counted twice. No reminder of the steps this time. Using the method is
+part of what's checked.
+
+Columns, in this order:
+
+1. subscription ID
+2. in May list? (Yes/No)
+3. in June list? (Yes/No)
+4. May MRR
+5. June MRR
+6. list change = June MRR − May MRR
+7. workbook change = `mrr_delta` of that subscription's June Engine rows, added up
+8. Difference = workbook change − list change
+
+The total of column 8 must equal the closing MRR difference minus the opening MRR
+difference, both from the Summary's first (**before**) tie table.
+
+### Summary
+
+**Header:**
+- the month, in one cell (every other mention of the month refers to this cell)
+- one line saying what this file checks
+- each source: its file name, and the date and time you copied it into this file
+- prepared by, and the date
+
+**Tie table**, with three columns: workbook · list · difference (workbook − list).
+
+| Row | Workbook figure | List figure |
+|---|---|---|
+| Opening MRR | June's opening MRR in `src_Workbook` | May list, total MRR |
+| Closing MRR | June's closing MRR in `src_Workbook` | June list, total MRR |
+| Subscriptions | June's Active Subscriptions in `src_Workbook` | June list, number of subscriptions |
+| Customers | June's Active Customers in `src_Workbook` | June list, number of different customers |
+
+Opening goes first. If the opening difference isn't 0, find out why before you look
+at June: if May doesn't tie, nothing in June can.
+
+**Reconciling items:** one line per explained difference, with its amount (from
+Recon), the explanation, and its status:
+- **Corrected**: you fixed it in the workbook (Step 4)
+- **Open**: not fixed yet, and you say what still has to happen
+
+**Unexplained** = closing MRR difference − the reconciling items. It must be **0**.
+A number that forces it to 0 without an explanation is a plug, and we never plug.
+
+### Rules for the whole file
+
+- Apart from text, dates and times, the month is the only thing you type. Never
+  type an amount or a count.
+- Every amount comes by formula from a src tab or from Recon.
+- Checks show a number (the difference), not "looks fine".
+- Workbook figures go in **as values**, with the file name and the date and time
+  you copied them. The tie-out records what the workbook said when you checked it.
 
 ---
 
 ## Step 4: Fix it and write it up
 
-1. If June doesn't tie, find out why. Then **correct the workbook at the source of
-   the error**, never in the tie-out file. Don't overwrite what you checked: paste
-   the corrected figures as a second source tab, `src_Workbook_corrected`. The
-   Summary then shows both: **before** (the difference, the reconciling items,
-   Unexplained 0) and an **after** tie table that reads `src_Workbook_corrected`:
-   difference 0. Recon stays on the figures you checked.
+1. **If June doesn't tie, find out why. Fix it in `workbook_2026-06.xlsx`**, where
+   the wrong number is made. Never fix it in the tie-out file.
+   - Leave `src_Workbook` exactly as it is: it is what you checked.
+   - Paste the corrected June Engine rows and June Actuals column, as values, into a
+     new tab, `src_Workbook_corrected`.
+   - On Summary, keep the first tie table (**before**: the difference, the
+     reconciling items, Unexplained 0). Under it, add a second tie table (**after**)
+     that reads `src_Workbook_corrected`. Its differences must all be 0.
+   - Recon keeps reading `src_Workbook`.
 2. **Write the finding for David and Sarah.** This is the main deliverable. Use the
    **Finding template** in `iDynamics Close/Docs`: Answer · Why · Evidence · So
-   what, **at most 120 words**. The standard is **How we write findings** in the
-   same folder, and you'll be marked against it. Read its three examples before you
-   write: yours should have the same shape, answer first with the number.
+   what, **at most 120 words**. You'll be marked against **How we write findings**,
+   in the same folder. Read its three examples before you write: yours should have
+   the same shape, with the answer first and the number in it.
 3. **Sign-off**, in the template's format: Status · Numbers · Ties to · Corrected ·
    Open.
 
-If June ties first time, say so, and say how you know your check could have failed.
+If June ties on the first try (every difference 0), say so, and say how you know your
+check could have failed.
 
 ---
 
 ## Submission
 
-Files on the drive in **`2026-06 Jun/Reporting`**: `tieout_2026-06.xlsx`,
-`june_workbook_query.sql` and `workbook_2026-06.xlsx`. Then one email to David,
-headed **"June tied out"**, with your key answers (Step 2), your finding and your
-sign-off pasted in.
+1. In `iDynamics Close/2026-06 Jun/Reporting`: `workbook_2026-06.xlsx`,
+   `june_workbook_query.sql` and `tieout_2026-06.xlsx`.
+2. A new email to David with the subject **"June tied out"**, with these pasted in:
+   your three lines from Step 2 (one per source), your finding and your sign-off.
 
 Sarah will read it, and she'll have a question for you on Slack.
