@@ -21,15 +21,18 @@ Expect about 3 hours.
 
 ## The rule for June
 
-**The frozen list is June's closing.** Don't re-query it. Your workbook has to agree
-with it, not the other way round.
+**The frozen list is June's closing.** Don't run the list query again to get a new
+one. Your workbook has to agree with it, not the other way round. (You will still
+query the events to build June in your workbook: that's Step 1.)
 
 ---
 
 ## Step 1: Put June in your workbook
 
 Save a copy of your fixed May workbook as **`workbook_2026-06.xlsx`** in
-`2026-06 Jun/Reporting` and build June in it, the way you built May. You only need
+`2026-06 Jun/Reporting` and build June in it. Quick reminder: run your
+events query (`mrr_events.sql`) for June, add the rows to the **Engine**, and let
+June's **Actuals** column read from the Engine. You only need
 the **Engine** and June's **Actuals** column: opening, the four movements, closing,
 subscriptions, customers. The rest of the pack (A vs F, KPIs, P&L) waits until June
 ties.
