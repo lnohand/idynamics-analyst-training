@@ -33,3 +33,5 @@ scratch.py
 scratch*.py
 # PD1 example data (small made-up list the brief teaches with)
 !assignments/python/pd1_examples/example_list.csv
+# PD3 example data (small made-up lists the brief teaches with)
+!assignments/python/pd3_examples/*.csv
