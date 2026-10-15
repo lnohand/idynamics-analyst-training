@@ -13,16 +13,40 @@
 
 Expect about 1 hour 45 minutes.
 
-## Why this, and when you'd use it
+## The goal
 
-When the same steps run on different files, put them in a **function** and call it once per file.
-You wrote functions in PF4 (`tier(amount)`, `total_value(deals)`), and loops over a list of dicts
-(`for deal in DEALS:`). Here you put pandas inside them. One function, one loop: six months, or
-sixty, with the same code. And a fix you make once is fixed for every month, which never happens
-with six copied sheets.
+One table: a row for every month from January to June, with the same numbers your PD3 bridge printed
+for June. This is what you'll have at the end:
 
-At the end you'll save the table to a CSV file and open it in Google Sheets, so the numbers you
-built in Python can go straight into a pack.
+```
+  month  opening    new  expansion  contraction   churn  closing
+2026-01      ...    ...        ...          ...     ...      ...
+2026-02      ...    ...        ...          ...     ...      ...
+...
+2026-06 160075.5 2420.0     1340.0       -330.0  -675.0 162830.5
+```
+
+Then you'll add the tie-out check and GRR / NRR to every row, and save the table as a file you can
+open in Google Sheets.
+
+## The idea
+
+Your PD3 script already does one month. For any other month, the steps are exactly the same. Only
+two things change: which list is the opening and which is the closing.
+
+So instead of copying the script six times:
+
+1. **Give the steps a name, with the two files as inputs.** That's a **function**. You run all its
+   steps by writing its name and the two files.
+2. **Have it hand back one row** of the table: month, opening, new, expansion, contraction, churn,
+   closing.
+3. **Run it once per month** with a loop, collect the six rows, and turn them into a table.
+
+This is how analysts handle anything that repeats every month. The steps live in one place, so a fix
+you make once is fixed for every month, and next month is one more line, not another copy.
+
+The examples below build each of the three pieces on PD3's tiny example lists. Then the steps do the
+same on the real lists.
 
 ## Step 0 — Set up
 
@@ -48,26 +72,71 @@ month from `2025-12` to `2026-06`.
 
 ## Learn it
 
-Clear `scratch.py` and use PD3's two example lists again.
+Clear `scratch.py` and start with `import pandas as pd`. The examples use PD3's two example lists.
 
-### Example 1 — A function that returns one row
+### Example 1 — A function: a name for some steps
 
-A row of a table is a dict: column name → value. So a function can build one row and `return` it.
+Start with the smallest function: one input, one result.
 
 ```python
 import pandas as pd
 
-def summary(month, file):           # month and file are the inputs
+def add_up(file):                 # NEW: a function called add_up, with one input called file
+    subs = pd.read_csv(file)      # the steps are indented under def
+    total = subs["mrr"].sum()
+    return total                  # NEW: hand the result back
+
+may_total = add_up("assignments/python/pd3_examples/may_example.csv")   # run it on one file
+print(may_total)
+june_total = add_up("assignments/python/pd3_examples/june_example.csv")  # same steps, another file
+print(june_total)
+```
+
+```
+2300
+2500
+```
+
+How to read it:
+
+- `def add_up(file):` creates the function. Nothing runs yet: Python only remembers the steps.
+- `file` is the input. Each time you run the function, `file` is whatever you put in the brackets.
+- The indented lines are the steps. The function ends where the indenting ends.
+- `return total` hands `total` back to the line that ran the function. That's how `may_total` gets 2300.
+- `add_up("...may_example.csv")` **runs** the function on that file.
+
+Read the call aloud: "may_total is: run add_up on the May example file."
+
+### Example 2 — Hand back a whole row
+
+A bridge gives several numbers, not one. So the function hands back one **row**, written as a dict:
+column name → value, inside `{ }`.
+
+```python
+def summary(month, file):         # two inputs this time, separated by a comma
     subs = pd.read_csv(file)
-    row = {                         # one row: column name → value
+    row = {                       # NEW: one row, column name → value
         "month": month,
         "customers": len(subs),
         "mrr": subs["mrr"].sum(),
     }
-    return row                      # hand the row back to whoever called summary
+    return row
 
 may_row = summary("May", "assignments/python/pd3_examples/may_example.csv")
-print(pd.DataFrame([may_row]))
+print(may_row)
+```
+
+```
+{'month': 'May', 'customers': 3, 'mrr': np.int64(2300)}
+```
+
+That's the row: three column names and their values. `np.int64(2300)` is how pandas labels a number
+it calculated. It's still 2300.
+
+To see it as a table, put it in a list (`[ ]`) and make a DataFrame:
+
+```python
+print(pd.DataFrame([may_row]))    # NEW: a list of rows → a table
 ```
 
 ```
@@ -75,24 +144,50 @@ print(pd.DataFrame([may_row]))
 0   May          3  2300
 ```
 
-`pd.DataFrame([may_row])` turns the one row into a table (Drill 1: the `[ ]` around it makes it a
-list of rows). If you `print(may_row)` on its own, you'll see the dict with `np.int64(2300)` in it:
-that's how pandas labels a number it calculated. It's still 2300.
+A table is a list of rows. Here the list has one row, so the table has one row.
 
-Read the call aloud: "may_row is: run summary with month "May" and the May example file."
+### Example 3 — Run it for every file, collect the rows
 
-### Example 2 — Call it in a loop, collect the rows
-
-The same pattern as `for deal in DEALS:` in PF3: a list of dicts, one per file.
+First, a list with one entry per file. Each entry says which month and which file:
 
 ```python
 FILES = [
     {"month": "May", "file": "assignments/python/pd3_examples/may_example.csv"},
     {"month": "June", "file": "assignments/python/pd3_examples/june_example.csv"},
 ]
-rows = []                                            # start with an empty list
+```
+
+**Piece 1: go through the list.** `for f in FILES:` runs the indented lines once for each entry, and
+`f` is the current entry:
+
+```python
+for f in FILES:                   # NEW: f is the May entry, then the June entry
+    print(f["month"], f["file"])
+```
+
+```
+May assignments/python/pd3_examples/may_example.csv
+June assignments/python/pd3_examples/june_example.csv
+```
+
+**Piece 2: run the function for each one.**
+
+```python
 for f in FILES:
-    rows.append(summary(f["month"], f["file"]))      # run summary, add its row to the list
+    print(summary(f["month"], f["file"]))
+```
+
+```
+{'month': 'May', 'customers': 3, 'mrr': np.int64(2300)}
+{'month': 'June', 'customers': 3, 'mrr': np.int64(2500)}
+```
+
+**Piece 3: keep the rows instead of printing them**, then turn them into one table:
+
+```python
+rows = []                                            # an empty list, before the loop
+for f in FILES:
+    rows.append(summary(f["month"], f["file"]))      # NEW: .append adds the row to the end of the list
 table = pd.DataFrame(rows)                           # list of rows → table
 print(table)
 ```
@@ -104,12 +199,10 @@ print(table)
 ```
 
 Read the loop aloud: "for each f in FILES: run summary with f's month and f's file, and add the row
-to rows."
-
-Then add columns with column math, as in Drill 2:
+to rows." Then add a column with column math, the same way you made `change` in PD3:
 
 ```python
-table["avg_mrr"] = (table["mrr"] / table["customers"]).round(1)
+table["avg_mrr"] = (table["mrr"] / table["customers"]).round(1)   # .round(1): one decimal
 print(table)
 ```
 
@@ -119,7 +212,7 @@ print(table)
 1  June          3  2500    833.3
 ```
 
-### Example 3 — Save the table to a CSV file
+### Example 4 — Save the table to a CSV file
 
 ```python
 table.to_csv("submissions/python/scratch_summary.csv", index=False)   # NEW: write the table to a file
@@ -217,7 +310,7 @@ MONTHS = [
 ]
 rows = []
 for m in MONTHS:
-    rows.append(bridge(m["month"], m["____"], m["____"]))   # Example 2
+    rows.append(bridge(m["month"], m["____"], m["____"]))   # Example 3
 table = pd.DataFrame(____)
 print(table.to_string(index=False))
 ```
@@ -243,7 +336,7 @@ table["check"] = table["opening"] + table["new"] + table["expansion"] + table["c
 table["grr"] = ((table["opening"] + table["contraction"] + table["churn"]) / table["opening"] * 100).round(1)
 table["nrr"] = ((table["opening"] + table["____"] + table["contraction"] + table["churn"]) / table["opening"] * 100).round(1)
 print(table[["month", "check", "grr", "nrr"]].to_string(index=False))
-table.to_csv("submissions/python/pd4_h1_bridge.csv", index=____)   # Example 3
+table.to_csv("submissions/python/pd4_h1_bridge.csv", index=____)   # Example 4
 print("Saved submissions/python/pd4_h1_bridge.csv")
 ```
 
