@@ -11,7 +11,7 @@
 >
 > — David
 
-Expect about 1 hour 45 minutes.
+Expect about 2 hours.
 
 ## The goal
 
