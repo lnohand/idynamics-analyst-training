@@ -22,9 +22,9 @@ Three things:
 
 ```
 WHERE IS OUR GROWTH COMING FROM?
-      period  opening  new_customers  existing_customers  closing  check  nrr
-H1 (Dec-Jun)      ...            ...                 ...      ...    ...  ...
-Q2 (Mar-Jun)      ...            ...                 ...      ...    ...  ...
+      period  opening  new_mrr  existing_net_change  closing  check  nrr
+H1 (Dec-Jun)      ...      ...                  ...      ...    ...  ...
+Q2 (Mar-Jun)      ...      ...                  ...      ...    ...  ...
 ```
 
 2. **A short plan** at the top of your file, written before any code (see "The idea").
@@ -36,11 +36,11 @@ What each column means:
 |---|---|
 | `period` | exactly `H1 (Dec-Jun)` or `Q2 (Mar-Jun)` |
 | `opening` | total MRR on the list at the start of the period |
-| `new_customers` | MRR at the end of the period from customers who **weren't** on the opening list |
-| `existing_customers` | what the customers who **were** on the opening list added or lost by the end: their growth, minus their shrinking, minus the ones who left. It can be negative. |
+| `new_mrr` | **New MRR**: MRR at the end of the period from customers who **weren't** on the opening list |
+| `existing_net_change` | **Expansion + contraction + churn** of the customers who **were** on the opening list: what they added or lost by the end (contraction and churn are negative). It can be negative. |
 | `closing` | total MRR on the list at the end of the period |
-| `check` | opening + new_customers + existing_customers − closing. Must be 0. |
-| `nrr` | (opening + existing_customers) ÷ opening × 100, rounded to 1 decimal: how much of the opening MRR the existing customers still pay at the end |
+| `check` | opening + new_mrr + existing_net_change − closing. Must be 0. |
+| `nrr` | (opening + existing_net_change) ÷ opening × 100, rounded to 1 decimal: how much of the opening MRR the existing customers still pay at the end |
 
 The month-end lists are in `closes/`: you need `closes/2025-12/subscriptions_2025-12-31.csv`,
 `closes/2026-03/subscriptions_2026-03-31.csv` and `closes/2026-06/subscriptions_2026-06-30.csv`.
@@ -109,7 +109,7 @@ column, filter or merge) and look at the result before you go on.
 - H1's `closing` is the same as June's closing in your PD5 output, and Q2's `opening` is the same
   as March's closing there.
 - H1's closing minus opening is the same as the `Jun minus Dec` line in your PD5 output.
-- H1's `new_customers` is **not** the same as the `New` total in your PD5 output. PD5 added up six
+- H1's `new_mrr` is **not** the same as the `New` total in your PD5 output. PD5 added up six
   one-month bridges; this question compares December with June directly, so a customer who joined in
   January and grew later counts as new in full. If yours matches PD5, you've added up months instead
   of comparing the December and June lists.
