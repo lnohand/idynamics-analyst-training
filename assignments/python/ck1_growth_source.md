@@ -61,9 +61,10 @@ would mean. Then the numbers can't be read to fit a story afterwards. Four hints
    `existing_net_change`, and the `check` column proves the two parts add up to the whole.
 3. **Decide the rule before you see the numbers.** If both parts are positive, growth came from
    both, and you say which part is the bigger share of the growth. Work out the other case
-   yourself: what would it mean if one part were negative?
-4. **Answer every part of the question.** The board asked about H1 and Q2. Q2 is three months and
-   H1 is six, so compare the story (which group drove the growth), not the size of the numbers.
+   yourself: what would it mean if one part were positive and the other negative?
+4. **Answer both periods.** The board asked about H1 and Q2, so say whether Q2 shows the same thing
+   as H1: is the same group behind the growth? Q2's numbers will be smaller because Q2 is three
+   months and H1 is six. Smaller numbers on their own don't mean anything changed.
 
 ### Part 2: plan the code
 
