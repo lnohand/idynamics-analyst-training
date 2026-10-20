@@ -93,6 +93,11 @@ For question 3, here are the tools you know:
 
 ## Step 0 — Set up
 
+**Start this from `main`, not from your PD5 branch.** You're probably still on
+`student/pd5_every_month`, so finish and push your PD5 fix first. Then follow the commands below:
+they switch you to `main` and make a new branch from there. If you skip the switch, this work ends
+up inside your PD5 pull request.
+
 In VS Code, **Terminal → New Terminal**:
 
 ```
@@ -103,13 +108,24 @@ It must say `nothing to commit, working tree clean`. If it lists files, message 
 
 ```
 git checkout main
+git branch --show-current
+```
+
+The second command must print `main`. If it prints anything else, stop and message me.
+
+```
 git pull origin main
 git checkout -b student/ck1_growth_source
 git log origin/main..HEAD --oneline
 ```
 
 The last command lists any work on your new branch that isn't on main yet. You just made the branch
-from main, so it must print nothing: that means you're starting clean.
+from main, so it must print nothing: that means you're starting clean. If it prints anything, stop
+and message me.
+
+Your PD5 file isn't on `main` until I merge PD5, so it won't show in VS Code now. To read your PD5
+code, open your PD5 pull request on GitHub → **Files changed**. Your PD5 output is in that pull
+request's description.
 
 ---
 
