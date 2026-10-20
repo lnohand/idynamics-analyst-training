@@ -22,9 +22,9 @@ Three things:
 
 ```
 WHERE IS OUR GROWTH COMING FROM?
-      period  opening  new_mrr  existing_net_change  closing  check  nrr
-H1 (Dec-Jun)      ...      ...                  ...      ...    ...  ...
-Q2 (Mar-Jun)      ...      ...                  ...      ...    ...  ...
+      period  opening  new_mrr  existing_net_change  closing  check
+H1 (Dec-Jun)      ...      ...                  ...      ...    ...
+Q2 (Mar-Jun)      ...      ...                  ...      ...    ...
 ```
 
 2. **A short plan** at the top of your file, written before any code (see "The idea").
@@ -40,19 +40,38 @@ What each column means:
 | `existing_net_change` | **Expansion + contraction + churn** of the customers who **were** on the opening list: what they added or lost by the end (contraction and churn are negative). It can be negative. |
 | `closing` | total MRR on the list at the end of the period |
 | `check` | opening + new_mrr + existing_net_change − closing. Must be 0. |
-| `nrr` | (opening + existing_net_change) ÷ opening × 100, rounded to 1 decimal: how much of the opening MRR the existing customers still pay at the end |
 
 The month-end lists are in `closes/`: you need `closes/2025-12/subscriptions_2025-12-31.csv`,
 `closes/2026-03/subscriptions_2026-03-31.csv` and `closes/2026-06/subscriptions_2026-06-30.csv`.
 
 ## The idea
 
-A real request doesn't come with steps. Before writing code, an analyst makes a short plan. Write
-yours as comments at the top of the file, answering these four questions:
+A real request comes as a question, not as steps. You have two jobs: first decide **how numbers
+will answer the question** (the analyst's part), then decide **which tools will calculate them**
+(the Python part).
+
+### Part 1: how to answer the question
+
+Before any code, an analyst turns the question into numbers and decides what each possible result
+would mean. Then the numbers can't be read to fit a story afterwards. Four hints:
+
+1. **Growth is a number:** closing − opening for the period.
+2. **Split it into the two groups the question names.** Every customer at the end of the period is
+   either new (not on the opening list) or existing (on it). So growth = `new_mrr` +
+   `existing_net_change`, and the `check` column proves the two parts add up to the whole.
+3. **Decide the rule before you see the numbers.** If both parts are positive, growth came from
+   both, and you say which part is the bigger share of the growth. Work out the other case
+   yourself: what would it mean if one part were negative?
+4. **Answer every part of the question.** The board asked about H1 and Q2. Q2 is three months and
+   H1 is six, so compare the story (which group drove the growth), not the size of the numbers.
+
+### Part 2: plan the code
+
+Write your plan as comments at the top of the file, answering these four questions:
 
 ```python
 # My plan
-# 1. What does the answer look like?            (the table above, in your own words)
+# 1. How will the numbers answer the board?     (your rule from Part 1, in your own words)
 # 2. Do I already have code that does part of it?   (which file, and which part)
 # 3. What are my steps, and which tool for each?
 # 4. How will I know it's right?                (compare with a number from somewhere else)
