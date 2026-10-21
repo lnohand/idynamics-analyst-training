@@ -42,19 +42,17 @@ def bridge(period, opening_file, closing_file):
     }
     return row
 
-if __name__ == "__main__":
-
-    periods = [
+periods = [
         {"period": "H1 (Dec-Jun)", "opening": "closes/2025-12/subscriptions_2025-12-31.csv", "closing": "closes/2026-06/subscriptions_2026-06-30.csv",},
         {"period": "Q2 (Mar-Jun)","opening": "closes/2026-03/subscriptions_2026-03-31.csv","closing": "closes/2026-06/subscriptions_2026-06-30.csv",}]
 
-    rows = [bridge(m["period"], m["opening"], m["closing"]) for m in periods]
-    table = pd.DataFrame(rows)
+rows = [bridge(m["period"], m["opening"], m["closing"]) for m in periods]
+table = pd.DataFrame(rows)
 
-    table["check"] = (table["opening"] + table["new"] + table["expansion"] + table["contraction"]+ table["churn"]- table["closing"])
-    table["new_mrr"] = table["new"]
-    table["existing_net_change"] = table["expansion"] + table["contraction"] + table["churn"]
+table["check"] = (table["opening"] + table["new"] + table["expansion"] + table["contraction"]+ table["churn"]- table["closing"])
+table["new_mrr"] = table["new"]
+table["existing_net_change"] = table["expansion"] + table["contraction"] + table["churn"]
 
-    summary_columns = ["period","opening","new_mrr","existing_net_change","closing","check"]
-    print("WHERE IS OUR GROWTH COMING FROM")
-    print(table[summary_columns].to_string(index=False))
+summary_columns = ["period","opening","new_mrr","existing_net_change","closing","check"]
+print("WHERE IS OUR GROWTH COMING FROM")
+print(table[summary_columns].to_string(index=False))
