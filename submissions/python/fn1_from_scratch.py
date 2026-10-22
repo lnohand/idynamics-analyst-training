@@ -30,15 +30,15 @@ print(f"June: {customer_count(JUN)}")
 
 def big_customers(month, amount):
     m = pd.read_csv(month)
-    totals = m.groupby("customer_id")["mrr"].sum()
-    above = totals[totals > amount]
-    above = above.sort_values(ascending=False)
-    print(f"{amount} or more: {above}")
+    totals = m.groupby("customer_id", as_index=False)["mrr"].sum()
+    above = totals[totals["mrr"] >= amount]
+    return above.sort_values("mrr", ascending=False)
 
-print()
 print("2. BIG CUSTOMERS IN JUNE")
-big_customers(JUN, 8000)
-big_customers(JUN, 9500)
+result = big_customers(JUN, 8000)
+print(result.to_string(index=False))
+result = big_customers(JUN, 9500)
+print(result.to_string(index=False)) 
 
 # Step 3
 # 1. The answer looks like: a number
@@ -55,8 +55,8 @@ def growth(start, end):
 
 print()
 print("3. GROWTH")
-print(f"H1 (Dec-Jun): {growth(DEC, JUN)}")
-print(f"Q2 (Mar-Jun): {growth(MAR, JUN)}")
+print(f"H1 (Dec-Jun): {growth(DEC, JUN):,.2f}")
+print(f"Q2 (Mar-Jun): {growth(MAR, JUN):,.2f}")
 
 # Step 4
 # 1. The answer looks like: two numbers indicating the new mrr generated from the ending to the starting period 
@@ -68,11 +68,11 @@ print(f"Q2 (Mar-Jun): {growth(MAR, JUN)}")
 def new_mrr(starting, ending):
     start = pd.read_csv(starting)
     end = pd.read_csv(ending)
-    start_mrr = start.groupby("customer_id")["mrr"].sum()
-    ending_mrr = end.groupby("customer_id")["mrr"].sum()
-    both = pd.merge(start_mrr, ending_mrr, on="mrr", how="outer", indicator=True)
+    start_mrr = start.groupby("customer_id", as_index=False)["mrr"].sum()
+    ending_mrr = end.groupby("customer_id", as_index=False)["mrr"].sum()
+    both = pd.merge(start_mrr, ending_mrr, on="customer_id", how="outer", indicator=True)
     new = both[both["_merge"] == "right_only"]
-    new = new["mrr"].sum()
+    new = new["mrr_y"].sum()
     return new
 
 print()
