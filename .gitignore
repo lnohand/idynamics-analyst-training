@@ -35,3 +35,5 @@ scratch*.py
 !assignments/python/pd1_examples/example_list.csv
 # PD3 example data (small made-up lists the brief teaches with)
 !assignments/python/pd3_examples/*.csv
+# Quiz 1 data (made-up movies the quiz uses)
+!assignments/python/quiz1_data/*.csv
