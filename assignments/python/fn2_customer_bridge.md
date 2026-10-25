@@ -5,11 +5,11 @@
 >
 > The board liked the MRR bridge. Their next question is about customers, not dollars: how many did
 > we start the half with, how many did we win, how many did we lose, and how many do we have now?
-> I'd like that as a customer bridge, for H1 and for every month.
+> I'd like that as a customer bridge for H1.
 >
 > — David
 
-Expect about 2 hours.
+Expect about 1.5 hours.
 
 ## The goal
 
@@ -19,8 +19,6 @@ A customer bridge: the same shape as your MRR bridge, but counting customers ins
       period  opening  new  churned  closing  check
 H1 (Dec-Jun)      ...  ...      ...      ...      0
 ```
-
-Then the same table for every month from January to June, saved as a file.
 
 ## Why this, and when you'd use it
 
@@ -34,21 +32,20 @@ the big one.** If the big function goes wrong, you already know the small ones w
 where to look. In Excel it's the same idea as helper columns: you check each column before you build
 the final formula on top of them. It's standard practice for any calculation longer than a few lines.
 
-You'll write three small functions and put them together into `customer_bridge`.
+You'll write two small functions, `list_customers` and `combine_lists`, and then `customer_bridge`, which calls them.
 
-Here are the tools you know. Everything in this assignment uses them, plus one new idea:
+Here are the tools you know. Everything in this assignment uses them, plus two new things:
 
 | If a step needs… | Tool | Where you learned it |
 |---|---|---|
-| **one total per group** (one row per customer) | `groupby("customer_id", as_index=False)["mrr"].sum()` | PD1, PD3 |
 | **how many rows** a table has | `len(table)` | PF1, FN1 |
 | **some rows** of a table | filter: `df[df["col"] == ...]` | PD1, PD1b |
-| what **changed between two lists** | `pd.merge(..., how="outer", indicator=True)`, then `fillna(0)` | PD3 |
+| **two lists in one table**, with a label for which list each row is on | `pd.merge(..., how="outer", indicator=True)` | PD3 |
+| **one column** of a table, kept as a table | `df[["col"]]` | PD1 |
 | **a row** of a table, from a function | a dictionary `{"period": ..., ...}`, then `return row` | PD4 |
-| **the same steps for every month** | `rows = []`, a `for` loop with `rows.append(...)`, then `pd.DataFrame(rows)` | PD5 |
-| **a file** someone can open in Google Sheets | `df.to_csv(path, index=False)` | PD5 |
 | **the same steps more than once** | a function that `return`s its answer | PD4, FN1 |
 | **NEW:** a **big job in small pieces** | call your own function inside another function | this assignment |
+| **NEW:** **remove repeated rows** | `df.drop_duplicates()` | this assignment, Step 1 |
 
 ---
 
@@ -286,6 +283,49 @@ Put `return picked["mrr"].sum()` back before you go on.
 
 ## Your turn — the customer bridge
 
+### First, the plan for the whole job
+
+**The job:** count how customers moved between two month-ends: how many we had at the start
+(`opening`), how many we won (`new`), how many we lost (`churned`), and how many we have at the end
+(`closing`). Only customers are counted here, not MRR. The information is in the month-end
+subscription lists.
+
+**The idea:** turn each month-end list into a list of customers → put the opening and closing
+customer lists in one table, with a label on each customer → count the customers and the labels →
+put the counts in one row.
+
+You'll write three functions. Here's why each one is needed, and what it does:
+
+**1. `list_customers`.** *Why:* the month-end files are subscription lists, not customer lists.
+`customer_id` is not a primary key there (as in SQL: a column where each value appears only once):
+a customer with two subscriptions appears twice. To count customers, each customer must appear
+once. If our files were customer lists, we wouldn't need this function. *How:* keep only the
+`customer_id` column and remove the repeats. We need this for the opening list and for the closing
+list, every time, so we write it once, as a function.
+
+**2. `combine_lists`.** *Why:* to find who is new and who left, we need both customer lists in one
+table. *How:* merge them (PD3), keeping every customer from either list. The merge adds a `_merge`
+column that labels each customer: on both lists, only on the opening list, or only on the closing
+list. The function doesn't count anything: it only builds the table. It calls `list_customers` for
+each list instead of repeating its lines.
+
+**3. `customer_bridge`.** *Why:* the board wants the counts in one row. *How:* `opening` and
+`closing` count the rows of each customer list (from `list_customers`); `new` and `churned` count
+the labels in `combine_lists`'s table. It doesn't read or merge anything itself: it calls the two
+functions.
+
+In short:
+
+| Step | Function | What it gives back | Which of your functions it calls |
+|---|---|---|---|
+| 1 | `list_customers(file)` | a customer list: one column, `customer_id`, one row per customer | none |
+| 2 | `combine_lists(opening_file, closing_file)` | one table with both customer lists: `customer_id` and `_merge` | `list_customers`, twice |
+| 3 | `customer_bridge(period, opening_file, closing_file)` | one row of counts (a dictionary) | `list_customers` and `combine_lists` |
+
+**The rule for this assignment:** when a step needs something an earlier function already does,
+**call that function. Don't copy its lines.** If `customer_bridge` has a `read_csv` or a `merge` in
+it, it's doing work that belongs to Steps 1 and 2.
+
 At the top of `fn2_customer_bridge.py`:
 
 ```python
@@ -295,107 +335,222 @@ DEC = "closes/2025-12/subscriptions_2025-12-31.csv"
 JUN = "closes/2026-06/subscriptions_2026-06-30.csv"
 ```
 
-For every step, write your plan as comments first (the five questions), then the function under it.
-Try it in `scratch.py` as you go. Each step gives you less help than the one before. If you get
-stuck, go back to Learn it: it does the same thing on a smaller job.
+Each step: fill the plan's blanks first, then the code's blanks, then run the file and do the check.
+Try each step in `scratch.py` as you go, if that helps.
 
-### Step 1 — One row per customer
+### Step 1 — `list_customers`: a customer list
 
-The bridge compares customers, but a month-end list has one row per **subscription**. So the first
-small function turns a list into one row per customer.
+**What it's for:** turning a subscription list into a customer list (reason 1 above).
 
-Fill the blanks in the plan, then in the code:
+**First, look at the data.** Make this a habit: before you work with any CSV, print a few rows to
+see its column names and what's in them. In `scratch.py`, read June's list into a table called
+`subs` and print its first rows:
+
+```python
+subs = pd.read_csv(JUN)
+print(subs.head().to_string(index=False))       # the first 5 rows
+```
+
+```
+subscription_id customer_id            plan_name billing_cycle  seats  price_per_seat  discount_percent    mrr
+         SUB002     CUST002       Platform Suite        Annual     26            1800                 0 3900.0
+         SUB003     CUST003        Marketing Pro       Monthly     23              85                 0 1955.0
+         SUB004     CUST004            Sales Hub       Monthly     18             110                 0 1980.0
+         SUB006     CUST006 Analytics Enterprise        Annual     31            2160                 0 5580.0
+         SUB007     CUST007        Marketing Pro       Monthly     16              85                 0 1360.0
+```
+
+One row per subscription. The only column this step needs is `customer_id`.
+
+**New tool: `drop_duplicates()`.** Why not `groupby`? `groupby` is for working something out per
+group, such as adding up each customer's MRR. Here we don't use MRR, so there's nothing to work out:
+we only need each `customer_id` once. `drop_duplicates()` does exactly that: it removes repeated
+rows from a table and keeps the first of each. Try it in `scratch.py`, one move at a time:
+
+```python
+ids = subs[["customer_id"]]          # keep only the customer_id column (a table with one column)
+print(len(ids))                      # how many rows: one per subscription
+customers = ids.drop_duplicates()    # remove the repeated customer_ids, keep the first of each
+print(len(customers))                # how many rows now: one per customer
+```
+
+```
+57
+45
+```
+
+57 subscriptions, 45 customers. In one line: `subs[["customer_id"]].drop_duplicates()`.
+
+Keep the `customer_id` column first. `subs.drop_duplicates()` on the whole table removes nothing
+(it still has 57 rows): a row only counts as a repeat if **every** column is the same, and every
+subscription has its own `subscription_id`.
+
+Now the function. Fill the blanks:
 
 ```python
 # Step 1
-# 1. The answer looks like: a table, one row per customer, with ____ and ____ as columns.
+# 1. The answer looks like: a table with one column, ____, one row per customer.
 # 2. The information is in: one month-end list.
-# 3. Steps → tools: read the file → one row per customer (____) → return the table.
+# 3. Steps → tools: read the file → keep the customer_id column → remove the repeats (____) → return it.
 # 4. I'll know it's right because: December has ____ customers and June ____ (my FN1 Step 1 output).
 # 5. What changes next time (my inputs): the file.
-def per_customer(file):
+def list_customers(file):
     subs = pd.read_csv(file)
-    customers = subs.groupby("customer_id", as_index=____)["mrr"].sum()
+    customers = subs[["customer_id"]].____()
     return ____
 ```
 
-Then print, using `len()` outside the function:
+Print what the function gives back: the first rows of June's customer list, then the number of
+customers in each list:
+
+```python
+print("1. CUSTOMER LISTS")
+jun = list_customers(JUN)                        # call it for June
+print(jun.head().to_string(index=False))         # the first 5 rows of the table it gives back
+dec = list_customers(____)                       # call it for December
+print(f"December: {len(dec)} customers")         # the total number of customers in December
+print(f"June: {____} customers")
+```
 
 ```
-1. ONE ROW PER CUSTOMER
+1. CUSTOMER LISTS
+customer_id
+    CUST002
+    CUST003
+    CUST004
+    CUST006
+    CUST007
 December: ... customers
 June: ... customers
 ```
 
-**Check:** the two counts must equal your FN1 Step 1 output. They're in your FN1 pull request on
-GitHub (#39) → "My output". Then, in `scratch.py`, print `per_customer(JUN).head()`: `customer_id` and `mrr` must be
-side by side on one header line. If `customer_id` sits on a line by itself, it's the index, not a
-column (FN1 feedback, Step 4), and the merge in Step 2 won't work.
+**Read the output in two parts.** The table is what `list_customers` gives back: a customer list,
+one row per customer. The two lines under it are **only a check**: one row per customer, so the
+number of rows is the number of customers, and those counts must match FN1. Step 2 uses the
+customer lists, not the counts.
 
-### Step 2 — Opening and closing side by side
+**Check:** the two counts must equal your FN1 Step 1 output: GitHub → your FN1 pull request (#39)
+→ "My output".
 
-The second small function puts two lists side by side, the way `bridge` did in PD3/PD4. This time
-it calls `per_customer` instead of repeating the groupby.
+### Step 2 — `combine_lists`: both customer lists in one table
 
-Fill the blanks in the plan, then write the code yourself:
+**What it's for:** putting the opening and closing customer lists in one table, with a label on each
+customer (reason 2 above). It doesn't read the files itself: it **calls `list_customers`** for each
+list.
+
+Here is the whole function: the code has no blanks, but the five plan lines still do. Type it in
+yourself (don't paste it) and read each comment as you go. Then fill the plan's blanks: lines 1–3
+and 5 from the code, and line 4 from the test you'll run below it.
 
 ```python
 # Step 2
-# 1. The answer looks like: one table, ____
-# 2. The information is in: ____
-# 3. Steps → tools: ____ twice → ____ on customer_id → ____ → a change column → return the table.
+# 1. The answer looks like: one table, one row per customer from either list, with customer_id and ____.
+# 2. The information is in: the opening and the closing month-end lists.
+# 3. Steps → tools: a customer list for each (call ____, twice) → both in one table, with labels (____).
 # 4. I'll know it's right because: ____
 # 5. What changes next time (my inputs): ____
+def combine_lists(opening_file, closing_file):   # create a function called combine_lists, with two inputs
+    opening = list_customers(opening_file)       # run Step 1's function on the opening file; keep the customer list it gives back
+    closing = list_customers(closing_file)       # the same for the closing file
+    both = pd.merge(opening, closing, on="customer_id", how="outer", indicator=True)   # both lists in one table
+    return both                                  # hand the table back
 ```
 
-Call the function `side_by_side`. Use `suffixes=("_open", "_close")`, so the MRR columns are
-`mrr_open` and `mrr_close`, and add a `change` column (closing minus opening).
+Read the merge line aloud: "merge the opening and the closing customer lists, matching on
+`customer_id`; keep every customer from either list (`how="outer"`); and add a `_merge` column that
+says which list each customer is on (`indicator=True`)", as in PD3. Without `how="outer"`, the merge
+keeps only the customers on both lists, and you can't see who is new or who left.
 
-Call it for H1 (December to June). Outside the function, keep the new customers (rows only on the
-closing list) and print how many there are and their MRR, after a blank line:
+The `_merge` column has three labels:
+
+| `_merge` | The customer is… | So they are… |
+|---|---|---|
+| `both` | on both lists | a customer who stayed |
+| `left_only` | only on the opening list (the first table in the merge) | churned |
+| `right_only` | only on the closing list (the second table in the merge) | new |
+
+Print what the function gives back for H1 (December to June), then a test:
+
+```python
+print()
+print("2. BOTH LISTS IN ONE TABLE")
+h1 = combine_lists(DEC, JUN)                     # December to June
+print(h1.head().to_string(index=False))          # the first 5 rows of the table it gives back
+stayed = h1[h1["_merge"] == "both"]              # on both lists
+churned = h1[h1["_merge"] == "left_only"]        # only on the opening list
+new = h1[h1["_merge"] == "right_only"]           # only on the closing list
+print(f"December: {len(stayed) + len(churned)} customers")   # stayed + churned = everyone in December
+print(f"June: {len(stayed) + len(new)} customers")           # stayed + new = everyone in June
+```
 
 ```
-2. SIDE BY SIDE
-H1 new customers: ...  New MRR: ...
+2. BOTH LISTS IN ONE TABLE
+customer_id _merge
+    CUST001   both
+    CUST002   both
+    CUST003   both
+    CUST004   both
+    CUST006   both
+December: ... customers
+June: ... customers
 ```
 
-`New MRR` is the sum of their `change`, printed with `:,.2f`.
+**Read the output in two parts.** The table is what `combine_lists` gives back: every customer from
+either list, one row each, with a label. The first rows are all `both`; further down are
+`left_only` and `right_only`.
 
-**Check:** `New MRR` must equal the H1 `new_mrr` in your checkpoint table. It's in your checkpoint
-pull request on GitHub (#38) → "My output".
+The two lines under it are **only a test** of the table: everyone in December either stayed or
+churned, and everyone in June either stayed or is new.
 
-### Step 3 — The customer bridge for H1
+**Check:** the two counts must equal your Step 1 counts. If they don't, look at `how=` in the merge.
 
-Now the big function, built from your two small ones. No blanks from here: write all five plan
-lines yourself, then the code. You've already done every piece of it; this step puts them together.
+### Step 3 — `customer_bridge`: the big function
 
-Call it `customer_bridge`. It returns one row with these keys, in this order: `period`, `opening`,
-`new`, `churned`, `closing`, `check`.
+**What it's for:** the board's answer, one row of customer counts (reason 3 above).
 
-- `opening` and `closing`: how many customers are on the opening list and on the closing list.
-- `new`: how many customers are only on the closing list. `churned`: how many are only on the opening list.
-- `check`: opening + new − churned − closing. It must be 0.
+The four numbers, and where each one comes from:
 
-Make the check worth having, as `total` was in Learn it: it should be able to catch a mistake.
+| Number | What it is | Where it comes from |
+|---|---|---|
+| `opening` | customers on the opening list | `len()` of the customer list from `list_customers`, opening file |
+| `closing` | customers on the closing list | `len()` of the customer list from `list_customers`, closing file |
+| `new` | customers only on the closing list | `len()` of the `combine_lists` rows where `_merge` is `right_only` |
+| `churned` | customers only on the opening list | `len()` of the `combine_lists` rows where `_merge` is `left_only` |
 
-Try to write it yourself first, from the list above. Only if you get stuck, look at where you've
-already done each piece:
+`check` is opening + new − churned − closing, and must be 0. It can catch a mistake because the
+numbers come by two different routes: `opening` and `closing` are counted straight from each list,
+while `new` and `churned` come from the merge. If the merge lost customers (for example, without
+`how="outer"`), the check wouldn't be 0.
 
-**If you're stuck: where you've done each piece**
+```python
+# Step 3
+# 1. The answer looks like: one row: period, ____, ____, ____, ____ (customer counts), check.
+# 2. The information is in: the two month-end lists, through my functions ____ and ____.
+# 3. Steps → tools: count each list (call ____, then len) → both lists in one table (call ____)
+#    → count the new and the churned rows (filter on ____, then len) → a row → return it.
+# 4. I'll know it's right because: ____
+# 5. What changes next time (my inputs): ____
+def customer_bridge(period, opening_file, closing_file):
+    opening = len(list_customers(opening_file))  # call Step 1's function, count its rows
+    closing = ____
+    both = ____(opening_file, closing_file)      # call Step 2's function
+    new = len(both[both["_merge"] == "right_only"])
+    churned = ____
+    row = {
+        "period": period,
+        "opening": opening,
+        "new": new,
+        "churned": churned,
+        "closing": closing,
+        "check": ____,
+    }
+    return ____
 
-| To get… | You did it in… |
-|---|---|
-| how many customers are on a list | Step 1: `len()` of what `per_customer` returns |
-| the customers only on the closing list | Step 2: the filter you used for the new customers |
-| the customers only on the opening list | the same filter, with the other `_merge` value (PD3) |
-| a function that returns one row | Learn it, Example 2(b): `cycle_split` |
-
-**A good way to start:** do it for H1 with plain steps in `scratch.py` first, and print each number,
-as in Example 2(a). When the four numbers look right, put the steps inside the function, swap the
-fixed values for its inputs, and `return` the row.
-
-Call it for H1 (December to June), and print the row as a table, as in Example 2(a), after a blank
-line:
+print()
+print("3. H1 CUSTOMER BRIDGE")
+h1_row = customer_bridge("H1 (Dec-Jun)", DEC, JUN)
+print(pd.DataFrame([h1_row]).to_string(index=False))   # one row → a list of one row → a table
+```
 
 ```
 3. H1 CUSTOMER BRIDGE
@@ -403,37 +558,7 @@ line:
 H1 (Dec-Jun)      ...  ...      ...      ...    ...
 ```
 
-**Check:** `check` is 0. `opening` and `closing` equal your Step 1 counts, and `new` equals your
-Step 2 count.
-
-### Step 4 — Every month
-
-On your own: write all five plan lines yourself, then the code. It's a small step, and it's your
-PD5 loop with a different function inside.
-
-Run `customer_bridge` for every month from January to June. The list of months is `MONTHS` in your
-PD5 file, `submissions/python/pd5_every_month.py`: copy it into this file. Print the table after a
-blank line, then save it to `submissions/python/fn2_customer_bridge.csv`:
-
-```
-4. EVERY MONTH
- period  opening  new  churned  closing  check
-2026-01      ...  ...      ...      ...    ...
-...
-2026-06      ...  ...      ...      ...    ...
-Saved submissions/python/fn2_customer_bridge.csv
-```
-
-Try to write it yourself first. Only if you get stuck, look back:
-
-**If you're stuck:** the loop in your PD5 file (`rows = []` before the loop,
-`rows.append(...)` inside it, `pd.DataFrame(rows)` after it) and the `to_csv` line from PD5. Two
-things to look at as you adapt it: call `customer_bridge` instead of `bridge`, and make every name
-inside `m[...]` one of the keys in `MONTHS` (`"month"`, `"opening"`, `"closing"`). A name that
-isn't there stops the loop with a `KeyError`.
-
-**Check:** every `check` is 0. January's `opening` equals December's count from Step 1, June's
-`closing` equals June's count from Step 1, and the six `new` values add up to H1's `new` in Step 3.
+**Check:** `check` is 0, and `opening` and `closing` equal your Step 1 counts.
 
 **Run the whole file once more before you commit,** and paste that output, not an earlier one.
 
@@ -441,7 +566,7 @@ isn't there stops the loop with a `KeyError`.
 
 ## Hand in
 
-Commit `submissions/python/fn2_customer_bridge.py` only (not `scratch.py`; the CSV won't show up):
+Commit `submissions/python/fn2_customer_bridge.py` only (not `scratch.py`):
 **Source Control** → `+` on the file → message `Complete: FN2 — customer bridge` → **Commit** →
 **Publish Branch**. Then open a PR from `student/fn2_customer_bridge` to `main` with this description:
 
@@ -454,11 +579,11 @@ Commit `submissions/python/fn2_customer_bridge.py` only (not `scratch.py`; the C
 ```
 
 ## One question
-Two sentences for the board, using your Step 3 and Step 4 tables: how did our customer count
-change in H1, and in which months did we lose customers?
+Two sentences for the board, using your Step 3 table: how did our customer count change in H1,
+and how much of that change came from new customers and how much from customers we lost?
 
 ## Why small functions?
-Why build customer_bridge from per_customer and side_by_side, instead of writing it as one long
+Why build customer_bridge from list_customers and combine_lists, instead of writing it as one long
 function? (2 sentences)
 
 ## How it went
