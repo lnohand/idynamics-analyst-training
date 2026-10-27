@@ -970,6 +970,18 @@ QUIZ_LIBRARY.push({
           a: "I wouldn't start by comparing totals or sorting the two exports side by side. I'd reconcile them at customer level. I'd pull both lists, check that each one has every customer ID only once, and then build a single list of every ID that appears in either system. For each ID I'd flag whether it's in the CRM, in billing, or both, and bring in the amounts with SUMIFS so a missing customer shows as zero instead of an error. Before reading any rows, I'd check that my table's counts and totals match each source exactly, so I know nothing got lost. Then the 25 break into groups, for example customers marked active in the CRM who were never invoiced, or cancellations billing has processed but the CRM hasn't. Each group gets a reason. I did exactly this comparing our April and May subscription lists: 57 IDs, three of them in only one list, and both totals tied to the cent."
         }
       ]
+    },
+    {
+      id: "fc_close_story",
+      title: "Telling Your Close Story",
+      difficulty: "intermediate",
+      questions: [
+        {
+          type: "flip",
+          q: "Walk me through how you did a month-end close in your last role.",
+          a: "I owned the monthly revenue close at iDynamics, a B2B SaaS company: MRR, retention, and the commentary for our VP of Finance.\n\nIt runs in three steps. First, I lock the cut-off: on the last day of the month I snapshot every active subscription from our Postgres database and freeze it, and last month's frozen snapshot is this month's opening. Second, I build the MRR waterfall by comparing the two snapshots customer by customer, so every change lands in new, expansion, contraction or churn. Third, I tie out: opening plus the movements has to equal closing to the cent. Only then do I calculate NRR, GRR and churn, compare to forecast, and write up what moved.\n\nOne close taught me why the tie-out matters. My waterfall came out about $7,800 above the snapshot. Instead of plugging it, I traced it: the query joined past events to each subscription's current state, so customers who upgraded later were counted at their new, higher price. I rebuilt the waterfall from the snapshot comparison and it has tied to zero since.\n\nI also try to turn the numbers into a decision. One month NRR came in at 99% even though new business was strong. A single churned account had wiped out all of that month's expansion, so my commentary said growth was masking a retention risk and the at-risk accounts needed attention before next month.\n\nThe part I enjoyed most was automating it. After a few months in Excel I rebuilt the close in Python with pandas: it reads the two snapshots, builds the waterfall, runs the tie-out check and prints the KPIs in seconds, so my time goes into the analysis instead of rebuilding formulas.\n\n---\nHOW THIS ANSWER IS BUILT (about 2 minutes)\n1. Headline: one sentence on what you owned and for whom.\n2. The process in three named steps. It shows you know the method; skip the formulas.\n3. A technical story: a problem you found, what you did, the result. It proves you think in controls, not just formulas.\n4. A business story: a number turned into a recommendation. It proves judgment.\n5. Something you improved because you wanted to. End on energy; that is your passion.\n\nHOW TO SOUND STRONG\n- Say \"I\", not \"we\". They are hiring you.\n- Name the strength, then prove it with a number: \"I'm careful with data: I traced a $7,800 gap instead of plugging it.\"\n- Stop at about 2 minutes and let them ask. Be ready for the follow-ups: why a current-state join inflates history, NRR vs GRR, and what your pandas script checks."
+        }
+      ]
     }
   ]
 });
