@@ -37,3 +37,5 @@ scratch*.py
 !assignments/python/pd3_examples/*.csv
 # Quiz 1 data (made-up movies the quiz uses)
 !assignments/python/quiz1_data/*.csv
+# Quiz 2 data (made-up library the quiz uses)
+!assignments/python/quiz2_data/*.csv
