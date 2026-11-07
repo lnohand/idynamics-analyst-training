@@ -17,6 +17,7 @@ print(piz[["title", "year", "rating"]].to_string(index=False))
 print("Question 3")
 genres = movie.groupby("genre", as_index=False)["minutes"].sum()
 genres = genres.sort_values("minutes", ascending=False)
+print(genres.to_string(index=False))
 print(genres[genres["minutes"] >= 400].to_string(index=False))
 
 print("Question 4")
@@ -73,4 +74,4 @@ print()
 print("Question 9")
 print("a. The function itself calculates the total minutes in the Movies table. It will print the total minutes amount because the function itself contains a print statement. The final print command will print nothing because there is no return statement in the function.")
 print("b. The code adds a new column called average where it puts the calculated average into each line. It then prints the total of the column. It does not print the average rating.")
-print("c. This code prints the total minutes in each genre of film. It is not a column since as_index = False is not present. It is an index. To make it a column, as_index=False should be added. ")   qwerASDDFGHZ
+print("c. This code prints the total minutes in each genre of film. It is not a column since as_index = False is not present. It is an index. To make it a column, as_index=False should be added. ")
