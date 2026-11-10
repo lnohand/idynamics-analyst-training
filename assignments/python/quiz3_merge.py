@@ -12,6 +12,7 @@ print("Question 1:")
 print(f"Courses: {courses["course_id"].count()}")
 print(f"Instructors: {instructors["instructor_id"].count()}")
 print(f"Enrollments: {enrollments["enroll_id"].count()}")
+print(f"Total paid: ${enrollments["paid"].sum()}")
 
 print()
 print("Question 2:")
