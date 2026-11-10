@@ -23,7 +23,7 @@ print()
 print("Question 3:")
 dul = enrollments.groupby("month", as_index=False)["paid"].sum()
 dul = dul.sort_values("paid", ascending=False)
-print(dul)
+print(dul.to_string(index=False))
 
 print()
 print("Question 4:")
@@ -33,7 +33,7 @@ pizdu = pizdu.fillna(0)
 nihu = nihu.groupby(["course_id", "title"], as_index=False)["paid"].sum()
 nihu = nihu.fillna(0)
 nihu = nihu.sort_values("paid", ascending=True)
-print(nihu[["course_id", "title", "paid"]])
+print(nihu[["course_id", "title", "paid"]].to_string(index=False))
 print("Courses with no sales:")
 print(pizdu[["title", "course_id", "paid"]].to_string(index=False))
 
@@ -53,8 +53,8 @@ never = pd.merge(instructors, courses, on="instructor_id", how="outer", indicato
 nev = never[never["_merge"] == "left_only"]
 ev = never[never["_merge"] == "right_only"]
 nev= nev.fillna(0)
-print(nev[["instructor_id", "name"]])
-print(ev[["course_id", "title", "instructor_id"]])
+print(nev[["instructor_id", "name"]].to_string(index=False))
+print(ev[["course_id", "title", "instructor_id"]].to_string(index=False))
 
 print()
 print("Question 7:")
