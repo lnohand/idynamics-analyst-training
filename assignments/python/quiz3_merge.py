@@ -40,7 +40,7 @@ print(pizdu[["title", "course_id", "paid"]].to_string(index=False))
 
 print()
 print("Question 5:")
-bru = pd.merge(courses, enrollments, on="course_id", how="outer", indicator=True)
+bru = pd.merge(enrollments, courses, on="course_id", how="left", indicator=True)
 heh = bru.groupby(["month", "student", "title"], as_index=False)["paid"].sum()
 heh = heh[heh["month"] == "2026-09"]
 sept = enrollments[enrollments["month"] == "2026-09"]
@@ -53,7 +53,7 @@ print("Question 6:")
 never = pd.merge(instructors, courses, on="instructor_id", how="outer", indicator=True)
 nev = never[never["_merge"] == "left_only"]
 ev = never[never["_merge"] == "right_only"]
-nev= nev.fillna(0)
+nev = nev.fillna(0)
 print(nev[["instructor_id", "name"]].to_string(index=False))
 print(ev[["course_id", "title", "instructor_id"]].to_string(index=False))
 
