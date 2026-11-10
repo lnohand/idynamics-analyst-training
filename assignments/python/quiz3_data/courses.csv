@@ -1,0 +1,17 @@
+course_id,title,category,price,instructor_id
+C01,Excel Basics,Excel,49,I01
+C02,Pivot Tables in a Day,Excel,50,I01
+C03,SQL for Analysts,SQL,79,I02
+C04,Joins Without Tears,SQL,65,I02
+C05,Python from Zero,Python,99,I03
+C06,pandas for Finance,Python,120,I03
+C07,Budgeting 101,Finance,45,I04
+C08,Reading a P&L,Finance,55,I04
+C09,Forecasting Basics,Finance,85,I04
+C10,Dashboards that Talk,Excel,70,I05
+C11,Charts in Python,Python,60,I03
+C12,Cash Flow Clinic,Finance,75,I05
+C13,Power Query Starter,Excel,40,I09
+C14,Window Functions,SQL,90,I02
+C15,Presenting Numbers,Finance,35,I05
+C16,Python Loops Lab,Python,30,I03

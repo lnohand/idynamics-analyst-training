@@ -26,7 +26,10 @@ import sys
 PATH_ALLOW = re.compile(
     r"""^(
         student/ | submission/ |            # git branch names
-        .*excel_\d+_[a-z_]+\.xlsx$ |        # the student's deliverable
+        submissions/ |                      # anything under submissions/ is HIS deliverable,
+                                            # i.e. a file the brief tells him to create
+        scratch\.py$ |                      # the throwaway file every brief tells him to use
+        .*excel_\d+_[a-z_]+\.xlsx$ |        # his Excel deliverable
         \#N/A | \#REF! | \#VALUE!           # Excel error literals
     )""",
     re.X,
@@ -42,15 +45,34 @@ def money(s):
     return float(s.replace("$", "").replace(",", ""))
 
 
+def _repo_index(repo):
+    """Every tracked-ish filename in the repo, by basename and by relative path."""
+    names, rels = set(), set()
+    for root, dirs, files in os.walk(repo):
+        dirs[:] = [d for d in dirs if d not in (".git", "__pycache__", ".venv")]
+        for f in files:
+            names.add(f)
+            rels.add(os.path.relpath(os.path.join(root, f), repo))
+        for d in dirs:
+            rels.add(os.path.relpath(os.path.join(root, d), repo) + "/")
+    return names, rels
+
+
 def check_paths(text, repo):
-    """A1 — every path the brief names resolves."""
+    """A1 — every path the brief names resolves.
+
+    A brief may name a file by bare basename (`courses.csv`) or by repo-relative path
+    (`docs/foo.md`). Resolve either, anywhere in the tree — a fixed list of base dirs
+    missed assignments/python/*_data/ entirely and failed correct briefs.
+    """
     fails = []
-    bases = ["", "assignments/excel/", "docs/", "submissions/excel/", "data/"]
+    names, rels = _repo_index(repo)
     for tok in sorted(set(PATH_RE.findall(text)) | set(DIR_RE.findall(text))):
         if PATH_ALLOW.match(tok):
             continue
-        if not any(os.path.exists(os.path.join(repo, b, tok)) for b in bases):
-            fails.append(f"A1  path does not exist: {tok}")
+        if tok in rels or os.path.basename(tok) in names:
+            continue
+        fails.append(f"A1  path does not exist: {tok}")
     return fails
 
 

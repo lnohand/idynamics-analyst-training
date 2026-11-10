@@ -39,3 +39,4 @@ scratch*.py
 !assignments/python/quiz1_data/*.csv
 # Quiz 2 data (made-up library the quiz uses)
 !assignments/python/quiz2_data/*.csv
+!assignments/python/quiz3_data/*.csv
