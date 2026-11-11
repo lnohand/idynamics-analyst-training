@@ -1,0 +1,50 @@
+customer_id,company_name,industry,city,region
+CUST001,TechVision Solutions,SaaS,Toronto,Eastern Canada
+CUST002,Pacific Analytics Inc,Finance,Vancouver,Western Canada
+CUST003,Maple Healthcare Systems,Healthcare,Montreal,Eastern Canada
+CUST004,Prairie Commerce Group,E-commerce,Calgary,Western Canada
+CUST005,Atlantic Media Corp,Media,Halifax,Eastern Canada
+CUST006,Northern Retail Solutions,Retail,Edmonton,Western Canada
+CUST007,Ontario Manufacturing Tech,Manufacturing,Toronto,Eastern Canada
+CUST008,Quantum Education Platform,Education,Ottawa,Eastern Canada
+CUST009,West Coast Logistics,SaaS,Vancouver,Western Canada
+CUST010,Montreal Finance Hub,Finance,Montreal,Eastern Canada
+CUST011,Prairie Health Connect,Healthcare,Winnipeg,Central Canada
+CUST012,Maritime E-commerce,E-commerce,Saint John,Eastern Canada
+CUST013,Alberta Tech Innovators,SaaS,Calgary,Western Canada
+CUST014,Toronto Media Group,Media,Toronto,Eastern Canada
+CUST015,BC Retail Networks,Retail,Victoria,Western Canada
+CUST016,Quebec Manufacturing,Manufacturing,Quebec City,Eastern Canada
+CUST017,Capital Education Tech,Education,Ottawa,Eastern Canada
+CUST018,Vancouver FinTech Labs,Finance,Vancouver,Western Canada
+CUST019,Central Healthcare Partners,Healthcare,Saskatoon,Central Canada
+CUST020,Atlantic SaaS Systems,SaaS,St. John's,Eastern Canada
+CUST021,Calgary Commerce Solutions,E-commerce,Calgary,Western Canada
+CUST022,Toronto Tech Ventures,SaaS,Toronto,Eastern Canada
+CUST023,Island Media Productions,Media,Charlottetown,Eastern Canada
+CUST024,Western Retail Group,Retail,Edmonton,Western Canada
+CUST025,Montreal Manufacturing Pro,Manufacturing,Montreal,Eastern Canada
+CUST026,Ontario Education Connect,Education,Mississauga,Eastern Canada
+CUST027,Pacific Finance Corp,Finance,Vancouver,Western Canada
+CUST028,Prairie SaaS Innovations,SaaS,Regina,Central Canada
+CUST029,Halifax Healthcare Tech,Healthcare,Halifax,Eastern Canada
+CUST030,Alberta E-commerce Hub,E-commerce,Calgary,Western Canada
+CUST031,Toronto Digital Media,Media,Toronto,Eastern Canada
+CUST032,BC Manufacturing Systems,Manufacturing,Kelowna,Western Canada
+CUST033,Ottawa Retail Solutions,Retail,Ottawa,Eastern Canada
+CUST034,Quebec Education Platform,Education,Montreal,Eastern Canada
+CUST035,Vancouver Health Systems,Healthcare,Vancouver,Western Canada
+CUST036,Manitoba Finance Group,Finance,Winnipeg,Central Canada
+CUST037,Maritime SaaS Ventures,SaaS,Moncton,Eastern Canada
+CUST038,Calgary Tech Partners,SaaS,Calgary,Western Canada
+CUST039,Toronto Commerce Cloud,E-commerce,Toronto,Eastern Canada
+CUST040,BC Education Innovations,Education,Vancouver,Western Canada
+CUST041,Dynamic Retail Solutions,Retail,Winnipeg,Central Canada
+CUST042,Pacific Coast Analytics,Technology,Victoria,Western Canada
+CUST043,Atlantic Financial Group,Financial Services,Halifax,Eastern Canada
+CUST044,Lakeside Retail Group,Retail,Mississauga,Central Canada
+CUST045,Summit Software Co,Technology,Kelowna,Western Canada
+CUST046,Fraser Valley Logistics,Transportation,Abbotsford,Western Canada
+CUST047,Capital Health Partners,Healthcare,Ottawa,Central Canada
+CUST048,Lakeshore Property Group,Real Estate,Hamilton,Central Canada
+CUST049,Northern Lights Energy,Energy,Calgary,Western Canada
