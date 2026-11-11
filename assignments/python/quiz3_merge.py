@@ -17,7 +17,7 @@ print(f"Total paid: ${enrollments["paid"].sum()}")
 print()
 print("Question 2:")
 chiz = courses[(courses["price"] >= 50) & (courses["price"] < 80)]
-chiz.sort_values("price", ascending=False)
+chiz = chiz.sort_values("price", ascending=False)
 print(chiz[["title", "category", "price"]].to_string(index=False))
 
 print()
@@ -60,18 +60,19 @@ print(ev[["course_id", "title", "instructor_id"]].to_string(index=False))
 print()
 print("Question 7:")
 pay = instructors.merge(courses, on="instructor_id", how="left").merge(enrollments, on="course_id", how="left")
-pay = pay.groupby("instructor_id", as_index=False)["paid"].sum()
+pay = pay.groupby("name", as_index=False)["paid"].sum()
 pay = pay.fillna(0)
 pay = pay.sort_values("paid", ascending=False)
 print(pay.to_string(index=False))
+print(f"Total: ${pay["paid"].sum()}")
 
 print()
 print("Question 8:")
 def month_stats(table, month):
-    enrollments_total = enrollments[enrollments["month"] == month]
+    enrollments_total = table[table["month"] == month]
     return {
         "month": month,
-        "enrollments": len("enrollments_total"),
+        "enrollments": len(enrollments_total),
         "paid": enrollments_total["paid"].sum(),
         "avg_paid": round(enrollments_total["paid"].mean(),1)
     }
