@@ -16,14 +16,14 @@ print(f"Loans: {loan_count}")
 
 print("Question 2:")
 later = books[(books["year"] >= 2015) & (books["price"] < 20)]
-later = books.sort_values("price", ascending=False)
+later = later.sort_values("price", ascending=True)
 print(later[["title", "year", "price"]].to_string(index=False))
 
 print("Question 3:")
 piz = books.groupby("category", as_index=False)["pages"].sum()
 piz = piz.sort_values("pages", ascending=False)
 print(piz.to_string(index=False))
-piz = piz[(piz["pages"] >= 1000)]
+piz = piz[piz["pages"] > 1000]
 print()
 print(piz.to_string(index=False))
 
@@ -59,12 +59,12 @@ print(no_id[["book_id", "days"]].to_string(index=False))
 
 print("Question 8:")
 def category_stats(table, category):
-    books_category = books[books["category"] == category]
+    books_category = table[table["category"] == category]
     return {
         "category": category,
-        "books": len("books_category"),
+        "books": len(books_category),
         "pages": books_category["pages"].sum(),
-        "average": round(books_category["pages"].mean(),1)
+        "avg_pages": round(books_category["pages"].mean(), 1)
     }
 
 books_row = []
@@ -80,4 +80,4 @@ print("Question 9:")
 print("a) This will print the total pages in each category of the books table with an index on the left side. It will then print the total pages in the Fiction category. Category is the index here.")
 print("b) This will not run because the Fiction column no longer exists. Due to the lack of an index column, Python treats by_cat as a table meaning that to determine the total number of pages from the Fiction category, you must run the following line: print(by_cat[by_cat[""category""] == ""Fiction""]). Remove the extra quotations to make it work.")
 print("c) The category will no longer show up and it will be a list of the page sums. I believe b) is better because it is simple to read and parsing the information from it requires using the usual table logic. ")
-print("d) The numbers on the left count the number of entries. It is not a column I believe. It does not have an index.")
+print("d) The numbers on the left count the number of entries. It is not a column I believe. It does have an index.")
