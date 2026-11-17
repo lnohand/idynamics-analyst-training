@@ -63,9 +63,8 @@ Build your answer in `submissions/python/dc1_clean_export.py`.
 them into `scratch.py`, run them, and mark yourself. Paste your paper answers *and* your marks into
 the PR. A wrong answer you caught is worth more than a right one you guessed.
 
-(Why on paper: some tests you may sit later, including the Rotman MMA assessment, give you
-60 minutes, a calculator and scratch paper, and no computer to run code on. Reading code
-without running it is a skill you can practise.)
+(Why on paper: technical interviews often hand you code or numbers with no computer to run
+them on. Reading code without running it is a skill you can practise.)
 
 **R1.**
 ```python
